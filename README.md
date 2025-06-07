@@ -1,3 +1,9 @@
+## ✨ 트링클(TRINKLE) 
+
+Trinkle = Triangle + Twinkle
+
+---
+
 ## ✨ 게임 규칙 (Game Rules)
 
 점들을 연결해 서로 **겹치지 않는 삼각형**을 가능한 많이 만들면 이깁니다.  
