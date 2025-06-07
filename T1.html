@@ -1,12 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trinkle</title>
   <style>
-
-<style>
         * {
             margin: 0;
             padding: 0;
@@ -14,229 +13,229 @@
         }
 
 ```
-    html {
-        background: #0b0c1a !important;
-    }
+html {
+    background: #0b0c1a !important;
+}
 
-    body,
-    .game-container {
-        background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
-        background-attachment: fixed !important;
-        font-family: 'Times New Roman', serif;
-        height: 100vh;
-        overflow: hidden;
-        min-height: 100vh;
-    }
+body,
+.game-container {
+    background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
+    background-attachment: fixed !important;
+    font-family: 'Times New Roman', serif;
+    height: 100vh;
+    overflow: hidden;
+    min-height: 100vh;
+}
 
-    .game-container {
-        width: 100vw;
-        height: 100vh;
-        position: relative;
-    }
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
 
-    .header {
-        text-align: center;
-        padding: 15px;
-        color: white;
-        position: relative;
-    }
+.header {
+    text-align: center;
+    padding: 15px;
+    color: white;
+    position: relative;
+}
 
-    .game-title {
-        font-size: 2rem;
-        font-weight: bold;
-        width: 30%;
-        margin: 0 auto;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
+.game-title {
+    font-size: 2rem;
+    font-weight: bold;
+    width: 30%;
+    margin: 0 auto;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
 
-    .buttons {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        display: flex;
-        gap: 10px;
-    }
+.buttons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
 
-    .game-button {
-        padding: 10px 20px;
-        background: rgba(255,255,255,0.9);
-        border: 2px solid #8B4513;
-        border-radius: 8px;
-        font-family: 'Times New Roman', serif;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        color: #8B4513;
-    }
+.game-button {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    font-family: 'Times New Roman', serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #8B4513;
+}
 
-    .game-button:hover {
-        background: rgba(255,255,255,1);
-        transform: scale(1.05);
-    }
+.game-button:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+}
 
-    .game-area {
-        position: absolute;
-        top: 80px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255,255,255,0.1);
-    }
+.game-area {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.1);
+}
 
-    .point {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        z-index: 100;
-        pointer-events: auto;
-        display: flex;
-        align-items: center;
+.point {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 100;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+justify-content: center;
+}
+
+.point::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #FFD700;
+    border-radius: 50%;
+    border: 2px solid #FFA500;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    transition: all 0.2s ease;
+}
+
+.point:hover::before {
+    transform: scale(1.2);
+    background: #FFFF00;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+}
+
+.point.selected::before {
+    background: #FFFF00;
+    transform: scale(1.3);
+    border-color: #FF6347;
+    box-shadow: 0 0 20px rgba(255, 255, 0, 1);
+}
+
+.line {
+    position: absolute;
+    height: 3px;
+    transform-origin: left center;
+    z-index: 5;
+}
+
+.triangle {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 40;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    }
+    pointer-events: none;
+}
 
-    .point::before {
-        content: '';
-        width: 16px;
-        height: 16px;
-        background: #FFD700;
-        border-radius: 50%;
-        border: 2px solid #FFA500;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-        transition: all 0.2s ease;
-    }
+.scoreboard {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #0b0c1a;
+    padding: 15px;
+    min-width: 180px;
+    font-family: 'Times New Roman', serif;
+    color: #fffde7;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    z-index: 50;
+    pointer-events: auto;
+}
 
-    .point:hover::before {
-        transform: scale(1.2);
-        background: #FFFF00;
-        box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
-    }
+.player-score {
+    margin: 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
 
-    .point.selected::before {
-        background: #FFFF00;
-        transform: scale(1.3);
-        border-color: #FF6347;
-        box-shadow: 0 0 20px rgba(255, 255, 0, 1);
-    }
+.player1 { color: white; }
+.player2 { color: lightblue; }
 
-    .line {
-        position: absolute;
-        height: 3px;
-        transform-origin: left center;
-        z-index: 5;
-    }
+.turn-indicator {
+    font-size: 18px;
+    animation: pulse 1s infinite;
+}
 
-    .triangle {
-        position: absolute;
-        font-size: 24px;
-        font-weight: bold;
-        z-index: 40;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
+.current-turn {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    font-family: 'Times New Roman', serif;
+    color: #fff;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 1.5rem;
+        width: 50%;
+    }
+    
+    .buttons {
+        position: static;
+        margin-bottom: 10px;
         justify-content: center;
-        pointer-events: none;
     }
- 
+    
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    
     .scoreboard {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: #0b0c1a;
-        padding: 15px;
-        min-width: 180px;
-        font-family: 'Times New Roman', serif;
-        color: #fffde7;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        z-index: 50;
-        pointer-events: auto;
+        bottom: 10px;
+        right: 10px;
+        min-width: 150px;
+        padding: 10px;
+        font-size: 14px;
     }
-
-    .player-score {
-        margin: 8px 0;
-        font-size: 18px;
-        font-weight: bold;
-        font-style: italic;
+    
+    .point {
+        width: 60px;
+        height: 60px;
     }
+}
 
-    .player1 { color: white; }
-    .player2 { color: lightblue; }
-
-    .turn-indicator {
-        font-size: 18px;
-        animation: pulse 1s infinite;
+@media (min-width: 769px) {
+    .game-area {
+        top: 80px;
     }
+}
 
-    .current-turn {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        font-style: italic;
-        padding: 5px;
-        border-radius: 5px;
-        background: rgba(255, 255, 255, 0.15);
-        font-family: 'Times New Roman', serif;
-        color: #fff;
-    }
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
 
-    /* 반응형 디자인 */
-    @media (max-width: 768px) {
-        .game-title {
-            font-size: 1.5rem;
-            width: 50%;
-        }
-        
-        .buttons {
-            position: static;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-        
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-        }
-        
-        .scoreboard {
-            bottom: 10px;
-            right: 10px;
-            min-width: 150px;
-            padding: 10px;
-            font-size: 14px;
-        }
-        
-        .point {
-            width: 60px;
-            height: 60px;
-        }
-    }
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+```
 
-    @media (min-width: 769px) {
-        .game-area {
-            top: 80px;
-        }
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-    }
-
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-        20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    }
 </style>
-
-    </style>
 </head>
 <body>
   <div class="game-container">
@@ -248,19 +247,21 @@
       <h1 class="game-title">✨ TRINKLE ✨</h1>
     </div>
 
-    <div class="game-area" id="gameArea">
-      <div class="scoreboard">
-        <div class="player-score player1">
-          Player1: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
-        </div>
-        <div class="player-score player2">
-          Player2: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
-        </div>
-        <div class="current-turn" id="currentTurn">Player1's Turn</div>
-      </div>
+```
+<div class="game-area" id="gameArea">
+  <div class="scoreboard">
+    <div class="player-score player1">
+      <span id="player1Name">Player1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
     </div>
+    <div class="player-score player2">
+      <span id="player2Name">Player2</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+    </div>
+    <div class="current-turn" id="currentTurn">Player1's Turn</div>
   </div>
+</div>
+```
 
+  </div>
 
 <script>
     console.log("스크립트 시작");
@@ -273,6 +274,29 @@
     let currentPlayer = 1;
     let selectedPoint = null;
     let scores = { player1: 0, player2: 0 };
+    
+    // 플레이어 이름 변수
+    let player1Name = 'Player1';
+    let player2Name = 'Player2';
+    
+    // localStorage에서 플레이어 이름 로드
+    function loadPlayerNames() {
+        const savedPlayer1 = localStorage.getItem('player1Name');
+        const savedPlayer2 = localStorage.getItem('player2Name');
+        
+        if (savedPlayer1 && savedPlayer2) {
+            player1Name = savedPlayer1;
+            player2Name = savedPlayer2;
+            
+            // HTML 업데이트
+            document.getElementById('player1Name').textContent = player1Name;
+            document.getElementById('player2Name').textContent = player2Name;
+            
+            console.log("플레이어 이름 로드됨:", player1Name, player2Name);
+        } else {
+            console.log("저장된 플레이어 이름이 없습니다. 기본값 사용.");
+        }
+    }
 
     function createPoints() {
         console.log("Creating points");
@@ -358,9 +382,6 @@
         }
     }
 
-
-    // drawLine() 함수 부분만 수정한 핵심 코드만 아래에 다시 기입합니다
-
     function drawLine(point1, point2) {
       console.log("Drawing line:", point1.id, "->", point2.id);
 
@@ -413,7 +434,8 @@
         updateTurnDisplay();
       }
     }
-// 새로 그으려는 선분이 기존 선분들과 교차하는지 확인
+
+    // 새로 그으려는 선분이 기존 선분들과 교차하는지 확인
     function lineIntersectsExistingLines(newPoint1, newPoint2) {
         for (let existingLine of lines) {
             const existingP1 = points[existingLine.point1];
@@ -453,70 +475,6 @@
         
         // 교점이 두 선분 모두의 범위 내에 있는지 확인
         return t > 0 && t < 1 && u > 0 && u < 1;
-    }
-
-    // 선분이 다른 점을 통과하는지 확인하는 함수
-    function linePassesThroughPoint(point1, point2) {
-        const tolerance = 8; // 허용 거리를 8픽셀로 줄임 (원래 15에서)
-        
-        for (let point of points) {
-            // 선분의 양 끝점은 제외
-            if (point.id === point1.id || point.id === point2.id) continue;
-            
-            // 점과 선분 사이의 거리 계산
-            const distance = distancePointToLine(point.x, point.y, point1.x, point1.y, point2.x, point2.y);
-            
-            if (distance < tolerance) {
-                // 점이 선분 위에 있는지 추가 확인 (선분의 연장선이 아닌 실제 선분 위)
-                if (isPointOnLineSegment(point.x, point.y, point1.x, point1.y, point2.x, point2.y, tolerance * 1.5)) {
-                    console.log(`Point ${point.id} is too close to line (distance: ${distance})`);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // 점과 직선 사이의 최단 거리 계산
-    function distancePointToLine(px, py, x1, y1, x2, y2) {
-        const A = px - x1;
-        const B = py - y1;
-        const C = x2 - x1;
-        const D = y2 - y1;
-
-        const dot = A * C + B * D;
-        const lenSq = C * C + D * D;
-        
-        if (lenSq === 0) return Math.sqrt(A * A + B * B); // 선분의 길이가 0인 경우
-        
-        const param = dot / lenSq;
-        
-        let xx, yy;
-        if (param < 0) {
-            xx = x1;
-            yy = y1;
-        } else if (param > 1) {
-            xx = x2;
-            yy = y2;
-        } else {
-            xx = x1 + param * C;
-            yy = y1 + param * D;
-        }
-
-        const dx = px - xx;
-        const dy = py - yy;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    // 점이 선분 위에 있는지 확인 (연장선이 아닌 실제 선분)
-    function isPointOnLineSegment(px, py, x1, y1, x2, y2, tolerance) {
-        // 점이 선분의 양 끝점 사이에 있는지 확인
-        const minX = Math.min(x1, x2) - tolerance;
-        const maxX = Math.max(x1, x2) + tolerance;
-        const minY = Math.min(y1, y2) - tolerance;
-        const maxY = Math.max(y1, y2) + tolerance;
-        
-        return px >= minX && px <= maxX && py >= minY && py <= maxY;
     }
 
     // 경고 메시지 표시 함수
@@ -621,7 +579,8 @@
     }
 
     function updateTurnDisplay() {
-        document.getElementById('currentTurn').textContent = `Player${currentPlayer}'s Turn`;
+        const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
+        document.getElementById('currentTurn').textContent = `${currentPlayerName}'s Turn`;
         document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'lightblue';
         
         document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
@@ -658,15 +617,13 @@
     // 인덱스로 가기 함수
     function goToIndex() {
         console.log("Go to index");
-        // 실제로는 인덱스 페이지로 이동해야 하지만, 
-        // 현재는 알림만 표시
-        alert("Going to index page");
-        // window.location.href = "index.html"; // 실제 인덱스 페이지가 있을 때
+        window.location.href = "index.html";
     }
 
     // 페이지 로드 완료 후 실행
     window.addEventListener('load', function() {
         console.log("페이지 로드 완료");
+        loadPlayerNames(); // 플레이어 이름 먼저 로드
         setTimeout(createPoints, 100);
         updateTurnDisplay();
     });
@@ -675,9 +632,8 @@
     gameArea.addEventListener('click', function(e) {
         console.log("게임 영역 클릭:", e.clientX, e.clientY);
     });
-    // 나머지 스크립트는 수수님 코드 그대로 유지
-    // (createPoints, checkForAllTriangles, lineIntersectsExistingLines, doLinesIntersect, etc...)
 
   </script>
+
 </body>
 </html>
