@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trinkle</title>
+  <style>
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    html {
+        background: #0b0c1a !important;
+    }
+
+    body,
+    .game-container {
+        background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
+        background-attachment: fixed !important;
+        font-family: 'Times New Roman', serif;
+        height: 100vh;
+        overflow: hidden;
+        min-height: 100vh;
+    }
+
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+    }
+
+    .header {
+        text-align: center;
+        padding: 15px;
+        color: white;
+        position: relative;
+    }
+
+    .game-title {
+        font-size: 2rem;
+        font-weight: bold;
+        width: 30%;
+        margin: 0 auto;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .buttons {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .game-button {
+        padding: 10px 20px;
+        background: rgba(255,255,255,0.9);
+        border: 2px solid #8B4513;
+        border-radius: 8px;
+        font-family: 'Times New Roman', serif;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #8B4513;
+    }
+
+    .game-button:hover {
+        background: rgba(255,255,255,1);
+        transform: scale(1.05);
+    }
+
+    .game-area {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .point {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        z-index: 100;
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+    justify-content: center;
+    }
+
+    .point::before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background: #FFD700;
+        border-radius: 50%;
+        border: 2px solid #FFA500;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        transition: all 0.2s ease;
+    }
+
+    .point:hover::before {
+        transform: scale(1.2);
+        background: #FFFF00;
+        box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+    }
+
+    .point.selected::before {
+        background: #FFFF00;
+        transform: scale(1.3);
+        border-color: #FF6347;
+        box-shadow: 0 0 20px rgba(255, 255, 0, 1);
+    }
+
+    .line {
+        position: absolute;
+        height: 3px;
+        transform-origin: left center;
+        z-index: 5;
+    }
+
+    .triangle {
+        position: absolute;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 40;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+ 
+    .scoreboard {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: #0b0c1a;
+        padding: 15px;
+        min-width: 180px;
+        font-family: 'Times New Roman', serif;
+        color: #fffde7;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        z-index: 50;
+        pointer-events: auto;
+    }
+
+    .player-score {
+        margin: 8px 0;
+        font-size: 18px;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .player1 { color: white; }
+    .player2 { color: lightblue; }
+
+    .turn-indicator {
+        font-size: 18px;
+        animation: pulse 1s infinite;
+    }
+
+    .current-turn {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        font-style: italic;
+        padding: 5px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.15);
+        font-family: 'Times New Roman', serif;
+        color: #fff;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+        .game-title {
+            font-size: 1.5rem;
+            width: 50%;
+        }
+        
+        .buttons {
+            position: static;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+        
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .scoreboard {
+            bottom: 10px;
+            right: 10px;
+            min-width: 150px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .point {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .game-area {
+            top: 80px;
+        }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    }
+</style>
+
+    </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header">
+      <div class="buttons">
+        <button class="game-button" onclick="restartGame()">Restart</button>
+        <button class="game-button" onclick="goToIndex()">Index</button>
+      </div>
+      <h1 class="game-title">✨ TRINKLE ✨</h1>
+    </div>
+
+    <div class="game-area" id="gameArea">
+      <div class="scoreboard">
+        <div class="player-score player1">
+          Player1: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+        </div>
+        <div class="player-score player2">
+          Player2: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+        </div>
+        <div class="current-turn" id="currentTurn">Player1's Turn</div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+    console.log("스크립트 시작");
+    
+    const gameArea = document.getElementById('gameArea');
+    const scoreBoard = document.querySelector('.scoreboard');
+    let points = [];
+    let lines = [];
+    let triangles = [];
+    let currentPlayer = 1;
+    let selectedPoint = null;
+    let scores = { player1: 0, player2: 0 };
+
+    function createPoints() {
+        console.log("Creating points");
+        
+        const areaRect = gameArea.getBoundingClientRect();
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.25;
+        const margin = 60;
+        
+        // 화면 크기에 따라 점 개수 결정 (모바일: 8개, 데스크탑: 12개)
+        const pointCount = window.innerWidth <= 768 ? 8 : 12;
+        
+        console.log("Game area:", areaRect.width, areaRect.height);
+        console.log("Min distance:", minDistance);
+        console.log("Point count:", pointCount);
+
+        for (let i = 0; i < pointCount; i++) {
+            let validPosition = false;
+            let attempts = 0;
+            let x, y;
+
+            while (!validPosition && attempts < 50) {
+                x = margin + Math.random() * (areaRect.width - 2 * margin);
+                y = margin + Math.random() * (areaRect.height - 2 * margin - 200); // 점수판 공간 확보
+
+                validPosition = true;
+                for (let existingPoint of points) {
+                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
+                    if (distance < minDistance) {
+                        validPosition = false;
+                        break;
+                    }
+                }
+                attempts++;
+            }
+
+            if (validPosition) {
+                const point = document.createElement('div');
+                point.className = 'point';
+                point.style.left = (x - 25) + 'px';
+                point.style.top = (y - 25) + 'px';
+                
+                // 터치와 클릭 이벤트 모두 추가
+                point.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Point clicked!", i);
+                    selectPoint(i, x, y);
+                });
+                
+                point.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Point touched!", i);
+                    selectPoint(i, x, y);
+                });
+                
+                // 더 넓은 터치 영역을 위한 추가 이벤트
+                point.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                });
+                
+                gameArea.appendChild(point);
+                points.push({ x, y, element: point, id: i });
+                console.log("Point created:", i, x, y);
+            }
+        }
+        console.log("Total points:", points.length);
+    }
+
+    function selectPoint(pointId, x, y) {
+        console.log("Point selected:", pointId);
+        
+        if (selectedPoint === null) {
+            selectedPoint = { id: pointId, x, y };
+            points[pointId].element.classList.add('selected');
+        } else if (selectedPoint.id === pointId) {
+            points[pointId].element.classList.remove('selected');
+            selectedPoint = null;
+        } else {
+            drawLine(selectedPoint, { id: pointId, x, y });
+            points[selectedPoint.id].element.classList.remove('selected');
+            selectedPoint = null;
+        }
+    }
+
+
+    // drawLine() 함수 부분만 수정한 핵심 코드만 아래에 다시 기입합니다
+
+    function drawLine(point1, point2) {
+      console.log("Drawing line:", point1.id, "->", point2.id);
+
+      const existingLine = lines.find(line =>
+        (line.point1 === point1.id && line.point2 === point2.id) ||
+        (line.point1 === point2.id && line.point2 === point1.id)
+      );
+
+      if (existingLine) {
+        console.log("Line already exists");
+        return;
+      }
+
+      // ✅ 교차 검사 활성화
+      if (lineIntersectsExistingLines(point1, point2)) {
+        console.log("Line intersects existing line");
+        showWarningMessage("선분이 다른 선분과 교차할 수 없습니다!");
+        return;
+      }
+
+      const line = document.createElement('div');
+      line.className = 'line';
+
+      const dx = point2.x - point1.x;
+      const dy = point2.y - point1.y;
+      const length = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+      line.style.width = length + 'px';
+      line.style.left = point1.x + 'px';
+      line.style.top = (point1.y - 1.5) + 'px';
+      line.style.transform = `rotate(${angle}deg)`;
+      line.style.background = currentPlayer === 1 ? 'white' : 'lightblue';
+
+      gameArea.appendChild(line);
+      lines.push({
+        point1: point1.id,
+        point2: point2.id,
+        player: currentPlayer,
+        element: line
+      });
+
+      const newTriangles = checkForAllTriangles(point1.id, point2.id);
+      if (newTriangles.length > 0) {
+        newTriangles.forEach(triangle => createTriangle(triangle));
+        scores[`player${currentPlayer}`] += newTriangles.length;
+        updateScoreboard();
+      } else {
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        updateTurnDisplay();
+      }
+    }
+// 새로 그으려는 선분이 기존 선분들과 교차하는지 확인
+    function lineIntersectsExistingLines(newPoint1, newPoint2) {
+        for (let existingLine of lines) {
+            const existingP1 = points[existingLine.point1];
+            const existingP2 = points[existingLine.point2];
+            
+            // 새 선분과 기존 선분이 같은 점을 공유하는 경우는 교차로 보지 않음
+            if (newPoint1.id === existingLine.point1 || newPoint1.id === existingLine.point2 ||
+                newPoint2.id === existingLine.point1 || newPoint2.id === existingLine.point2) {
+                continue;
+            }
+            
+            // 두 선분의 교차점 확인
+            if (doLinesIntersect(
+                newPoint1.x, newPoint1.y, newPoint2.x, newPoint2.y,
+                existingP1.x, existingP1.y, existingP2.x, existingP2.y
+            )) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 두 선분이 교차하는지 확인하는 함수
+    function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
+        // 선분 1: (x1, y1) - (x2, y2)
+        // 선분 2: (x3, y3) - (x4, y4)
+        
+        const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        
+        // 평행한 경우
+        if (Math.abs(denom) < 1e-10) {
+            return false;
+        }
+        
+        const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+        const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+        
+        // 교점이 두 선분 모두의 범위 내에 있는지 확인
+        return t > 0 && t < 1 && u > 0 && u < 1;
+    }
+
+    // 선분이 다른 점을 통과하는지 확인하는 함수
+    function linePassesThroughPoint(point1, point2) {
+        const tolerance = 8; // 허용 거리를 8픽셀로 줄임 (원래 15에서)
+        
+        for (let point of points) {
+            // 선분의 양 끝점은 제외
+            if (point.id === point1.id || point.id === point2.id) continue;
+            
+            // 점과 선분 사이의 거리 계산
+            const distance = distancePointToLine(point.x, point.y, point1.x, point1.y, point2.x, point2.y);
+            
+            if (distance < tolerance) {
+                // 점이 선분 위에 있는지 추가 확인 (선분의 연장선이 아닌 실제 선분 위)
+                if (isPointOnLineSegment(point.x, point.y, point1.x, point1.y, point2.x, point2.y, tolerance * 1.5)) {
+                    console.log(`Point ${point.id} is too close to line (distance: ${distance})`);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // 점과 직선 사이의 최단 거리 계산
+    function distancePointToLine(px, py, x1, y1, x2, y2) {
+        const A = px - x1;
+        const B = py - y1;
+        const C = x2 - x1;
+        const D = y2 - y1;
+
+        const dot = A * C + B * D;
+        const lenSq = C * C + D * D;
+        
+        if (lenSq === 0) return Math.sqrt(A * A + B * B); // 선분의 길이가 0인 경우
+        
+        const param = dot / lenSq;
+        
+        let xx, yy;
+        if (param < 0) {
+            xx = x1;
+            yy = y1;
+        } else if (param > 1) {
+            xx = x2;
+            yy = y2;
+        } else {
+            xx = x1 + param * C;
+            yy = y1 + param * D;
+        }
+
+        const dx = px - xx;
+        const dy = py - yy;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // 점이 선분 위에 있는지 확인 (연장선이 아닌 실제 선분)
+    function isPointOnLineSegment(px, py, x1, y1, x2, y2, tolerance) {
+        // 점이 선분의 양 끝점 사이에 있는지 확인
+        const minX = Math.min(x1, x2) - tolerance;
+        const maxX = Math.max(x1, x2) + tolerance;
+        const minY = Math.min(y1, y2) - tolerance;
+        const maxY = Math.max(y1, y2) + tolerance;
+        
+        return px >= minX && px <= maxX && py >= minY && py <= maxY;
+    }
+
+    // 경고 메시지 표시 함수
+    function showWarningMessage(message) {
+        // 기존 경고 메시지가 있다면 제거
+        const existingWarning = document.getElementById('warningMessage');
+        if (existingWarning) {
+            existingWarning.remove();
+        }
+
+        // 새 경고 메시지 생성
+        const warning = document.createElement('div');
+        warning.id = 'warningMessage';
+        warning.textContent = message;
+        warning.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-family: 'Times New Roman', serif;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: fadeInOut 2s ease-in-out;
+        `;
+
+        document.body.appendChild(warning);
+
+        // 2초 후 자동으로 제거
+        setTimeout(() => {
+            if (warning && warning.parentNode) {
+                warning.remove();
+            }
+        }, 2000);
+    }
+
+    function checkForAllTriangles(newPoint1, newPoint2) {
+        const completedTriangles = [];
+        
+        // 새로 그은 선분과 연결되어 삼각형을 이룰 수 있는 모든 점 확인
+        for (let point of points) {
+            if (point.id === newPoint1 || point.id === newPoint2) continue;
+            
+            // newPoint1 - point.id 선분이 존재하는지 확인
+            const hasLine1 = lines.some(line => 
+                (line.point1 === newPoint1 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint1)
+            );
+            
+            // newPoint2 - point.id 선분이 존재하는지 확인
+            const hasLine2 = lines.some(line => 
+                (line.point1 === newPoint2 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint2)
+            );
+
+            // 삼각형이 완성되었다면
+            if (hasLine1 && hasLine2) {
+                const triangle = [newPoint1, newPoint2, point.id].sort((a, b) => a - b);
+                
+                // 이미 존재하는 삼각형인지 확인 (중복 방지)
+                const triangleExists = triangles.some(existingTriangle => {
+                    const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
+                    return JSON.stringify(triangle) === JSON.stringify(existingPoints);
+                });
+                
+                if (!triangleExists) {
+                    completedTriangles.push(triangle);
+                }
+            }
+        }
+        
+        return completedTriangles;
+    }
+
+    function createTriangle(trianglePoints) {
+        const p1 = points[trianglePoints[0]];
+        const p2 = points[trianglePoints[1]];
+        const p3 = points[trianglePoints[2]];
+
+        const centerX = (p1.x + p2.x + p3.x) / 3;
+        const centerY = (p1.y + p2.y + p3.y) / 3;
+
+        const triangle = document.createElement('div');
+        triangle.className = 'triangle';
+        triangle.style.left = (centerX - 15) + 'px';
+        triangle.style.top = (centerY - 15) + 'px';
+        triangle.style.color = currentPlayer === 1 ? 'white' : 'lightblue';
+        triangle.textContent = currentPlayer === 1 ? 'V' : 'O';
+
+        gameArea.appendChild(triangle);
+        triangles.push({ points: trianglePoints, player: currentPlayer, element: triangle });
+    }
+
+    function updateScoreboard() {
+        document.getElementById('score1').textContent = scores.player1;
+        document.getElementById('score2').textContent = scores.player2;
+    }
+
+    function updateTurnDisplay() {
+        document.getElementById('currentTurn').textContent = `Player${currentPlayer}'s Turn`;
+        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'lightblue';
+        
+        document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
+        document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
+    }
+
+    // 게임 재시작 함수
+    function restartGame() {
+        console.log("Game restart");
+        
+        // 모든 점, 선, 삼각형 제거
+        points.forEach(point => point.element.remove());
+        lines.forEach(line => line.element.remove());
+        triangles.forEach(triangle => triangle.element.remove());
+        
+        // 배열 초기화
+        points = [];
+        lines = [];
+        triangles = [];
+        
+        // 게임 상태 초기화
+        currentPlayer = 1;
+        selectedPoint = null;
+        scores = { player1: 0, player2: 0 };
+        
+        // UI 업데이트
+        updateScoreboard();
+        updateTurnDisplay();
+        
+        // 새 점들 생성
+        setTimeout(createPoints, 100);
+    }
+
+    // 인덱스로 가기 함수
+    function goToIndex() {
+        console.log("Go to index");
+        // 실제로는 인덱스 페이지로 이동해야 하지만, 
+        // 현재는 알림만 표시
+        alert("Going to index page");
+        // window.location.href = "index.html"; // 실제 인덱스 페이지가 있을 때
+    }
+
+    // 페이지 로드 완료 후 실행
+    window.addEventListener('load', function() {
+        console.log("페이지 로드 완료");
+        setTimeout(createPoints, 100);
+        updateTurnDisplay();
+    });
+
+    // 디버깅용 - 게임 영역 클릭시 정보 출력
+    gameArea.addEventListener('click', function(e) {
+        console.log("게임 영역 클릭:", e.clientX, e.clientY);
+    });
+    // 나머지 스크립트는 수수님 코드 그대로 유지
+    // (createPoints, checkForAllTriangles, lineIntersectsExistingLines, doLinesIntersect, etc...)
+
+  </script>
+</body>
+</html>
