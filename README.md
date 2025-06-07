@@ -36,7 +36,7 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
 ## ✨ 제작 및 크레디트 (Credits)
 
 - **만든 사람 (Created by)**: 한수수 (Han Soosoo)  
-- **코딩 도움 (Coding Support)**: 챗지피티 (ChatGPT)
+- **코딩 도움 (Coding Support)**: 챗지피티 (ChatGPT), 클라우드(Claude)
 
 ---
 
