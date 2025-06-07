@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trinkle - 트링클</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+      font-family: 'Gowun Batang', serif;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;# 
+padding: 40px 30px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+
+    .title {
+      font-size: 3.2rem;
+      font-weight: bold;
+      color: #f0e68c;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #ddd;
+      margin-bottom: 25px;
+    }
+
+    .game-rules {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      text-align: left;
+      color: #eee;
+      font-size: 0.95rem;
+    }
+
+    .rule-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ffec8b;
+    }
+
+    .input-label {
+      display: block;
+      text-align: left;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #fcefa9;
+    }
+
+    .input-section {
+      margin-bottom: 20px;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .name-input::placeholder {
+      color: #ccc;
+    }
+
+    .name-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 5px #f0e68c;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .mode-button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: #333;
+      background: #fffacd;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: 'Gowun Batang', serif;
+    }
+
+    .mode-button:hover {
+      background: #ffffe0;
+      transform: translateY(-2px);
+    }
+
+    .credit {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">✨ TRINKLE ✨</h1>
+    <p class="subtitle">Trinkle = Triangle + Twinkle</p>
+
+    <div class="game-rules">
+      <div class="rule-title">🎮 게임 규칙 / Game Rules</div>
+      <div>
+        • 두 사람이 번갈아 선을 그어요<br/>
+        • 삼각형을 완성하면 점수를 얻고 한 번 더!<br/>
+        • 가장 많은 삼각형을 만든 사람이 이겨요!<br/><br/>
+        • Two players take turns drawing lines<br/>
+        • Complete a triangle to score and take another turn<br/>
+        • Player with the most triangles wins!
+      </div>
+    </div>
+
+    <form id="playerForm">
+      <div class="input-section">
+        <label class="input-label" for="player1">
+          먼저할 사람 이름 / Player 1
+        </label>
+        <input type="text" id="player1" class="name-input" placeholder="이름 / Name" maxlength="15" />
+      </div>
+
+      <div class="input-section">
+        <label class="input-label" for="player2">
+          나중에 할 사람 이름 / Player 2
+        </label>
+        <input type="text" id="player2" class="name-input" placeholder="이름 / Name" maxlength="15" />
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="mode-button" id="startBtn" disabled>
+          🌟 둘이서 하기 / 2 Player Mode
+        </button>
+        <button type="button" class="mode-button" onclick="location.href='T2.html'">
+          🤖 트링키와 하기 / Play with Trinky
+        </button>
+      </div>
+    </form>
+
+    <p class="credit">
+      만든 사람: 수수<br/>
+      도움 준 인공지능: 챗지피티 재치<br/>
+      Created by: Soosoo Han<br/>
+      AI Assistant: ChatGPT Jaechi<br/>
+      © 2025 한수수. All rights reserved.
+    </p>
+  </div>
+
+  <script>
+    const player1Input = document.getElementById('player1');
+    const player2Input = document.getElementById('player2');
+    const startBtn = document.getElementById('startBtn');
+
+    function checkInputs() {
+      const name1 = player1Input.value.trim();
+      const name2 = player2Input.value.trim();
+      startBtn.disabled = !(name1 && name2);
+    }
+
+    player1Input.addEventListener('input', checkInputs);
+    player2Input.addEventListener('input', checkInputs);
+
+    startBtn.addEventListener('click', function () {
+      const name1 = player1Input.value.trim();
+      const name2 = player2Input.value.trim();
+      if (name1 && name2) {
+        localStorage.setItem('player1Name', name1);
+        localStorage.setItem('player2Name', name2);
+        window.location.href = 'T1.html';
+      }
+    });
+  </script>
+</body>
+</html>
