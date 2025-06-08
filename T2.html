@@ -668,7 +668,7 @@ body,
         }, thinkingTime);
     }
 
-    // 똑똑한 AI 전략 함수
+    // 똑똑한 AI 전략 함수 (게임 단계별 전략)
     function findBestAiMoveAdvanced() {
         const possibleMoves = getAllValidMoves();
 
@@ -679,34 +679,151 @@ body,
 
         console.log(`🔍 총 ${possibleMoves.length}개의 가능한 수 분석 중...`);
 
-        // 1단계: 삼각형 완성 우선 (이미 연결된 두 점끼리 연결)
+        // 게임 진행 단계 파악
+        const totalLines = lines.length;
+        const gamePhase = getGamePhase(totalLines);
+        console.log(`🎮 게임 단계: ${gamePhase} (총 ${totalLines}개 선분)`);
+
+        // 1단계: 삼각형 완성 우선 (항상 최우선)
         const triangleCompletingMoves = findTriangleCompletingMoves(possibleMoves);
         if (triangleCompletingMoves.length > 0) {
-            console.log("🎯 삼각형 완성 가능!");
+            console.log(`🎯 삼각형 완성 가능한 수: ${triangleCompletingMoves.length}개`);
+            console.log("최우선으로 삼각형 완성 수행!");
             return selectBestFromMoves(triangleCompletingMoves, "triangle");
         }
 
-        // 2단계: 새로운 시작 (아무것도 연결 안 된 두 점)
-        const isolatedMoves = findIsolatedPointMoves(possibleMoves);
+        console.log("❌ 즉시 완성 가능한 삼각형 없음");
 
-        // 3단계: 확장 (한쪽만 연결된 점과 안 연결된 점)
-        const extensionMoves = findExtensionMoves(possibleMoves);
-
-        // 우선순위에 따라 선택
-        let candidateMoves = [];
-
-        if (isolatedMoves.length > 0) {
-            candidateMoves = isolatedMoves;
-            console.log(`🆕 새로운 시작 가능: ${isolatedMoves.length}개`);
-        } else if (extensionMoves.length > 0) {
-            candidateMoves = extensionMoves;
-            console.log(`🔗 확장 가능: ${extensionMoves.length}개`);
+        // 게임 단계별 전략
+        if (gamePhase === 'early') {
+            console.log("🌱 초반 전략: 새로운 영역 개척");
+            return findEarlyGameMove(possibleMoves);
+        } else if (gamePhase === 'mid') {
+            console.log("⚔️ 중반 전략: 균형잡힌 확장");
+            return findMidGameMove(possibleMoves);
         } else {
-            candidateMoves = possibleMoves;
-            console.log(`⚡ 모든 가능한 수 고려: ${possibleMoves.length}개`);
+            console.log("🔥 후반 전략: 적극적 공격");
+            return findLateGameMove(possibleMoves);
+        }
+    }
+
+    // 게임 진행 단계 판단
+    function getGamePhase(totalLines) {
+        const maxPossibleLines = (points.length * (points.length - 1)) / 2; // 완전그래프
+        const progress = totalLines / maxPossibleLines;
+        
+        if (progress < 0.3) return 'early';    // 30% 미만
+        if (progress < 0.7) return 'mid';      // 30-70%
+        return 'late';                          // 70% 이상
+    }
+
+    // 초반 게임 전략: 새로운 영역 개척
+    function findEarlyGameMove(possibleMoves) {
+        console.log("🌱 초반: 비어있는 점들 우선 연결");
+        
+        // 1. 완전히 고립된 점들끼리 연결 (최우선)
+        const isolatedMoves = findIsolatedPointMoves(possibleMoves);
+        if (isolatedMoves.length > 0) {
+            console.log(`✨ 고립된 점들 연결: ${isolatedMoves.length}개`);
+            return selectBestFromMoves(isolatedMoves, "strategic");
         }
 
-        return selectBestFromMoves(candidateMoves, "strategic");
+        // 2. 한쪽만 연결된 점과 고립된 점 연결
+        const extensionMoves = findExtensionMoves(possibleMoves);
+        if (extensionMoves.length > 0) {
+            console.log(`🔗 확장 가능: ${extensionMoves.length}개`);
+            return selectBestFromMoves(extensionMoves, "strategic");
+        }
+
+        // 3. 그 외는 전략적 점수로 판단
+        console.log(`⚡ 기타 전략적 수: ${possibleMoves.length}개`);
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 중반 게임 전략: 균형잡힌 확장
+    function findMidGameMove(possibleMoves) {
+        console.log("⚔️ 중반: 삼각형 기회와 영역 확장 균형");
+        
+        // 1. 삼각형 완성에 가까운 수들 (하지만 초반보다 덜 우선시)
+        const nearTriangleMoves = findNearTriangleMoves(possibleMoves);
+        
+        // 2. 새로운 영역 확장
+        const isolatedMoves = findIsolatedPointMoves(possibleMoves);
+        const extensionMoves = findExtensionMoves(possibleMoves);
+
+        // 균형잡힌 선택
+        const allCandidates = [
+            ...nearTriangleMoves.slice(0, 2), // 상위 2개만
+            ...isolatedMoves,
+            ...extensionMoves
+        ];
+
+        if (allCandidates.length > 0) {
+            console.log(`🎯 균형잡힌 후보들: ${allCandidates.length}개`);
+            return selectBestFromMoves(allCandidates, "strategic");
+        }
+
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 후반 게임 전략: 적극적 공격
+    function findLateGameMove(possibleMoves) {
+        console.log("🔥 후반: 적극적으로 삼각형 기회 추구");
+        
+        // 1. 삼각형 완성에 가까운 수들 우선
+        const nearTriangleMoves = findNearTriangleMoves(possibleMoves);
+        if (nearTriangleMoves.length > 0) {
+            console.log(`🔶 삼각형 완성에 가까운 수: ${nearTriangleMoves.length}개`);
+            return selectBestFromMoves(nearTriangleMoves, "strategic");
+        }
+
+        // 2. 기타 모든 수
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 삼각형 완성에 가까운 수들 찾기 (2개 변 중 1개 변만 있는 경우)
+    function findNearTriangleMoves(possibleMoves) {
+        const nearMoves = [];
+
+        for (let move of possibleMoves) {
+            let potentialTriangles = 0;
+            
+            // 이 수를 두었을 때 미래에 삼각형을 완성할 수 있는 기회가 몇 개나 생기는지 계산
+            for (let point of points) {
+                if (point.id === move.point1 || point.id === move.point2) continue;
+                
+                // move.point1과 point.id를 연결하는 선이 있는지
+                const hasLine1 = lines.some(line => 
+                    (line.point1 === move.point1 && line.point2 === point.id) ||
+                    (line.point1 === point.id && line.point2 === move.point1)
+                );
+                
+                // move.point2와 point.id를 연결하는 선이 있는지
+                const hasLine2 = lines.some(line => 
+                    (line.point1 === move.point2 && line.point2 === point.id) ||
+                    (line.point1 === point.id && line.point2 === move.point2)
+                );
+                
+                // 둘 중 하나만 있다면, 나중에 삼각형을 완성할 기회
+                if ((hasLine1 && !hasLine2) || (!hasLine1 && hasLine2)) {
+                    // 완성될 삼각형이 유효한지 미리 확인
+                    const futureTriangle = [move.point1, move.point2, point.id].sort((a, b) => a - b);
+                    if (!triangleHasInteriorElements(futureTriangle)) {
+                        potentialTriangles++;
+                    }
+                }
+            }
+            
+            if (potentialTriangles > 0) {
+                nearMoves.push({
+                    ...move,
+                    potentialTriangles: potentialTriangles,
+                    priority: 2
+                });
+            }
+        }
+
+        return nearMoves.sort((a, b) => b.potentialTriangles - a.potentialTriangles);
     }
 
     // 모든 유효한 수를 찾는 함수
@@ -734,41 +851,51 @@ body,
         return moves;
     }
 
-    // 삼각형을 완성할 수 있는 수 찾기
+    // 삼각형을 완성할 수 있는 수 찾기 (개선된 버전)
     function findTriangleCompletingMoves(possibleMoves) {
         const triangleMoves = [];
 
+        console.log("🔍 삼각형 완성 기회 분석 시작...");
+
         for (let move of possibleMoves) {
-            const point1Connections = getPointConnections(move.point1);
-            const point2Connections = getPointConnections(move.point2);
+            // 실제로 유효한 삼각형이 완성되는지 정확히 시뮬레이션
+            const validTriangles = simulateValidTrianglesFormed(move.point1, move.point2);
             
-            if (point1Connections.length > 0 && point2Connections.length > 0) {
-                const trianglesFormed = simulateTrianglesFormed(move.point1, move.point2);
-                if (trianglesFormed.length > 0) {
-                    triangleMoves.push({
-                        ...move,
-                        triangleCount: trianglesFormed.length,
-                        priority: 1
-                    });
-                }
+            if (validTriangles.length > 0) {
+                console.log(`🎯 발견! ${move.point1}-${move.point2} 연결시 ${validTriangles.length}개 삼각형 완성 가능`);
+                validTriangles.forEach(triangle => {
+                    console.log(`   삼각형: ${triangle.join('-')}`);
+                });
+                
+                triangleMoves.push({
+                    ...move,
+                    triangleCount: validTriangles.length,
+                    priority: 1,
+                    triangles: validTriangles
+                });
             }
         }
 
+        console.log(`📊 총 ${triangleMoves.length}개의 삼각형 완성 수 발견`);
         return triangleMoves.sort((a, b) => b.triangleCount - a.triangleCount);
     }
 
-    // 삼각형 형성 시뮬레이션
-    function simulateTrianglesFormed(point1Id, point2Id) {
-        const completedTriangles = [];
+    // 실제로 유효한 삼각형 완성 시뮬레이션 (엄격한 룰 적용)
+    function simulateValidTrianglesFormed(point1Id, point2Id) {
+        const validTriangles = [];
+        
+        console.log(`🧮 시뮬레이션: ${point1Id}-${point2Id} 연결시...`);
         
         for (let point of points) {
             if (point.id === point1Id || point.id === point2Id) continue;
             
+            // 첫 번째 선: point1Id ↔ point.id
             const hasLine1 = lines.some(line => 
                 (line.point1 === point1Id && line.point2 === point.id) ||
                 (line.point1 === point.id && line.point2 === point1Id)
             );
             
+            // 두 번째 선: point2Id ↔ point.id  
             const hasLine2 = lines.some(line => 
                 (line.point1 === point2Id && line.point2 === point.id) ||
                 (line.point1 === point.id && line.point2 === point2Id)
@@ -776,11 +903,41 @@ body,
 
             if (hasLine1 && hasLine2) {
                 const triangle = [point1Id, point2Id, point.id].sort((a, b) => a - b);
-                completedTriangles.push(triangle);
+                
+                console.log(`   🔺 삼각형 후보: ${triangle.join('-')}`);
+                
+                // 이미 존재하는 삼각형인지 확인
+                const triangleExists = triangles.some(existingTriangle => {
+                    const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
+                    return JSON.stringify(triangle) === JSON.stringify(existingPoints);
+                });
+                
+                if (triangleExists) {
+                    console.log(`      ❌ 이미 존재함`);
+                    continue;
+                }
+                
+                // 삼각형 내부에 다른 요소가 있는지 확인
+                const hasInteriorElements = triangleHasInteriorElements(triangle);
+                if (hasInteriorElements) {
+                    console.log(`      ❌ 내부에 다른 요소 있음`);
+                    continue;
+                }
+                
+                // 새로 그을 선분이 이 삼각형을 직접 완성하는지 확인
+                const isDirectTriangle = isTriangleDirectlyFormedByNewLine(triangle, point1Id, point2Id);
+                if (!isDirectTriangle) {
+                    console.log(`      ❌ 직접 완성이 아님`);
+                    continue;
+                }
+                
+                console.log(`      ✅ 유효한 삼각형!`);
+                validTriangles.push(triangle);
             }
         }
         
-        return completedTriangles;
+        console.log(`🧮 시뮬레이션 결과: ${validTriangles.length}개 유효한 삼각형`);
+        return validTriangles;
     }
 
     // 아무것도 연결되지 않은 두 점끼리 연결하는 수 찾기
