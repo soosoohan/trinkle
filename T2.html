@@ -257,7 +257,6 @@
       <h1 class="game-title">✨ TRINKLE vs TRINKY ✨</h1>
     </div>
 
-```
 <div class="game-area" id="gameArea">
   <div class="scoreboard">
     <div class="player-score player1">
@@ -269,7 +268,6 @@
     <div class="current-turn" id="currentTurn">Your Turn</div>
   </div>
 </div>
-```
 
   </div>
 
@@ -963,10 +961,10 @@
         updateTurnDisplay();
         setTimeout(createPoints, 100);
     }
-
+  
     function goToIndex() {
-        alert("Going to index page");
-    }
+    window.location.href = "index.html";
+}
 
     window.addEventListener('load', function() {
         setTimeout(createPoints, 100);
