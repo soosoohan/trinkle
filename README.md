@@ -22,9 +22,6 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
 - **선분이 서로 교차해서는 안 됩니다.**  
   _Lines must not cross over other lines._
 
-- **이미 만들어진 삼각형의 변이나 꼭짓점은 다시 사용할 수 없습니다.**  
-  _Existing triangle sides or vertices cannot be reused._
-
 - 가능한 선을 모두 그리면 게임은 종료되며, **삼각형을 많이 그린 사람이 승리**합니다.  
   _The game ends when no more valid moves remain, and the player with the most triangles wins._
 
