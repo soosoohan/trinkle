@@ -29,15 +29,37 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
   _Squares or other polygons are not counted as valid._
 
 ---
+## 👤 만든 사람 | Credits
 
-## ✨ 제작 및 크레디트 (Credits)
-
-- **만든 사람 (Created by)**: 한수수 (Han Soosoo)  
-- **코딩 도움 (Coding Support)**: 챗지피티 (ChatGPT), 클라우드(Claude)
+- 제작 | Developed by: **한수수 (Soosoo Han)**  
+- 코딩 지원 | Coding Support: **ChatGPT , 재치,  Claude**
+ⓒ 2025 한수수.  
+이 게임의 모든 권리는 제작자에게 있으며,  
+**무단 복제, 배포, 2차 창작을 금지합니다.**
+© 2025 Soosoo Han.  
+All rights reserved.  
+**Do not copy, distribute, or create derivative works without permission.**
 
 ---
 
-## ✨ 저작권 안내 (License Notice)
+## 🧪 한수수의 다른 게임들 | Other Games by Soosoo Han
 
-**모든 저작권은 한수수에게 있습니다. 무단 복제 및 상업적 이용을 금합니다.**  
-_All rights reserved by Han Soosoo. Unauthorized copying or commercial use is prohibited._
+- **워퍼즈 (Worpuzz)**  
+  격자 속에 숨어있는 단어를 찾으며 어휘력을 키우는 게임  
+  *Find hidden words in the grid and build your vocabulary*  
+  👉 http://soosoohan.github.io/worpuzz
+
+- **넘즐 (Numzzle)**  
+  수학을 재미있게! 목표 숫자에 가까운 수식을 만드는 게임  
+  *Make math fun! Create formulas to match the target number*  
+  👉 http://soosoohan.github.io/numzzle
+
+- **트링클 (Trinkle)**  
+  별을 잇고 삼각형을 그리는 우주 땅따먹기 전략 게임  
+  *Connect stars to draw triangles in this cosmic strategy game*  
+  👉 http://soosoohan.github.io/trinkle
+
+- **워퍼즈메이트 (Worpuzz Mate)**  
+  격자를 열거나 단어를 추측하며 겨루는 어휘력 대결 게임  
+  *Compete to guess or uncover words hidden in the grid*  
+  👉 http://soosoohan.github.io/worpuzzmate
