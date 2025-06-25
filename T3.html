@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trinkle vs AI</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+html {
+    background: #0b0c1a !important;
+}
+
+body,
+.game-container {
+    background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
+    background-attachment: fixed !important;
+    font-family: 'Times New Roman', serif;
+    height: 100vh;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    padding: 15px;
+    color: white;
+    position: relative;
+}
+
+.game-title {
+    font-size: 2rem;
+    font-weight: bold;
+    width: 30%;
+    margin: 0 auto;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.buttons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.game-button {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    font-family: 'Times New Roman', serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #8B4513;
+}
+
+.game-button:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+}
+
+.game-area {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.1);
+}
+
+.point {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 100;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.point::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #FFD700;
+    border-radius: 50%;
+    border: 2px solid #FFA500;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    transition: all 0.2s ease;
+}
+
+.point:hover::before {
+    transform: scale(1.2);
+    background: #FFFF00;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+}
+
+.point.selected::before {
+    background: #FFFF00;
+    transform: scale(1.3);
+    border-color: #FF6347;
+    box-shadow: 0 0 20px rgba(255, 255, 0, 1);
+}
+
+.line {
+    position: absolute;
+    height: 3px;
+    transform-origin: left center;
+    z-index: 5;
+}
+
+.triangle {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 40;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.scoreboard {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #0b0c1a;
+    padding: 15px;
+    min-width: 180px;
+    font-family: 'Times New Roman', serif;
+    color: #fffde7;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    z-index: 50;
+    pointer-events: auto;
+}
+
+.player-score {
+    margin: 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.player1 { color: white; }
+.player2 { color: #FF6B6B; }
+
+.turn-indicator {
+    font-size: 18px;
+    animation: pulse 1s infinite;
+}
+
+.current-turn {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    font-family: 'Times New Roman', serif;
+    color: #fff;
+}
+
+.ai-thinking {
+    background: rgba(255, 107, 107, 0.2) !important;
+    animation: aiThinking 1.5s infinite;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 1.5rem;
+        width: 50%;
+    }
+    
+    .buttons {
+        position: static;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    
+    .scoreboard {
+        bottom: 10px;
+        right: 10px;
+        min-width: 150px;
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .point {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (min-width: 769px) {
+    .game-area {
+        top: 80px;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes aiThinking {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+
+</style>
+
+</head>
+<body>
+  <div class="game-container">
+    <div class="header">
+      <div class="buttons">
+        <button class="game-button" onclick="restartGame()">Restart</button>
+        <button class="game-button" onclick="goToIndex()">Home</button>
+      </div>
+      <h1 class="game-title">✨ TRINKLE vs GOOFY TRINKY ✨</h1>
+    </div>
+
+<div class="game-area" id="gameArea">
+  <div class="scoreboard">
+    <div class="player-score player1">
+      <span id="player1Name">You</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+    </div>
+    <div class="player-score player2">
+      <span id="player2Name">Trinky</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">🤖</span>
+    </div>
+    <div class="current-turn" id="currentTurn">Your Turn</div>
+  </div>
+</div>
+
+  </div>
+
+<script>
+    console.log("스크립트 시작");
+    
+    const gameArea = document.getElementById('gameArea');
+    const scoreBoard = document.querySelector('.scoreboard');
+    let points = [];
+    let lines = [];
+    let triangles = [];
+    let currentPlayer = 1;
+    let selectedPoint = null;
+    let scores = { player1: 0, player2: 0 };
+    let gameMode = 'ai';
+    let isAiThinking = false;
+
+    function createPoints() {
+        console.log("Creating points");
+
+        const areaRect = gameArea.getBoundingClientRect();
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.15;
+        const margin = 60;
+        const pointCount = 11; // 9개에서 11개로 변경
+
+        // 금지 구역 정의
+        const forbiddenZones = [
+            { x: 0, y: 0, width: 250, height: 100 },
+            { x: areaRect.width - 250, y: areaRect.height - 180, width: 250, height: 180 }
+        ];
+
+        function isInForbiddenZone(x, y) {
+            for (let zone of forbiddenZones) {
+                if (x >= zone.x && x <= zone.x + zone.width && 
+                    y >= zone.y && y <= zone.y + zone.height) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (let i = 0; i < pointCount; i++) {
+            let validPosition = false;
+            let attempts = 0;
+            let x, y;
+
+            while (!validPosition && attempts < 100) {
+                x = margin + Math.random() * (areaRect.width - 2 * margin);
+                y = margin + Math.random() * (areaRect.height - 2 * margin);
+
+                validPosition = true;
+                
+                if (isInForbiddenZone(x, y)) {
+                    validPosition = false;
+                    attempts++;
+                    continue;
+                }
+                
+                for (let existingPoint of points) {
+                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
+                    if (distance < minDistance) {
+                        validPosition = false;
+                        break;
+                    }
+                }
+                attempts++;
+            }
+
+            if (validPosition) {
+                const point = document.createElement('div');
+                point.className = 'point';
+                point.style.left = (x - 25) + 'px';
+                point.style.top = (y - 25) + 'px';
+                
+                point.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!isAiThinking && currentPlayer === 1) {
+                        selectPoint(i, x, y);
+                    }
+                });
+                
+                gameArea.appendChild(point);
+                points.push({ x, y, element: point, id: i });
+                console.log("Point created:", i, x, y);
+            }
+        }
+        console.log("Total points:", points.length);
+    }
+
+    function selectPoint(pointId, x, y) {
+        console.log("Point selected:", pointId);
+        
+        if (selectedPoint === null) {
+            selectedPoint = { id: pointId, x, y };
+            points[pointId].element.classList.add('selected');
+        } else if (selectedPoint.id === pointId) {
+            points[pointId].element.classList.remove('selected');
+            selectedPoint = null;
+        } else {
+            drawLine(selectedPoint, { id: pointId, x, y });
+            points[selectedPoint.id].element.classList.remove('selected');
+            selectedPoint = null;
+        }
+    }
+
+    function drawLine(point1, point2) {
+        console.log("Drawing line:", point1.id, "->", point2.id);
+
+        const existingLine = lines.find(line =>
+            (line.point1 === point1.id && line.point2 === point2.id) ||
+            (line.point1 === point2.id && line.point2 === point1.id)
+        );
+
+        if (existingLine) {
+            console.log("Line already exists");
+            return;
+        }
+
+        if (lineIntersectsExistingLines(point1, point2)) {
+            console.log("Line intersects existing line or passes too close to a point");
+            showWarningMessage("선분이 다른 선분과 교차하거나 점을 지나갈 수 없습니다!");
+            return;
+        }
+
+        const line = document.createElement('div');
+        line.className = 'line';
+
+        const dx = point2.x - point1.x;
+        const dy = point2.y - point1.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+        line.style.width = length + 'px';
+        line.style.left = point1.x + 'px';
+        line.style.top = (point1.y - 1.5) + 'px';
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.background = currentPlayer === 1 ? 'white' : '#FF6B6B';
+
+        gameArea.appendChild(line);
+        lines.push({
+            point1: point1.id,
+            point2: point2.id,
+            player: currentPlayer,
+            element: line
+        });
+
+        // 새로 그은 선분이 직접 완성하는 삼각형만 체크하여 점수 부여
+        const newTriangles = checkForDirectTrianglesOnly(point1.id, point2.id);
+        if (newTriangles.length > 0) {
+            console.log(`🔺 삼각형 ${newTriangles.length}개 완성! 플레이어 ${currentPlayer} 계속 진행`);
+            newTriangles.forEach(triangle => createTriangle(triangle));
+            scores[`player${currentPlayer}`] += newTriangles.length;
+            updateScoreboard();
+            // 삼각형을 완성했으므로 같은 플레이어가 계속 진행
+            updateTurnDisplay();
+        } else {
+            console.log(`➡️ 삼각형 없음. 턴 교체: ${currentPlayer} -> ${currentPlayer === 1 ? 2 : 1}`);
+            // 삼각형을 완성하지 못했으므로 턴 교체
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            updateTurnDisplay();
+        }
+
+        // AI 턴인 경우 자동으로 수행
+        if (currentPlayer === 2 && !isAiThinking) {
+            console.log("🤖 AI 턴 감지 - makeAiMove 호출");
+            // 게임이 끝났는지 먼저 확인
+            if (isGameOver()) {
+                console.log("🏁 게임 종료!");
+                showGameEndMessage();
+            } else {
+                setTimeout(makeAiMove, 1000);
+            }
+        } else if (currentPlayer === 1 && isGameOver()) {
+            console.log("🏁 게임 종료!");
+            showGameEndMessage();
+        }
+    }
+
+    // 엄격한 룰: 빈 공간에 새로 완성되는 삼각형만 점수 부여
+    function checkForDirectTrianglesOnly(newPoint1, newPoint2) {
+        const completedTriangles = [];
+        
+        console.log(`🔍 엄격한 삼각형 체크: 새로 그은 선 ${newPoint1}-${newPoint2}`);
+        
+        for (let point of points) {
+            if (point.id === newPoint1 || point.id === newPoint2) continue;
+            
+            // 첫 번째 선: newPoint1 ↔ point.id
+            const hasLine1 = lines.some(line => 
+                (line.point1 === newPoint1 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint1)
+            );
+            
+            // 두 번째 선: newPoint2 ↔ point.id  
+            const hasLine2 = lines.some(line => 
+                (line.point1 === newPoint2 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint2)
+            );
+
+            if (hasLine1 && hasLine2) {
+                const triangle = [newPoint1, newPoint2, point.id].sort((a, b) => a - b);
+                
+                // 이미 존재하는 삼각형인지 확인
+                const triangleExists = triangles.some(existingTriangle => {
+                    const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
+                    return JSON.stringify(triangle) === JSON.stringify(existingPoints);
+                });
+                
+                if (triangleExists) {
+                    console.log(`❌ 이미 존재하는 삼각형: ${triangle.join('-')}`);
+                    continue;
+                }
+                
+                // 🚫 엄격한 룰: 삼각형 내부에 다른 점이나 삼각형이 있으면 점수 없음
+                const hasInteriorElements = triangleHasInteriorElements(triangle);
+                if (hasInteriorElements) {
+                    console.log(`❌ 삼각형 내부에 다른 요소가 있음: ${triangle.join('-')}`);
+                    continue;
+                }
+                
+                // 새로 그은 선분이 이 삼각형을 직접적으로 완성하는지 확인
+                const isDirectTriangle = isTriangleDirectlyFormedByNewLine(triangle, newPoint1, newPoint2);
+                
+                if (isDirectTriangle) {
+                    console.log(`✅ 빈 공간에 새로 완성된 삼각형: ${triangle.join('-')}`);
+                    completedTriangles.push(triangle);
+                } else {
+                    console.log(`❌ 간접적 삼각형: ${triangle.join('-')}`);
+                }
+            }
+        }
+        
+        console.log(`🔍 최종 엄격한 삼각형 체크 결과: ${completedTriangles.length}개 발견`);
+        return completedTriangles;
+    }
+
+    // 삼각형 내부에 다른 점이나 기존 삼각형이 있는지 확인
+    function triangleHasInteriorElements(trianglePoints) {
+        const [p1, p2, p3] = trianglePoints;
+        const point1 = points[p1];
+        const point2 = points[p2];
+        const point3 = points[p3];
+        
+        // 1. 삼각형 내부에 다른 점이 있는지 확인
+        for (let point of points) {
+            if (trianglePoints.includes(point.id)) continue;
+            
+            if (isPointInsideTriangle(point.x, point.y, point1.x, point1.y, point2.x, point2.y, point3.x, point3.y)) {
+                console.log(`🔍 삼각형 ${trianglePoints.join('-')} 내부에 점 ${point.id} 발견`);
+                return true;
+            }
+        }
+        
+        // 2. 삼각형 내부에 기존 삼각형이 있는지 확인
+        for (let existingTriangle of triangles) {
+            const [ep1, ep2, ep3] = existingTriangle.points;
+            const epoint1 = points[ep1];
+            const epoint2 = points[ep2];
+            const epoint3 = points[ep3];
+            
+            // 기존 삼각형의 중심점이 새 삼각형 내부에 있는지 확인
+            const centerX = (epoint1.x + epoint2.x + epoint3.x) / 3;
+            const centerY = (epoint1.y + epoint2.y + epoint3.y) / 3;
+            
+            if (isPointInsideTriangle(centerX, centerY, point1.x, point1.y, point2.x, point2.y, point3.x, point3.y)) {
+                console.log(`🔍 삼각형 ${trianglePoints.join('-')} 내부에 기존 삼각형 ${existingTriangle.points.join('-')} 발견`);
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    // 점이 삼각형 내부에 있는지 확인 (Barycentric 좌표 사용)
+    function isPointInsideTriangle(px, py, x1, y1, x2, y2, x3, y3) {
+        const denominator = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
+        
+        if (Math.abs(denominator) < 1e-10) return false; // 삼각형이 아님
+        
+        const a = ((y2 - y3) * (px - x3) + (x3 - x2) * (py - y3)) / denominator;
+        const b = ((y3 - y1) * (px - x3) + (x1 - x3) * (py - y3)) / denominator;
+        const c = 1 - a - b;
+        
+        // 내부에 있으려면 모든 barycentric 좌표가 0보다 커야 함 (경계 제외)
+        return a > 0.01 && b > 0.01 && c > 0.01;
+    }
+
+    // 새로 그은 선분이 삼각형을 직접적으로 완성하는지 확인
+    function isTriangleDirectlyFormedByNewLine(triangle, newPoint1, newPoint2) {
+        // 삼각형의 세 변 중 새로 그은 선분이 하나여야 함
+        const [p1, p2, p3] = triangle;
+        
+        // 삼각형의 세 변을 확인
+        const side1 = [p1, p2].sort((a, b) => a - b);
+        const side2 = [p1, p3].sort((a, b) => a - b);
+        const side3 = [p2, p3].sort((a, b) => a - b);
+        
+        const newLine = [newPoint1, newPoint2].sort((a, b) => a - b);
+        
+        // 새로 그은 선분이 삼각형의 한 변과 정확히 일치하는지 확인
+        const isNewLineSide1 = JSON.stringify(side1) === JSON.stringify(newLine);
+        const isNewLineSide2 = JSON.stringify(side2) === JSON.stringify(newLine);
+        const isNewLineSide3 = JSON.stringify(side3) === JSON.stringify(newLine);
+        
+        const newLineMatchesOneSide = isNewLineSide1 || isNewLineSide2 || isNewLineSide3;
+        
+        if (newLineMatchesOneSide) {
+            // 나머지 두 변이 이미 존재하는지 확인
+            let otherSidesExist = 0;
+            
+            if (!isNewLineSide1) {
+                const side1Exists = lines.some(line => 
+                    (line.point1 === side1[0] && line.point2 === side1[1]) ||
+                    (line.point1 === side1[1] && line.point2 === side1[0])
+                );
+                if (side1Exists) otherSidesExist++;
+            }
+            
+            if (!isNewLineSide2) {
+                const side2Exists = lines.some(line => 
+                    (line.point1 === side2[0] && line.point2 === side2[1]) ||
+                    (line.point1 === side2[1] && line.point2 === side2[0])
+                );
+                if (side2Exists) otherSidesExist++;
+            }
+            
+            if (!isNewLineSide3) {
+                const side3Exists = lines.some(line => 
+                    (line.point1 === side3[0] && line.point2 === side3[1]) ||
+                    (line.point1 === side3[1] && line.point2 === side3[0])
+                );
+                if (side3Exists) otherSidesExist++;
+            }
+            
+            // 정확히 2개의 다른 변이 이미 존재해야 직접적인 삼각형 완성
+            return otherSidesExist === 2;
+        }
+        
+        return false;
+    }
+
+    function makeAiMove() {
+        if (isAiThinking || currentPlayer !== 2) return;
+
+        isAiThinking = true;
+        updateTurnDisplay();
+
+        console.log("🤖 AI가 생각 중...");
+
+        const thinkingTime = 800 + Math.random() * 700;
+
+        setTimeout(() => {
+            const bestMove = findBestAiMoveAdvanced();
+            
+            if (bestMove) {
+                console.log("🎯 AI가 선택한 수:", bestMove);
+                
+                const point1 = points[bestMove.point1];
+                const point2 = points[bestMove.point2];
+                
+                point1.element.classList.add('selected');
+                point2.element.classList.add('selected');
+                
+                setTimeout(() => {
+                    point1.element.classList.remove('selected');
+                    point2.element.classList.remove('selected');
+                    
+                    drawLine(
+                        { id: bestMove.point1, x: point1.x, y: point1.y },
+                        { id: bestMove.point2, x: point2.x, y: point2.y }
+                    );
+                    
+                    isAiThinking = false;
+                    updateTurnDisplay();
+                    
+                    // 삼각형 완성 후 AI가 계속 턴을 가지는지 확인
+                    console.log("🔄 AI 수 완료 후 - currentPlayer:", currentPlayer, "isAiThinking:", isAiThinking);
+                    
+                    // AI가 계속 턴을 가진다면 다시 수행 (단, 게임이 끝나지 않았다면)
+                    if (currentPlayer === 2 && !isAiThinking && !isGameOver()) {
+                        console.log("🎯 AI 연속 턴 시작!");
+                        setTimeout(makeAiMove, 800);
+                    } else if (isGameOver()) {
+                        console.log("🏁 AI 수 후 게임 종료!");
+                        showGameEndMessage();
+                    }
+                }, 500);
+            } else {
+                isAiThinking = false;
+                updateTurnDisplay();
+                console.log("❌ AI에게 유효한 수가 없음 - 게임 종료 체크");
+                if (isGameOver()) {
+                    showGameEndMessage();
+                }
+            }
+        }, thinkingTime);
+    }
+
+    // 똑똑한 AI 전략 함수 (게임 단계별 전략)
+    function findBestAiMoveAdvanced() {
+        const possibleMoves = getAllValidMoves();
+
+        if (possibleMoves.length === 0) {
+            console.log("⚠️ 가능한 수가 없음");
+            return null;
+        }
+
+        console.log(`🔍 총 ${possibleMoves.length}개의 가능한 수 분석 중...`);
+
+        // 게임 진행 단계 파악
+        const totalLines = lines.length;
+        const gamePhase = getGamePhase(totalLines);
+        console.log(`🎮 게임 단계: ${gamePhase} (총 ${totalLines}개 선분)`);
+
+        // 1단계: 삼각형 완성 우선 (항상 최우선)
+        const triangleCompletingMoves = findTriangleCompletingMoves(possibleMoves);
+        if (triangleCompletingMoves.length > 0) {
+            console.log(`🎯 삼각형 완성 가능한 수: ${triangleCompletingMoves.length}개`);
+            console.log("최우선으로 삼각형 완성 수행!");
+            return selectBestFromMoves(triangleCompletingMoves, "triangle");
+        }
+
+        console.log("❌ 즉시 완성 가능한 삼각형 없음");
+
+        // 게임 단계별 전략
+        if (gamePhase === 'early') {
+            console.log("🌱 초반 전략: 새로운 영역 개척");
+            return findEarlyGameMove(possibleMoves);
+        } else if (gamePhase === 'mid') {
+            console.log("⚔️ 중반 전략: 균형잡힌 확장");
+            return findMidGameMove(possibleMoves);
+        } else {
+            console.log("🔥 후반 전략: 적극적 공격");
+            return findLateGameMove(possibleMoves);
+        }
+    }
+
+    // 게임 진행 단계 판단
+    function getGamePhase(totalLines) {
+        const maxPossibleLines = (points.length * (points.length - 1)) / 2; // 완전그래프
+        const progress = totalLines / maxPossibleLines;
+        
+        if (progress < 0.3) return 'early';    // 30% 미만
+        if (progress < 0.7) return 'mid';      // 30-70%
+        return 'late';                          // 70% 이상
+    }
+
+    // 초반 게임 전략: 새로운 영역 개척
+    function findEarlyGameMove(possibleMoves) {
+        console.log("🌱 초반: 비어있는 점들 우선 연결");
+        
+        // 1. 완전히 고립된 점들끼리 연결 (최우선)
+        const isolatedMoves = findIsolatedPointMoves(possibleMoves);
+        if (isolatedMoves.length > 0) {
+            console.log(`✨ 고립된 점들 연결: ${isolatedMoves.length}개`);
+            return selectBestFromMoves(isolatedMoves, "strategic");
+        }
+
+        // 2. 한쪽만 연결된 점과 고립된 점 연결
+        const extensionMoves = findExtensionMoves(possibleMoves);
+        if (extensionMoves.length > 0) {
+            console.log(`🔗 확장 가능: ${extensionMoves.length}개`);
+            return selectBestFromMoves(extensionMoves, "strategic");
+        }
+
+        // 3. 그 외는 전략적 점수로 판단
+        console.log(`⚡ 기타 전략적 수: ${possibleMoves.length}개`);
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 중반 게임 전략: 균형잡힌 확장
+    function findMidGameMove(possibleMoves) {
+        console.log("⚔️ 중반: 삼각형 기회와 영역 확장 균형");
+        
+        // 1. 삼각형 완성에 가까운 수들 (하지만 초반보다 덜 우선시)
+        const nearTriangleMoves = findNearTriangleMoves(possibleMoves);
+        
+        // 2. 새로운 영역 확장
+        const isolatedMoves = findIsolatedPointMoves(possibleMoves);
+        const extensionMoves = findExtensionMoves(possibleMoves);
+
+        // 균형잡힌 선택
+        const allCandidates = [
+            ...nearTriangleMoves.slice(0, 2), // 상위 2개만
+            ...isolatedMoves,
+            ...extensionMoves
+        ];
+
+        if (allCandidates.length > 0) {
+            console.log(`🎯 균형잡힌 후보들: ${allCandidates.length}개`);
+            return selectBestFromMoves(allCandidates, "strategic");
+        }
+
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 후반 게임 전략: 적극적 공격
+    function findLateGameMove(possibleMoves) {
+        console.log("🔥 후반: 적극적으로 삼각형 기회 추구");
+        
+        // 1. 삼각형 완성에 가까운 수들 우선
+        const nearTriangleMoves = findNearTriangleMoves(possibleMoves);
+        if (nearTriangleMoves.length > 0) {
+            console.log(`🔶 삼각형 완성에 가까운 수: ${nearTriangleMoves.length}개`);
+            return selectBestFromMoves(nearTriangleMoves, "strategic");
+        }
+
+        // 2. 기타 모든 수
+        return selectBestFromMoves(possibleMoves, "strategic");
+    }
+
+    // 삼각형 완성에 가까운 수들 찾기 (2개 변 중 1개 변만 있는 경우)
+    function findNearTriangleMoves(possibleMoves) {
+        const nearMoves = [];
+
+        for (let move of possibleMoves) {
+            let potentialTriangles = 0;
+            
+            // 이 수를 두었을 때 미래에 삼각형을 완성할 수 있는 기회가 몇 개나 생기는지 계산
+            for (let point of points) {
+                if (point.id === move.point1 || point.id === move.point2) continue;
+                
+                // move.point1과 point.id를 연결하는 선이 있는지
+                const hasLine1 = lines.some(line => 
+                    (line.point1 === move.point1 && line.point2 === point.id) ||
+                    (line.point1 === point.id && line.point2 === move.point1)
+                );
+                
+                // move.point2와 point.id를 연결하는 선이 있는지
+                const hasLine2 = lines.some(line => 
+                    (line.point1 === move.point2 && line.point2 === point.id) ||
+                    (line.point1 === point.id && line.point2 === move.point2)
+                );
+                
+                // 둘 중 하나만 있다면, 나중에 삼각형을 완성할 기회
+                if ((hasLine1 && !hasLine2) || (!hasLine1 && hasLine2)) {
+                    // 완성될 삼각형이 유효한지 미리 확인
+                    const futureTriangle = [move.point1, move.point2, point.id].sort((a, b) => a - b);
+                    if (!triangleHasInteriorElements(futureTriangle)) {
+                        potentialTriangles++;
+                    }
+                }
+            }
+            
+            if (potentialTriangles > 0) {
+                nearMoves.push({
+                    ...move,
+                    potentialTriangles: potentialTriangles,
+                    priority: 2
+                });
+            }
+        }
+
+        return nearMoves.sort((a, b) => b.potentialTriangles - a.potentialTriangles);
+    }
+
+    // 모든 유효한 수를 찾는 함수
+    function getAllValidMoves() {
+        const moves = [];
+
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                const existingLine = lines.find(line =>
+                    (line.point1 === i && line.point2 === j) ||
+                    (line.point1 === j && line.point2 === i)
+                );
+                
+                if (!existingLine) {
+                    const point1 = { id: i, x: points[i].x, y: points[i].y };
+                    const point2 = { id: j, x: points[j].x, y: points[j].y };
+                    
+                    if (!lineIntersectsExistingLines(point1, point2)) {
+                        moves.push({ point1: i, point2: j });
+                    }
+                }
+            }
+        }
+
+        return moves;
+    }
+
+    // 삼각형을 완성할 수 있는 수 찾기 (개선된 버전)
+    function findTriangleCompletingMoves(possibleMoves) {
+        const triangleMoves = [];
+
+        console.log("🔍 삼각형 완성 기회 분석 시작...");
+
+        for (let move of possibleMoves) {
+            // 실제로 유효한 삼각형이 완성되는지 정확히 시뮬레이션
+            const validTriangles = simulateValidTrianglesFormed(move.point1, move.point2);
+            
+            if (validTriangles.length > 0) {
+                console.log(`🎯 발견! ${move.point1}-${move.point2} 연결시 ${validTriangles.length}개 삼각형 완성 가능`);
+                validTriangles.forEach(triangle => {
+                    console.log(`   삼각형: ${triangle.join('-')}`);
+                });
+                
+                triangleMoves.push({
+                    ...move,
+                    triangleCount: validTriangles.length,
+                    priority: 1,
+                    triangles: validTriangles
+                });
+            }
+        }
+
+        console.log(`📊 총 ${triangleMoves.length}개의 삼각형 완성 수 발견`);
+        return triangleMoves.sort((a, b) => b.triangleCount - a.triangleCount);
+    }
+
+    // 실제로 유효한 삼각형 완성 시뮬레이션 (엄격한 룰 적용)
+    function simulateValidTrianglesFormed(point1Id, point2Id) {
+        const validTriangles = [];
+        
+        console.log(`🧮 시뮬레이션: ${point1Id}-${point2Id} 연결시...`);
+        
+        for (let point of points) {
+            if (point.id === point1Id || point.id === point2Id) continue;
+            
+            // 첫 번째 선: point1Id ↔ point.id
+            const hasLine1 = lines.some(line => 
+                (line.point1 === point1Id && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === point1Id)
+            );
+            
+            // 두 번째 선: point2Id ↔ point.id  
+            const hasLine2 = lines.some(line => 
+                (line.point1 === point2Id && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === point2Id)
+            );
+
+            if (hasLine1 && hasLine2) {
+                const triangle = [point1Id, point2Id, point.id].sort((a, b) => a - b);
+                
+                console.log(`   🔺 삼각형 후보: ${triangle.join('-')}`);
+                
+                // 이미 존재하는 삼각형인지 확인
+                const triangleExists = triangles.some(existingTriangle => {
+                    const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
+                    return JSON.stringify(triangle) === JSON.stringify(existingPoints);
+                });
+                
+                if (triangleExists) {
+                    console.log(`      ❌ 이미 존재함`);
+                    continue;
+                }
+                
+                // 삼각형 내부에 다른 요소가 있는지 확인
+                const hasInteriorElements = triangleHasInteriorElements(triangle);
+                if (hasInteriorElements) {
+                    console.log(`      ❌ 내부에 다른 요소 있음`);
+                    continue;
+                }
+                
+                // 새로 그을 선분이 이 삼각형을 직접 완성하는지 확인
+                const isDirectTriangle = isTriangleDirectlyFormedByNewLine(triangle, point1Id, point2Id);
+                if (!isDirectTriangle) {
+                    console.log(`      ❌ 직접 완성이 아님`);
+                    continue;
+                }
+                
+                console.log(`      ✅ 유효한 삼각형!`);
+                validTriangles.push(triangle);
+            }
+        }
+        
+        console.log(`🧮 시뮬레이션 결과: ${validTriangles.length}개 유효한 삼각형`);
+        return validTriangles;
+    }
+
+    // 아무것도 연결되지 않은 두 점끼리 연결하는 수 찾기
+    function findIsolatedPointMoves(possibleMoves) {
+        const isolatedMoves = [];
+
+        for (let move of possibleMoves) {
+            const point1Connections = getPointConnections(move.point1);
+            const point2Connections = getPointConnections(move.point2);
+            
+            if (point1Connections.length === 0 && point2Connections.length === 0) {
+                isolatedMoves.push({
+                    ...move,
+                    priority: 2
+                });
+            }
+        }
+
+        return isolatedMoves;
+    }
+
+    // 한쪽만 연결된 점과 안 연결된 점을 연결하는 수 찾기  
+    function findExtensionMoves(possibleMoves) {
+        const extensionMoves = [];
+
+        for (let move of possibleMoves) {
+            const point1Connections = getPointConnections(move.point1);
+            const point2Connections = getPointConnections(move.point2);
+            
+            if ((point1Connections.length > 0 && point2Connections.length === 0) ||
+                (point1Connections.length === 0 && point2Connections.length > 0)) {
+                extensionMoves.push({
+                    ...move,
+                    priority: 3
+                });
+            }
+        }
+
+        return extensionMoves;
+    }
+
+    // 점의 연결 상태 확인
+    function getPointConnections(pointId) {
+        return lines.filter(line =>
+            line.point1 === pointId || line.point2 === pointId
+        );
+    }
+
+    // 후보 수들 중에서 최적의 수 선택
+    function selectBestFromMoves(moves, type) {
+        if (moves.length === 0) return null;
+
+        if (type === "triangle") {
+            return moves[0]; // 이미 정렬되어 있음
+        }
+
+        const scoredMoves = moves.map(move => ({
+            ...move,
+            strategicScore: calculateStrategicScore(move)
+        }));
+
+        scoredMoves.sort((a, b) => b.strategicScore - a.strategicScore);
+
+        const topMoves = scoredMoves.slice(0, Math.min(3, scoredMoves.length));
+        const selectedMove = topMoves[Math.floor(Math.random() * topMoves.length)];
+
+        console.log(`🎲 전략적 점수: ${selectedMove.strategicScore.toFixed(1)}`);
+        return selectedMove;
+    }
+
+    // 전략적 점수 계산
+    function calculateStrategicScore(move) {
+        let score = 0;
+
+        const centerX = gameArea.offsetWidth / 2;
+        const centerY = gameArea.offsetHeight / 2;
+
+        const point1 = points[move.point1];
+        const point2 = points[move.point2];
+
+        const dist1 = Math.sqrt(Math.pow(point1.x - centerX, 2) + Math.pow(point1.y - centerY, 2));
+        const dist2 = Math.sqrt(Math.pow(point2.x - centerY, 2) + Math.pow(point2.y - centerY, 2));
+
+        score += (500 - dist1 * 0.5) + (500 - dist2 * 0.5);
+
+        const connections1 = getPointConnections(move.point1).length;
+        const connections2 = getPointConnections(move.point2).length;
+
+        score += (connections1 + connections2) * 30;
+
+        score += evaluateFutureTrianglePotential(move.point1, move.point2) * 20;
+
+        return score;
+    }
+
+    // 미래 삼각형 가능성 평가
+    function evaluateFutureTrianglePotential(point1Id, point2Id) {
+        let potential = 0;
+
+        for (let i = 0; i < points.length; i++) {
+            if (i === point1Id || i === point2Id) continue;
+            
+            const canConnect1 = canConnectPoints(point1Id, i);
+            const canConnect2 = canConnectPoints(point2Id, i);
+            
+            if (canConnect1 && canConnect2) {
+                potential += 1;
+            }
+        }
+
+        return potential;
+    }
+
+    // 두 점이 연결 가능한지 확인
+    function canConnectPoints(pointId1, pointId2) {
+        const existingLine = lines.find(line =>
+            (line.point1 === pointId1 && line.point2 === pointId2) ||
+            (line.point1 === pointId2 && line.point2 === pointId1)
+        );
+
+        if (existingLine) return false;
+
+        const point1 = { id: pointId1, x: points[pointId1].x, y: points[pointId1].y };
+        const point2 = { id: pointId2, x: points[pointId2].x, y: points[pointId2].y };
+
+        return !lineIntersectsExistingLines(point1, point2);
+    }
+
+    function lineIntersectsExistingLines(newPoint1, newPoint2) {
+        // 1. 기존 선분들과의 교차 체크
+        for (let existingLine of lines) {
+            const existingP1 = points[existingLine.point1];
+            const existingP2 = points[existingLine.point2];
+            
+            if (newPoint1.id === existingLine.point1 || newPoint1.id === existingLine.point2 ||
+                newPoint2.id === existingLine.point1 || newPoint2.id === existingLine.point2) {
+                continue;
+            }
+            
+            if (doLinesIntersect(
+                newPoint1.x, newPoint1.y, newPoint2.x, newPoint2.y,
+                existingP1.x, existingP1.y, existingP2.x, existingP2.y
+            )) {
+                return true;
+            }
+        }
+        
+        // 2. 다른 점들을 너무 가깝게 지나가는지 체크
+        for (let point of points) {
+            // 선분의 양 끝점은 제외
+            if (point.id === newPoint1.id || point.id === newPoint2.id) {
+                continue;
+            }
+            
+            const distance = distanceFromPointToLine(
+                point.x, point.y,
+                newPoint1.x, newPoint1.y, newPoint2.x, newPoint2.y
+            );
+            
+            // 점 반지름(25px) 정도의 안전 거리 확보
+            if (distance < 25) {
+                console.log(`⚠️ 선분이 점 ${point.id}를 너무 가깝게 지나감 (거리: ${distance.toFixed(1)}px)`);
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    // 점과 선분 사이의 최단 거리 계산
+    function distanceFromPointToLine(px, py, x1, y1, x2, y2) {
+        // 선분의 길이의 제곱
+        const lineLength = Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
+        
+        if (lineLength === 0) {
+            // 선분이 점인 경우
+            return Math.sqrt(Math.pow(px - x1, 2) + Math.pow(py - y1, 2));
+        }
+        
+        // 점에서 선분으로의 수직선의 위치 계산 (0~1 사이)
+        const t = Math.max(0, Math.min(1, ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / lineLength));
+        
+        // 선분 위의 가장 가까운 점
+        const closestX = x1 + t * (x2 - x1);
+        const closestY = y1 + t * (y2 - y1);
+        
+        // 점과 가장 가까운 점 사이의 거리
+        return Math.sqrt(Math.pow(px - closestX, 2) + Math.pow(py - closestY, 2));
+    }
+
+    function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
+        const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        
+        if (Math.abs(denom) < 1e-10) {
+            return false;
+        }
+        
+        const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+        const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+        
+        return t > 0 && t < 1 && u > 0 && u < 1;
+    }
+
+    function showWarningMessage(message) {
+        const warning = document.createElement('div');
+        warning.textContent = message;
+        warning.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 18px;
+            z-index: 1000;
+        `;
+        document.body.appendChild(warning);
+        setTimeout(() => warning.remove(), 2000);
+    }
+
+    function createTriangle(trianglePoints) {
+        const p1 = points[trianglePoints[0]];
+        const p2 = points[trianglePoints[1]];
+        const p3 = points[trianglePoints[2]];
+
+        const centerX = (p1.x + p2.x + p3.x) / 3;
+        const centerY = (p1.y + p2.y + p3.y) / 3;
+
+        const triangle = document.createElement('div');
+        triangle.className = 'triangle';
+        triangle.style.left = (centerX - 15) + 'px';
+        triangle.style.top = (centerY - 15) + 'px';
+        triangle.style.color = currentPlayer === 1 ? 'white' : '#FF6B6B';
+        triangle.textContent = currentPlayer === 1 ? 'V' : 'O';
+
+        gameArea.appendChild(triangle);
+        triangles.push({ points: trianglePoints, player: currentPlayer, element: triangle });
+    }
+
+    function updateTurnDisplay() {
+        const turnText = currentPlayer === 1 ? 'Your Turn' : 'Trinky is thinking...';
+        document.getElementById('currentTurn').textContent = turnText;
+        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : '#FF6B6B';
+        
+        if (isAiThinking) {
+            document.getElementById('currentTurn').classList.add('ai-thinking');
+        } else {
+            document.getElementById('currentTurn').classList.remove('ai-thinking');
+        }
+        
+        document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
+        document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
+    }
+
+    function updateScoreboard() {
+        document.getElementById('score1').textContent = scores.player1;
+        document.getElementById('score2').textContent = scores.player2;
+    }
+
+    function isGameOver() {
+        return getAllValidMoves().length === 0;
+    }
+
+    function showGameEndMessage() {
+        isAiThinking = false;
+        const winner = scores.player1 > scores.player2 ? "You Win! 🎉" : 
+                      scores.player2 > scores.player1 ? "Trinky Wins! 🤖" : "Draw! 🤝";
+        
+        document.getElementById('currentTurn').textContent = `Game Over - ${winner}`;
+        document.getElementById('currentTurn').style.background = 'rgba(0, 255, 0, 0.3)';
+        
+        setTimeout(() => {
+            alert(`게임 종료!\n${winner}\n\nYour Score: ${scores.player1}\nTrinky Score: ${scores.player2}`);
+        }, 500);
+    }
+
+    function restartGame() {
+        points.forEach(point => point.element.remove());
+        lines.forEach(line => line.element.remove());
+        triangles.forEach(triangle => triangle.element.remove());
+        
+        points = [];
+        lines = [];
+        triangles = [];
+        currentPlayer = 1;
+        selectedPoint = null;
+        scores = { player1: 0, player2: 0 };
+        isAiThinking = false;
+        
+        updateScoreboard();
+        updateTurnDisplay();
+        setTimeout(createPoints, 100);
+    }
+  
+    function goToIndex() {
+        window.location.href = "index.html";
+    }
+
+    window.addEventListener('load', function() {
+        setTimeout(createPoints, 100);
+        updateTurnDisplay();
+    });
+</script>
+
+</body>
+</html>
