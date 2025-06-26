@@ -188,7 +188,7 @@ font-size: 1.5rem;
 width: 50%;
 }
 
-
+```
 .buttons {
     position: static;
     margin-bottom: 10px;
@@ -214,7 +214,7 @@ width: 50%;
     width: 60px;
     height: 60px;
 }
-
+```
 
 }
 
@@ -245,7 +245,7 @@ top: 80px;
         <button class="game-button" onclick="restartGame()">Restart</button>
         <button class="game-button" onclick="goToIndex()">Index</button>
       </div>
-      <h1 class="game-title">✨ TRINKLE 수수1✨</h1>
+      <h1 class="game-title">✨ TRINKLE 수수✨</h1>
     </div>
 
 <div class="game-area" id="gameArea">
@@ -278,103 +278,79 @@ top: 80px;
     let player1Name = 'Player1';
     let player2Name = 'Player2';
     
-    // 플레이어 이름을 기본값으로 리셋
+    // localStorage에서 플레이어 이름 로드
     function loadPlayerNames() {
-        // localStorage 초기화 (항상 기본 이름 사용)
-        localStorage.removeItem('player1Name');
-        localStorage.removeItem('player2Name');
+        const savedPlayer1 = localStorage.getItem('player1Name');
+        const savedPlayer2 = localStorage.getItem('player2Name');
         
-        // 기본 이름 사용
-        player1Name = 'You';
-        player2Name = 'Trinky';
-        
-        // HTML 업데이트
-        document.getElementById('player1Name').textContent = player1Name;
-        document.getElementById('player2Name').textContent = player2Name;
-        
-        console.log("플레이어 이름이 기본값으로 설정됨:", player1Name, player2Name);
+        if (savedPlayer1 && savedPlayer2) {
+            player1Name = savedPlayer1;
+            player2Name = savedPlayer2;
+            
+            // HTML 업데이트
+            document.getElementById('player1Name').textContent = player1Name;
+            document.getElementById('player2Name').textContent = player2Name;
+            
+            console.log("플레이어 이름 로드됨:", player1Name, player2Name);
+        } else {
+            console.log("저장된 플레이어 이름이 없습니다. 기본값 사용.");
+        }
     }
 
     function createPoints() {
-        console.log("Creating points - START");
-        console.log("Screen dimensions:", window.innerWidth, "x", window.innerHeight);
+        console.log("Creating points");
         
         const areaRect = gameArea.getBoundingClientRect();
-        console.log("Game area rect:", areaRect);
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.2; // 거리 조건 완화
+        const margin = 40; // 마진 줄임
         
-        // 더 관대한 조건으로 설정
-        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.15; // 더 줄임
-        const margin = 30; // 더 줄임
+        // 스코어보드 공간을 더 간단하게 계산 (높이 기준 150px 여유)
+        const bottomReserved = 150; // 스코어보드를 위한 하단 여유 공간
+        const rightReserved = 200;  // 스코어보드를 위한 우측 여유 공간
         
-        // 아이패드를 고려한 점 개수 (화면 크기에 따라)
-        let pointCount;
-        if (window.innerWidth <= 768) {
-            pointCount = 6; // 모바일/작은 태블릿
-        } else if (window.innerWidth <= 1024) {
-            pointCount = 8; // 아이패드 크기
-        } else {
-            pointCount = 10; // 데스크탑
-        }
+        // 화면 크기에 따라 점 개수 결정 (모바일: 8개, 데스크탑: 12개)
+        const pointCount = window.innerWidth <= 768 ? 8 : 12;
         
-        // 매우 관대한 공간 설정
-        const bottomReserved = 120; 
-        const rightReserved = window.innerWidth <= 1024 ? 80 : 180;
-        
-        const availableWidth = areaRect.width - 2 * margin - rightReserved;
+        // 게임 영역을 위쪽으로 더 집중시키기 위해 Y 좌표 범위 조정
+        const availableWidth = areaRect.width - 2 * margin - (window.innerWidth <= 768 ? 50 : rightReserved);
         const availableHeight = areaRect.height - 2 * margin - bottomReserved;
         
-        console.log("Available dimensions:", availableWidth, "x", availableHeight);
+        console.log("Game area:", areaRect.width, areaRect.height);
+        console.log("Available area:", availableWidth, availableHeight);
         console.log("Min distance:", minDistance);
         console.log("Point count:", pointCount);
 
-        // 강제로 점 생성 (거리 조건 완화)
         for (let i = 0; i < pointCount; i++) {
             let validPosition = false;
             let attempts = 0;
             let x, y;
-            let bestPosition = null;
-            let maxDistance = 0;
 
-            // 200번 시도하면서 가장 좋은 위치 찾기
-            while (attempts < 200) {
+            while (!validPosition && attempts < 100) { // 시도 횟수 증가
+                // X 좌표: 좌우 마진 고려
                 x = margin + Math.random() * availableWidth;
                 
-                // 화면 전체 높이 사용 (위쪽 집중 제거)
-                y = margin + Math.random() * availableHeight;
-
-                // 최소 거리 체크
-                let minDistanceToOthers = Infinity;
-                for (let existingPoint of points) {
-                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
-                    minDistanceToOthers = Math.min(minDistanceToOthers, distance);
+                // Y 좌표: 위쪽 60%에 더 많이 배치되도록 가중치 적용
+                const yWeight = Math.random();
+                if (yWeight < 0.6) {
+                    // 위쪽 60% 영역에 배치
+                    y = margin + Math.random() * (availableHeight * 0.6);
+                } else {
+                    // 나머지 40% 영역에 배치
+                    y = margin + (availableHeight * 0.6) + Math.random() * (availableHeight * 0.4);
                 }
 
-                // 충분한 거리가 있거나, 현재까지 최선의 위치라면
-                if (minDistanceToOthers >= minDistance) {
-                    validPosition = true;
-                    break;
-                } else if (minDistanceToOthers > maxDistance) {
-                    maxDistance = minDistanceToOthers;
-                    bestPosition = { x, y };
+                validPosition = true;
+                
+                // 기존 점들과의 최소 거리 체크
+                for (let existingPoint of points) {
+                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
+                    if (distance < minDistance) {
+                        validPosition = false;
+                        break;
+                    }
                 }
                 
                 attempts++;
-            }
-
-            // 최적 위치를 못 찾았다면 최선의 위치 사용
-            if (!validPosition && bestPosition) {
-                x = bestPosition.x;
-                y = bestPosition.y;
-                validPosition = true;
-                console.log("Using best available position for point", i);
-            }
-
-            // 그래도 안 되면 강제로 랜덤 위치에 배치
-            if (!validPosition) {
-                x = margin + Math.random() * availableWidth;
-                y = margin + Math.random() * availableHeight;
-                validPosition = true;
-                console.log("Force placing point", i, "at random location");
             }
 
             if (validPosition) {
@@ -383,7 +359,7 @@ top: 80px;
                 point.style.left = (x - 25) + 'px';
                 point.style.top = (y - 25) + 'px';
                 
-                // 아이패드 터치 이벤트 강화
+                // 터치와 클릭 이벤트 모두 추가
                 point.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -396,27 +372,21 @@ top: 80px;
                     e.stopPropagation();
                     console.log("Point touched!", i);
                     selectPoint(i, x, y);
-                }, { passive: false });
+                });
                 
+                // 더 넓은 터치 영역을 위한 추가 이벤트
                 point.addEventListener('touchend', function(e) {
                     e.preventDefault();
-                }, { passive: false });
+                });
                 
                 gameArea.appendChild(point);
                 points.push({ x, y, element: point, id: i });
-                console.log("Point created successfully:", i, "at", x.toFixed(1), y.toFixed(1));
+                console.log("Point created:", i, x, y);
             } else {
-                console.error("Failed to place point", i, "after", attempts, "attempts");
+                console.log("Failed to place point", i, "after", attempts, "attempts");
             }
         }
-        
-        console.log("Total points created:", points.length);
-        
-        // 점이 하나도 생성되지 않았다면 알림
-        if (points.length === 0) {
-            console.error("NO POINTS CREATED! This is a critical error.");
-            alert("별 생성에 실패했습니다. 화면을 새로고침해주세요.");
-        }
+        console.log("Total points:", points.length);
     }
 
     function selectPoint(pointId, x, y) {
