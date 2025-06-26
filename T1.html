@@ -11,8 +11,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+
 html {
-    background: #0b0c1a !important;
+background: #0b0c1a !important;
 }
 
 body,
@@ -187,6 +188,7 @@ font-size: 1.5rem;
 width: 50%;
 }
 
+
 .buttons {
     position: static;
     margin-bottom: 10px;
@@ -241,9 +243,9 @@ top: 80px;
     <div class="header">
       <div class="buttons">
         <button class="game-button" onclick="restartGame()">Restart</button>
-        <button class="game-button" onclick="goToIndex()">Home</button>
+        <button class="game-button" onclick="goToIndex()">Index</button>
       </div>
-      <h1 class="game-title">✨ TRINKLE 수정✨</h1>
+      <h1 class="game-title">✨ TRINKLE 수수1✨</h1>
     </div>
 
 <div class="game-area" id="gameArea">
@@ -276,64 +278,103 @@ top: 80px;
     let player1Name = 'Player1';
     let player2Name = 'Player2';
     
-    // localStorage에서 플레이어 이름 로드
+    // 플레이어 이름을 기본값으로 리셋
     function loadPlayerNames() {
-        const savedPlayer1 = localStorage.getItem('player1Name');
-        const savedPlayer2 = localStorage.getItem('player2Name');
+        // localStorage 초기화 (항상 기본 이름 사용)
+        localStorage.removeItem('player1Name');
+        localStorage.removeItem('player2Name');
         
-        console.log("localStorage에서 읽은 값:", savedPlayer1, savedPlayer2);
+        // 기본 이름 사용
+        player1Name = 'You';
+        player2Name = 'Trinky';
         
-        if (savedPlayer1 && savedPlayer2) {
-            player1Name = savedPlayer1;
-            player2Name = savedPlayer2;
-            
-            // HTML 업데이트
-            document.getElementById('player1Name').textContent = player1Name;
-            document.getElementById('player2Name').textContent = player2Name;
-            
-            console.log("플레이어 이름 업데이트 완료:", player1Name, player2Name);
-            
-            // 사용 후 localStorage에서 삭제하여 다음번에 새로운 이름 적용
-            localStorage.removeItem('player1Name');
-            localStorage.removeItem('player2Name');
-            
-        } else {
-            console.log("저장된 플레이어 이름이 없습니다. 기본값 사용.");
-        }
+        // HTML 업데이트
+        document.getElementById('player1Name').textContent = player1Name;
+        document.getElementById('player2Name').textContent = player2Name;
+        
+        console.log("플레이어 이름이 기본값으로 설정됨:", player1Name, player2Name);
     }
 
     function createPoints() {
-        console.log("Creating points");
+        console.log("Creating points - START");
+        console.log("Screen dimensions:", window.innerWidth, "x", window.innerHeight);
         
         const areaRect = gameArea.getBoundingClientRect();
-        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.25;
-        const margin = 60;
+        console.log("Game area rect:", areaRect);
         
-        // 화면 크기에 따라 점 개수 결정 (모바일: 8개, 데스크탑: 12개)
-        const pointCount = window.innerWidth <= 768 ? 8 : 12;
+        // 더 관대한 조건으로 설정
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.15; // 더 줄임
+        const margin = 30; // 더 줄임
         
-        console.log("Game area:", areaRect.width, areaRect.height);
+        // 아이패드를 고려한 점 개수 (화면 크기에 따라)
+        let pointCount;
+        if (window.innerWidth <= 768) {
+            pointCount = 6; // 모바일/작은 태블릿
+        } else if (window.innerWidth <= 1024) {
+            pointCount = 8; // 아이패드 크기
+        } else {
+            pointCount = 10; // 데스크탑
+        }
+        
+        // 매우 관대한 공간 설정
+        const bottomReserved = 120; 
+        const rightReserved = window.innerWidth <= 1024 ? 80 : 180;
+        
+        const availableWidth = areaRect.width - 2 * margin - rightReserved;
+        const availableHeight = areaRect.height - 2 * margin - bottomReserved;
+        
+        console.log("Available dimensions:", availableWidth, "x", availableHeight);
         console.log("Min distance:", minDistance);
         console.log("Point count:", pointCount);
 
+        // 강제로 점 생성 (거리 조건 완화)
         for (let i = 0; i < pointCount; i++) {
             let validPosition = false;
             let attempts = 0;
             let x, y;
+            let bestPosition = null;
+            let maxDistance = 0;
 
-            while (!validPosition && attempts < 50) {
-                x = margin + Math.random() * (areaRect.width - 2 * margin);
-                y = margin + Math.random() * (areaRect.height - 2 * margin - 200); // 점수판 공간 확보
+            // 200번 시도하면서 가장 좋은 위치 찾기
+            while (attempts < 200) {
+                x = margin + Math.random() * availableWidth;
+                
+                // 화면 전체 높이 사용 (위쪽 집중 제거)
+                y = margin + Math.random() * availableHeight;
 
-                validPosition = true;
+                // 최소 거리 체크
+                let minDistanceToOthers = Infinity;
                 for (let existingPoint of points) {
                     const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
-                    if (distance < minDistance) {
-                        validPosition = false;
-                        break;
-                    }
+                    minDistanceToOthers = Math.min(minDistanceToOthers, distance);
                 }
+
+                // 충분한 거리가 있거나, 현재까지 최선의 위치라면
+                if (minDistanceToOthers >= minDistance) {
+                    validPosition = true;
+                    break;
+                } else if (minDistanceToOthers > maxDistance) {
+                    maxDistance = minDistanceToOthers;
+                    bestPosition = { x, y };
+                }
+                
                 attempts++;
+            }
+
+            // 최적 위치를 못 찾았다면 최선의 위치 사용
+            if (!validPosition && bestPosition) {
+                x = bestPosition.x;
+                y = bestPosition.y;
+                validPosition = true;
+                console.log("Using best available position for point", i);
+            }
+
+            // 그래도 안 되면 강제로 랜덤 위치에 배치
+            if (!validPosition) {
+                x = margin + Math.random() * availableWidth;
+                y = margin + Math.random() * availableHeight;
+                validPosition = true;
+                console.log("Force placing point", i, "at random location");
             }
 
             if (validPosition) {
@@ -342,7 +383,7 @@ top: 80px;
                 point.style.left = (x - 25) + 'px';
                 point.style.top = (y - 25) + 'px';
                 
-                // 터치와 클릭 이벤트 모두 추가
+                // 아이패드 터치 이벤트 강화
                 point.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -355,19 +396,27 @@ top: 80px;
                     e.stopPropagation();
                     console.log("Point touched!", i);
                     selectPoint(i, x, y);
-                });
+                }, { passive: false });
                 
-                // 더 넓은 터치 영역을 위한 추가 이벤트
                 point.addEventListener('touchend', function(e) {
                     e.preventDefault();
-                });
+                }, { passive: false });
                 
                 gameArea.appendChild(point);
                 points.push({ x, y, element: point, id: i });
-                console.log("Point created:", i, x, y);
+                console.log("Point created successfully:", i, "at", x.toFixed(1), y.toFixed(1));
+            } else {
+                console.error("Failed to place point", i, "after", attempts, "attempts");
             }
         }
-        console.log("Total points:", points.length);
+        
+        console.log("Total points created:", points.length);
+        
+        // 점이 하나도 생성되지 않았다면 알림
+        if (points.length === 0) {
+            console.error("NO POINTS CREATED! This is a critical error.");
+            alert("별 생성에 실패했습니다. 화면을 새로고침해주세요.");
+        }
     }
 
     function selectPoint(pointId, x, y) {
@@ -498,7 +547,7 @@ top: 80px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 0, 0, 0.9);
+            background: rgba(0, 100, 255, 0.9);
             color: white;
             padding: 15px 25px;
             border-radius: 10px;
