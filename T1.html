@@ -308,148 +308,76 @@ top: 80px;
     function createPoints() {
         console.log("Creating points");
         
-        // DOM이 완전히 로드된 후 크기 측정
-        setTimeout(() => {
-            const areaRect = gameArea.getBoundingClientRect();
-            console.log("Game area bounds:", areaRect);
-            
-            // 모바일에서 더 작은 최소 거리와 여백 사용
-            const isMobile = window.innerWidth <= 768;
-            const minDistance = Math.min(areaRect.width, areaRect.height) * (isMobile ? 0.18 : 0.25);
-            const margin = isMobile ? 40 : 60;
-            const bottomMargin = isMobile ? 180 : 200; // 점수판 공간
-            
-            // 화면 크기에 따라 점 개수 결정
-            const pointCount = isMobile ? 6 : 8; // 모바일에서 점 개수 줄임
-            
-            console.log("설정값:", {
-                isMobile,
-                areaWidth: areaRect.width,
-                areaHeight: areaRect.height,
-                minDistance,
-                margin,
-                bottomMargin,
-                pointCount
-            });
-
-            // 유효한 게임 영역 확인
-            const validWidth = areaRect.width - 2 * margin;
-            const validHeight = areaRect.height - margin - bottomMargin;
-            
-            if (validWidth <= 0 || validHeight <= 0) {
-                console.error("유효하지 않은 게임 영역:", validWidth, validHeight);
-                return;
-            }
-
-            let createdPoints = 0;
-            for (let i = 0; i < pointCount && createdPoints < pointCount; i++) {
-                let validPosition = false;
-                let attempts = 0;
-                let x, y;
-
-                while (!validPosition && attempts < 100) { // 시도 횟수 증가
-                    x = margin + Math.random() * validWidth;
-                    y = margin + Math.random() * validHeight;
-
-                    validPosition = true;
-                    for (let existingPoint of points) {
-                        const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
-                        if (distance < minDistance) {
-                            validPosition = false;
-                            break;
-                        }
-                    }
-                    attempts++;
-                }
-
-                if (validPosition) {
-                    const point = document.createElement('div');
-                    point.className = 'point';
-                    point.style.left = (x - 25) + 'px';
-                    point.style.top = (y - 25) + 'px';
-                    
-                    // 터치와 클릭 이벤트 모두 추가
-                    point.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log("Point clicked!", createdPoints);
-                        selectPoint(createdPoints, x, y);
-                    });
-                    
-                    point.addEventListener('touchstart', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log("Point touched!", createdPoints);
-                        selectPoint(createdPoints, x, y);
-                    });
-                    
-                    point.addEventListener('touchend', function(e) {
-                        e.preventDefault();
-                    });
-                    
-                    gameArea.appendChild(point);
-                    points.push({ x, y, element: point, id: createdPoints });
-                    console.log("Point created:", createdPoints, x, y);
-                    createdPoints++;
-                } else {
-                    console.log("유효한 위치를 찾을 수 없음, 시도:", attempts);
-                }
-            }
-            console.log("Total points created:", points.length);
-            
-            if (points.length === 0) {
-                console.error("점이 생성되지 않았습니다!");
-                // 폴백: 강제로 점 생성
-                createFallbackPoints();
-            }
-        }, 200); // DOM 로드 대기
-    }
-
-    // 폴백 점 생성 함수
-    function createFallbackPoints() {
-        console.log("폴백 점 생성 시작");
+        const areaRect = gameArea.getBoundingClientRect();
         const isMobile = window.innerWidth <= 768;
-        const pointCount = isMobile ? 4 : 6;
+        const minDistance = Math.min(areaRect.width, areaRect.height) * (isMobile ? 0.2 : 0.25);
+        const margin = isMobile ? 50 : 60;
         
-        // 고정된 위치에 점들 배치
-        const positions = isMobile ? [
-            {x: 100, y: 100},
-            {x: 250, y: 100},
-            {x: 100, y: 250},
-            {x: 250, y: 250}
-        ] : [
-            {x: 150, y: 150},
-            {x: 350, y: 150},
-            {x: 500, y: 150},
-            {x: 150, y: 300},
-            {x: 350, y: 300},
-            {x: 500, y: 300}
-        ];
+        // 화면 크기에 따라 점 개수 결정
+        const pointCount = isMobile ? 7 : 10;
+        
+        console.log("Game area:", areaRect.width, areaRect.height);
+        console.log("Min distance:", minDistance);
+        console.log("Point count:", pointCount);
+        console.log("Is mobile:", isMobile);
 
-        positions.slice(0, pointCount).forEach((pos, i) => {
-            const point = document.createElement('div');
-            point.className = 'point';
-            point.style.left = (pos.x - 25) + 'px';
-            point.style.top = (pos.y - 25) + 'px';
-            
-            point.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                selectPoint(i, pos.x, pos.y);
-            });
-            
-            point.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                selectPoint(i, pos.x, pos.y);
-            });
-            
-            gameArea.appendChild(point);
-            points.push({ x: pos.x, y: pos.y, element: point, id: i });
-        });
-        
-        console.log("폴백 점 생성 완료:", points.length);
+        for (let i = 0; i < pointCount; i++) {
+            let validPosition = false;
+            let attempts = 0;
+            let x, y;
+
+            while (!validPosition && attempts < 50) {
+                x = margin + Math.random() * (areaRect.width - 2 * margin);
+                y = margin + Math.random() * (areaRect.height - 2 * margin - 200); // 점수판 공간 확보
+
+                validPosition = true;
+                for (let existingPoint of points) {
+                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
+                    if (distance < minDistance) {
+                        validPosition = false;
+                        break;
+                    }
+                }
+                attempts++;
+            }
+
+            if (validPosition) {
+                const point = document.createElement('div');
+                point.className = 'point';
+                point.style.left = (x - 25) + 'px';
+                point.style.top = (y - 25) + 'px';
+                
+                // 터치와 클릭 이벤트 모두 추가
+                point.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Point clicked!", i);
+                    selectPoint(i, x, y);
+                });
+                
+                point.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Point touched!", i);
+                    selectPoint(i, x, y);
+                });
+                
+                // 더 넓은 터치 영역을 위한 추가 이벤트
+                point.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                });
+                
+                gameArea.appendChild(point);
+                points.push({ x, y, element: point, id: i });
+                console.log("Point created:", i, x, y);
+            } else {
+                console.log("Could not place point", i, "after", attempts, "attempts");
+            }
+        }
+        console.log("Total points:", points.length);
     }
+
+
 
     function selectPoint(pointId, x, y) {
         console.log("Point selected:", pointId);
@@ -709,7 +637,7 @@ top: 80px;
     window.addEventListener('load', function() {
         console.log("페이지 로드 완료");
         loadPlayerNames(); // 플레이어 이름 먼저 로드
-        createPoints(); // setTimeout 제거하고 직접 호출
+        setTimeout(createPoints, 100); // 원래대로 setTimeout 사용
         updateTurnDisplay();
     });
 
