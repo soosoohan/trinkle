@@ -187,35 +187,33 @@ font-size: 1.5rem;
 width: 50%;
 }
 
+
 .buttons {
-position: static;
-margin-bottom: 10px;
-justify-content: center;
+    position: static;
+    margin-bottom: 10px;
+    justify-content: center;
 }
 
 .header {
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
 }
 
 .scoreboard {
-bottom: 10px;
-right: 10px;
-min-width: 150px;
-padding: 10px;
-font-size: 14px;
+    bottom: 10px;
+    right: 10px;
+    min-width: 150px;
+    padding: 10px;
+    font-size: 14px;
 }
 
 .point {
-width: 60px;
-height: 60px;
+    width: 60px;
+    height: 60px;
 }
 
-.game-area {
-top: 100px; /* 모바일에서 헤더 공간 확보 */
-}
 
 }
 
@@ -309,17 +307,15 @@ top: 80px;
         console.log("Creating points");
         
         const areaRect = gameArea.getBoundingClientRect();
-        const isMobile = window.innerWidth <= 768;
-        const minDistance = Math.min(areaRect.width, areaRect.height) * (isMobile ? 0.2 : 0.25);
-        const margin = isMobile ? 50 : 60;
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.25;
+        const margin = 60;
         
-        // 화면 크기에 따라 점 개수 결정
-        const pointCount = isMobile ? 7 : 10;
+        // 화면 크기에 따라 점 개수 결정 (모바일: 8개, 데스크탑: 12개)
+        const pointCount = window.innerWidth <= 768 ? 8 : 12;
         
         console.log("Game area:", areaRect.width, areaRect.height);
         console.log("Min distance:", minDistance);
         console.log("Point count:", pointCount);
-        console.log("Is mobile:", isMobile);
 
         for (let i = 0; i < pointCount; i++) {
             let validPosition = false;
@@ -370,14 +366,10 @@ top: 80px;
                 gameArea.appendChild(point);
                 points.push({ x, y, element: point, id: i });
                 console.log("Point created:", i, x, y);
-            } else {
-                console.log("Could not place point", i, "after", attempts, "attempts");
             }
         }
         console.log("Total points:", points.length);
     }
-
-
 
     function selectPoint(pointId, x, y) {
         console.log("Point selected:", pointId);
@@ -637,7 +629,7 @@ top: 80px;
     window.addEventListener('load', function() {
         console.log("페이지 로드 완료");
         loadPlayerNames(); // 플레이어 이름 먼저 로드
-        setTimeout(createPoints, 100); // 원래대로 setTimeout 사용
+        setTimeout(createPoints, 100);
         updateTurnDisplay();
     });
 
