@@ -11,228 +11,228 @@
             padding: 0;
             box-sizing: border-box;
         }
+
 html {
     background: #0b0c1a !important;
 }
 
 body,
 .game-container {
-background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
-background-attachment: fixed !important;
-font-family: ‘Times New Roman’, serif;
-height: 100vh;
-overflow: hidden;
-min-height: 100vh;
+    background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
+    background-attachment: fixed !important;
+    font-family: 'Times New Roman', serif;
+    height: 100vh;
+    overflow: hidden;
+    min-height: 100vh;
 }
 
 .game-container {
-width: 100vw;
-height: 100vh;
-position: relative;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
 .header {
-text-align: center;
-padding: 15px;
-color: white;
-position: relative;
+    text-align: center;
+    padding: 15px;
+    color: white;
+    position: relative;
 }
 
 .game-title {
-font-size: 2rem;
-font-weight: bold;
-width: 30%;
-margin: 0 auto;
-text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 2rem;
+    font-weight: bold;
+    width: 30%;
+    margin: 0 auto;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .buttons {
-position: absolute;
-top: 20px;
-left: 20px;
-display: flex;
-gap: 10px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .game-button {
-padding: 10px 20px;
-background: rgba(255,255,255,0.9);
-border: 2px solid #8B4513;
-border-radius: 8px;
-font-family: ‘Times New Roman’, serif;
-font-size: 14px;
-font-weight: bold;
-cursor: pointer;
-transition: all 0.3s ease;
-color: #8B4513;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    font-family: 'Times New Roman', serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #8B4513;
 }
 
 .game-button:hover {
-background: rgba(255,255,255,1);
-transform: scale(1.05);
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
 }
 
 .game-area {
-position: absolute;
-top: 80px;
-left: 0;
-right: 0;
-bottom: 0;
-background: rgba(255,255,255,0.1);
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.1);
 }
 
 .point {
-position: absolute;
-width: 50px;
-height: 50px;
-cursor: pointer;
-z-index: 100;
-pointer-events: auto;
-display: flex;
-align-items: center;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 100;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
 justify-content: center;
 }
 
 .point::before {
-content: ‘’;
-width: 16px;
-height: 16px;
-background: #FFD700;
-border-radius: 50%;
-border: 2px solid #FFA500;
-box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-transition: all 0.2s ease;
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #FFD700;
+    border-radius: 50%;
+    border: 2px solid #FFA500;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    transition: all 0.2s ease;
 }
 
 .point:hover::before {
-transform: scale(1.2);
-background: #FFFF00;
-box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+    transform: scale(1.2);
+    background: #FFFF00;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
 }
 
 .point.selected::before {
-background: #FFFF00;
-transform: scale(1.3);
-border-color: #FF6347;
-box-shadow: 0 0 20px rgba(255, 255, 0, 1);
+    background: #FFFF00;
+    transform: scale(1.3);
+    border-color: #FF6347;
+    box-shadow: 0 0 20px rgba(255, 255, 0, 1);
 }
 
 .line {
-position: absolute;
-height: 3px;
-transform-origin: left center;
-z-index: 5;
+    position: absolute;
+    height: 3px;
+    transform-origin: left center;
+    z-index: 5;
 }
 
 .triangle {
-position: absolute;
-font-size: 24px;
-font-weight: bold;
-z-index: 40;
-width: 30px;
-height: 30px;
-display: flex;
-align-items: center;
-justify-content: center;
-pointer-events: none;
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 40;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
 }
 
 .scoreboard {
-position: absolute;
-bottom: 20px;
-right: 20px;
-background: #0b0c1a;
-padding: 15px;
-min-width: 180px;
-font-family: ‘Times New Roman’, serif;
-color: #fffde7;
-border-radius: 10px;
-box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-z-index: 50;
-pointer-events: auto;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #0b0c1a;
+    padding: 15px;
+    min-width: 180px;
+    font-family: 'Times New Roman', serif;
+    color: #fffde7;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    z-index: 50;
+    pointer-events: auto;
 }
 
 .player-score {
-margin: 8px 0;
-font-size: 18px;
-font-weight: bold;
-font-style: italic;
+    margin: 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .player1 { color: white; }
 .player2 { color: lightblue; }
 
 .turn-indicator {
-font-size: 18px;
-animation: pulse 1s infinite;
+    font-size: 18px;
+    animation: pulse 1s infinite;
 }
 
 .current-turn {
-text-align: center;
-margin-top: 10px;
-font-size: 16px;
-font-weight: bold;
-font-style: italic;
-padding: 5px;
-border-radius: 5px;
-background: rgba(255, 255, 255, 0.15);
-font-family: ‘Times New Roman’, serif;
-color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    font-family: 'Times New Roman', serif;
+    color: #fff;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-.game-title {
-font-size: 1.5rem;
-width: 50%;
-}
-
-.buttons {
-    position: static;
-    margin-bottom: 10px;
-    justify-content: center;
-}
-
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-}
-
-.scoreboard {
-    bottom: 10px;
-    right: 10px;
-    min-width: 150px;
-    padding: 10px;
-    font-size: 14px;
-}
-
-.point {
-    width: 60px;
-    height: 60px;
-}
-
-
+    .game-title {
+        font-size: 1.5rem;
+        width: 50%;
+    }
+    
+    .buttons {
+        position: static;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    
+    .scoreboard {
+        bottom: 10px;
+        right: 10px;
+        min-width: 150px;
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .point {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 @media (min-width: 769px) {
-.game-area {
-top: 80px;
-}
+    .game-area {
+        top: 80px;
+    }
 }
 
 @keyframes pulse {
-0%, 100% { transform: scale(1); }
-50% { transform: scale(1.2); }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 @keyframes fadeInOut {
-0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 }
+
 
 </style>
 </head>
@@ -241,10 +241,11 @@ top: 80px;
     <div class="header">
       <div class="buttons">
         <button class="game-button" onclick="restartGame()">Restart</button>
-        <button class="game-button" onclick="goToIndex()">Home</button>
+        <button class="game-button" onclick="goToIndex()">Index</button>
       </div>
-      <h1 class="game-title">✨ TRINKLE 티원✨</h1>
+      <h1 class="game-title">✨ TRINKLE 완성 ✨</h1>
     </div>
+
 
 <div class="game-area" id="gameArea">
   <div class="scoreboard">
@@ -257,6 +258,7 @@ top: 80px;
     <div class="current-turn" id="currentTurn">Player1's Turn</div>
   </div>
 </div>
+
 
   </div>
 
@@ -281,8 +283,6 @@ top: 80px;
         const savedPlayer1 = localStorage.getItem('player1Name');
         const savedPlayer2 = localStorage.getItem('player2Name');
         
-        console.log("localStorage에서 읽은 값:", savedPlayer1, savedPlayer2);
-        
         if (savedPlayer1 && savedPlayer2) {
             player1Name = savedPlayer1;
             player2Name = savedPlayer2;
@@ -291,12 +291,7 @@ top: 80px;
             document.getElementById('player1Name').textContent = player1Name;
             document.getElementById('player2Name').textContent = player2Name;
             
-            console.log("플레이어 이름 업데이트 완료:", player1Name, player2Name);
-            
-            // 사용 후 localStorage에서 삭제하여 다음번에 새로운 이름 적용
-            localStorage.removeItem('player1Name');
-            localStorage.removeItem('player2Name');
-            
+            console.log("플레이어 이름 로드됨:", player1Name, player2Name);
         } else {
             console.log("저장된 플레이어 이름이 없습니다. 기본값 사용.");
         }
@@ -498,7 +493,7 @@ top: 80px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 0, 0, 0.9);
+            background: rgba(0, 100, 255, 0.9);
             color: white;
             padding: 15px 25px;
             border-radius: 10px;
