@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trinkle</title>
   <style>
-        * {
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -18,17 +20,12 @@ html {
 
 body,
 .game-container {
-    background: linear-gradient(135deg, #0b0c1a, #1f2241) !important;
-    background-attachment: fixed !important;
-    font-family: 'Times New Roman', serif;
+    background: #2e8b8b ;
+    font-family: 'Pretendard', sans-serif;
     height: 100vh;
     overflow: hidden;
     min-height: 100vh;
-}
-
-.game-container {
     width: 100vw;
-    height: 100vh;
     position: relative;
 }
 
@@ -58,19 +55,20 @@ body,
 .game-button {
     padding: 10px 20px;
     background: rgba(255,255,255,0.9);
-    border: 2px solid #8B4513;
+    border: none;
     border-radius: 8px;
-    font-family: 'Times New Roman', serif;
-    font-size: 14px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: #8B4513;
+    color: #2e8b8b;
 }
 
 .game-button:hover {
     background: rgba(255,255,255,1);
     transform: scale(1.05);
+font-family: 'Pretendard', sans-serif;
 }
 
 .game-area {
@@ -79,7 +77,8 @@ body,
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,0.1);
+    background: #2e8b8b ;
+    
 }
 
 .point {
@@ -91,32 +90,27 @@ body,
     pointer-events: auto;
     display: flex;
     align-items: center;
-justify-content: center;
+    justify-content: center;
 }
 
 .point::before {
     content: '';
     width: 16px;
     height: 16px;
-    background: #FFD700;
+    background: #F7f783;
     border-radius: 50%;
-    border: 2px solid #FFA500;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
     transition: all 0.2s ease;
 }
 
 .point:hover::before {
     transform: scale(1.2);
-    background: #FFFF00;
-    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
-}
+    background: #Fcefa4;
+    }
 
 .point.selected::before {
-    background: #FFFF00;
+    background: #F7f883;
     transform: scale(1.3);
-    border-color: #FF6347;
-    box-shadow: 0 0 20px rgba(255, 255, 0, 1);
-}
+    }
 
 .line {
     position: absolute;
@@ -142,95 +136,53 @@ justify-content: center;
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background: #0b0c1a;
+    background: #2e8b8b
     padding: 15px;
     min-width: 180px;
-    font-family: 'Times New Roman', serif;
+    font-family: 'Pretendard', sans-serif;
     color: #fffde7;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     z-index: 50;
     pointer-events: auto;
 }
 
 .player-score {
     margin: 8px 0;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
-    font-style: italic;
-}
+    }
 
 .player1 { color: white; }
-.player2 { color: lightblue; }
+.player2 { color: pink; }
 
 .turn-indicator {
-    font-size: 18px;
+    font-size: 25px;
     animation: pulse 1s infinite;
 }
 
 .current-turn {
     text-align: center;
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: bold;
-    font-style: italic;
     padding: 5px;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.15);
-    font-family: 'Times New Roman', serif;
+    background: #2e8b8b
+    font-family: 'Pretendard', sans-serif;
     color: #fff;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .game-title {
-        font-size: 1.5rem;
-        width: 50%;
-    }
-    
-    .buttons {
-        position: static;
-        margin-bottom: 10px;
-        justify-content: center;
-    }
-    
-    .header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-    }
-    
-    .scoreboard {
-        bottom: 10px;
-        right: 10px;
-        min-width: 150px;
-        padding: 10px;
-        font-size: 14px;
-    }
-    
-    .point {
-        width: 60px;
-        height: 60px;
-    }
+.ai-thinking {
+    background: rgba(255, 107, 107, 0.2) !important;
+    animation: aiThinking 1.5s infinite;
 }
 
-@media (min-width: 769px) {
-    .game-area {
-        top: 80px;
+@media (max-height: 800px) {
+    .blackboard {
+        border: none;  /* 테두리 제거 */
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
     }
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 }
 
 
@@ -297,15 +249,16 @@ justify-content: center;
         }
     }
 
+
+
     function createPoints() {
         console.log("Creating points");
         
         const areaRect = gameArea.getBoundingClientRect();
-        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.25;
-        const margin = 60;
+        const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;// 25% → 18%로 줄임
+        const margin = 40;// 60px → 40px로 줄임
         
-        // 화면 크기에 따라 점 개수 결정 (모바일: 8개, 데스크탑: 12개)
-        const pointCount = window.innerWidth <= 768 ? 8 : 12;
+        const pointCount =  16;//점의 개수
         
         console.log("Game area:", areaRect.width, areaRect.height);
         console.log("Min distance:", minDistance);
@@ -413,7 +366,7 @@ justify-content: center;
       line.style.left = point1.x + 'px';
       line.style.top = (point1.y - 1.5) + 'px';
       line.style.transform = `rotate(${angle}deg)`;
-      line.style.background = currentPlayer === 1 ? 'white' : 'lightblue';
+      line.style.background = currentPlayer === 1 ? 'white' : 'pink';
 
       gameArea.appendChild(line);
       lines.push({
@@ -565,7 +518,7 @@ justify-content: center;
         triangle.className = 'triangle';
         triangle.style.left = (centerX - 15) + 'px';
         triangle.style.top = (centerY - 15) + 'px';
-        triangle.style.color = currentPlayer === 1 ? 'white' : 'lightblue';
+        triangle.style.color = currentPlayer === 1 ? 'white' : 'pink';
         triangle.textContent = currentPlayer === 1 ? 'V' : 'O';
 
         gameArea.appendChild(triangle);
@@ -580,7 +533,7 @@ justify-content: center;
     function updateTurnDisplay() {
         const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
         document.getElementById('currentTurn').textContent = `${currentPlayerName}'s Turn`;
-        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'lightblue';
+        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
         
         document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
         document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
