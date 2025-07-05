@@ -466,7 +466,16 @@ color: #ccc;
    
 
   <script>
-   
+
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const isSmall = window.innerWidth < 800;
+
+  if (isTouchDevice && isPortrait && isSmall) {
+    // 이건 진짜 폰일 확률이 높다!
+    location.href = "https://susugame.github.io/cheongdam/";
+  }
+
     function startTwoPlayerGame() {
       const player1 = document.getElementById('player1').value.trim();
       const player2 = document.getElementById('player2').value.trim();
