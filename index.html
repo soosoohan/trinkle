@@ -414,13 +414,12 @@ color: #ccc;
 <li> If two players are playing, please make sure to enter your names.</li>      
 </ul>
     </div>
- 
-<div class="credits-area chalk-text">
+ <div class="credits-area chalk-text">
         <div class="credits-item">
-            기획: 한수수 
+            기획 · 개발: 한수수 
         </div>
         <div class="credits-item">
-            개발 도움: 재치 
+            개발 보조: 챗GPT 
         </div>
         <div class="credits-item">
             코딩 도움: 클라우드 
@@ -466,16 +465,6 @@ color: #ccc;
    
 
   <script>
-
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const isPortrait = window.innerHeight > window.innerWidth;
-  const isSmall = window.innerWidth < 800;
-
-  if (isTouchDevice && isPortrait && isSmall) {
-    // 이건 진짜 폰일 확률이 높다!
-    location.href = "https://soosoohan.github.io/semoddang/";
-  }
-
     function startTwoPlayerGame() {
       const player1 = document.getElementById('player1').value.trim();
       const player2 = document.getElementById('player2').value.trim();
