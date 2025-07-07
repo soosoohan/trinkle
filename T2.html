@@ -24,7 +24,7 @@ body,
     background: #2e8b8b ;
     font-family: 'Pretendard', sans-serif;
     height: 100vh;
-    overflow: auto;
+    overflow: hidden;
     min-height: 100vh;
 }
 
@@ -38,9 +38,10 @@ body,
 
 .header {
     text-align: center;
-    padding: 15px;
+    padding: 20px 15px;
     color: white;
     position: relative;
+    min-height:90px;  
 }
 
 .game-title {
@@ -51,12 +52,14 @@ body,
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+
 .buttons {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 25px;
+    left: 25px;
     display: flex;
     gap: 10px;
+    z-index: 200;
 }
 
 .game-button {
@@ -79,7 +82,7 @@ body,
 
 .game-area {
     position: absolute;
-    top: 80px;
+    top: 90px;
     left: 0;
     right: 0;
     bottom: 0;
