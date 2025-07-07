@@ -29,6 +29,42 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
   _Squares or other polygons are not counted as valid._
 
 ---
+
+## 📅 개발 타임라인 / Development Timeline
+
+- **2025-05-01**  
+  챗GPT의 도움으로 코딩을 몰라도 게임을 만들 수 있다는 희망을 가지고 개발 시작.  
+  오랫동안 생각만 했던 아이디어를 직접 구현해보기로 결심함.
+
+  Began development with the help of ChatGPT, turning a long-held idea into a playable game without needing to code from scratch.
+
+- **2025-06-07**  
+  첫 번째 프로토타입 완성 후 [`/trinkle`](https://github.com/soosoohan/trinkle) 레포에 업로드.  실질적인 초기 완성 단계.
+
+  First prototype completed and uploaded to the [`/trinkle`](https://github.com/soosoohan/trinkle) repository.
+
+- **2025-07-05**  
+  청록색 계열의 테마로 디자인을 전면 리뉴얼하고 같은 레포에 덮어씀.  
+  그러나 모바일에서 UI가 깨지는 문제가 발생함.
+
+  Redesigned the game with a turquoise theme and updated the same repository.  
+  However, layout issues appeared on mobile devices.
+
+- **2025-07-05**  
+  반응형 버전을 복구하기 위해 새로운 레포 [`/semoddang`](https://github.com/soosoohan/semoddang) 생성 후 6월 7일 버전 업로드.
+
+  Created a new repo [`/semoddang`](https://github.com/soosoohan/semoddang) to restore the responsive version from June.
+
+- **2025-07-07**  
+  최초 반응형 버전을 모바일에 맞게 더 줄여 최적화한 버전을 `/semoddang`에 업로드함.
+
+  Uploaded a more compact, mobile-optimized version of the original responsive build to `/semoddang`.
+
+- “세모땅”은 “Trinkle”의 한국 이름입니다.  
+- “Semoddang” is the Korean name of the game “Trinkle.”
+
+---
+
 ### 🧪 한수수의 다른 게임들 | Other Games by Soosoo Han
 
 - **넘즐 (Numzzle)**  
@@ -52,6 +88,7 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
   👉 http://soosoohan.github.io/moeum-quiz
 
 ---
+
 ### 👤 만든 사람 | Credits
 
 - 기획·개발 : 한수수  
