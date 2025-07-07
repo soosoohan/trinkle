@@ -39,9 +39,9 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
   Began development with the help of ChatGPT, turning a long-held idea into a playable game without needing to code from scratch.
 
 - **2025-06-07**  
-  첫 번째 프로토타입 완성 후 [`/trinkle`](https://github.com/soosoohan/trinkle) 레포에 업로드.  실질적인 초기 완성 단계.
+  첫 번째 프로토타입 완성 후 ['/trinkle'](https://soosoohan.github.io/trinkle) 레포에 업로드.  실질적인 초기 완성 단계.
 
-  First prototype completed and uploaded to the [`/trinkle`](https://github.com/soosoohan/trinkle) repository.
+  First prototype completed and uploaded to the ['/trinkle'](https://soosoohan.git.io/trinkle) repository.
 
 - **2025-07-05**  
   청록색 계열의 테마로 디자인을 전면 리뉴얼하고 같은 레포에 덮어씀.  
@@ -51,14 +51,14 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
   However, layout issues appeared on mobile devices.
 
 - **2025-07-05**  
-  반응형 버전을 복구하기 위해 새로운 레포 [`/semoddang`](https://github.com/soosoohan/semoddang) 생성 후 6월 7일 버전 업로드.
+  반응형 버전을 복구하기 위해 새로운 레포 ['/semoddang'](https://soosoohan.gihub.io/semoddang) 생성 후 6월 7일 버전 업로드.
 
-  Created a new repo [`/semoddang`](https://github.com/soosoohan/semoddang) to restore the responsive version from June.
+  Created a new repo ['/semoddang'](https://soosoohan.github.io/semoddang) to restore the responsive version from June.
 
 - **2025-07-07**  
-  최초 반응형 버전을 모바일에 맞게 더 줄여 최적화한 버전을 `/semoddang`에 업로드함.
+  최초 반응형 버전을 모바일에 맞게 더 줄여 최적화한 버전을 ['/semoddang'](http://soosoohan.github.io/semoddang)에 업로드함.
 
-  Uploaded a more compact, mobile-optimized version of the original responsive build to `/semoddang`.
+  Uploaded a more compact, mobile-optimized version of the original responsive build to ['/semoddang'](http://soosoohan.github.io/semoddang).
 
 - “세모땅”은 “Trinkle”의 한국 이름입니다.  
 - “Semoddang” is the Korean name of the game “Trinkle.”
