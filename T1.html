@@ -255,7 +255,7 @@ border-radius: 0;
         const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;// 25% → 18%로 줄임
         const margin = 40;// 60px → 40px로 줄임
         
-        const pointCount =  16;//점의 개수
+       const pointCount = Math.random() < 0.48 ? 16 : 17;
         
         console.log("Game area:", areaRect.width, areaRect.height);
         console.log("Min distance:", minDistance);
