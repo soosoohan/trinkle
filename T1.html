@@ -610,6 +610,10 @@ background: #2e8b8b ;
     // 인덱스로 가기 함수
     function goToIndex() {
         console.log("Go to index");
+      
+localStorage.removeItem('player1Name');
+localStorage.removeItem('player2Name');
+
         window.location.href = "index.html";
     }
 
