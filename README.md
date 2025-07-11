@@ -65,27 +65,37 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
 
 ---
 
-### 🧪 한수수의 다른 게임들 | Other Games by Soosoo Han
+### 🧪 한수수의  게임들 |  Games by Soosoo Han
 
 - **넘즐 (Numzzle)**  
   수학을 재미있게! 목표 숫자에 가까운 수식을 만드는 게임  
   *Make math fun! Create formulas to match the target number*  
   👉 http://soosoohan.github.io/numzzle
 
+- **트링클 (Trinkle)**  
+  별을 잇고 삼각형을 그리는 우주 땅따먹기 전략 게임  
+  *Connect stars to draw triangles in this cosmic strategy game*  
+  👉 http://soosoohan.github.io/trinkle
+
 - **워퍼즈메이트 (Worpuzz Mate)**  
   격자를 열거나 단어를 추측하며 친구와 겨루는 어휘력 대결 게임  
   *Compete to guess or uncover words hidden in the grid*  
   👉 http://soosoohan.github.io/worpuzzmate
 
-- **워퍼즈 (Worpuzz)**  
-  격자 속에 숨어있는 단어를 찾으며 어휘력을 키우는 게임. 컴퓨터와 겨룹니다.
+- **워퍼즈 (Worpuzz Bot)**  
+  격자 속에 숨어있는 단어를 찾으며 어휘력을 키우는 게임.    
   *Compete to guess or uncover words hidden in the grid*  
   👉 http://soosoohan.github.io/worpuzz
 
 - **모음 퀴즈(Moeum Quiz)**  
-    모음과 힌트를 보고 자음을 맞추어 단어나 구절이나 문장을 완성하는 퍼즐 게임   
-  *Guess the missing consonants to complete words, phrases, or sentences using vowels and hints*    
+    모음과 힌트를 보고 자음을 맞추어 단어나 구절이나 문장을 완성하는 퍼즐 게임  
+  *Guess the missing consonants to complete words, phrases, or sentences using vowels and hint  
   👉 http://soosoohan.github.io/moeum-quiz
+
+- **넘즐 X(Numzzle X)**  
+    수학 공부를 재미있게! 주어진  숫자카드와 연산기호 카드로 최대값을 만드는 게임  
+   *Make math fun! Create formulas to muximum number*  
+  👉 http://soosoohan.github.io/numzzlex
 
 ---
 
@@ -101,7 +111,7 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
 
 - Created and Developed by Soosoo Han  
 - Development Assistant: ChatGPT  
-- Coding Support: Cloud  
+- Coding Support: Claude  
 - Design Support: Nature Lee
 
 <p>© 2025 Soosoo Han. All rights reserved.<br>
