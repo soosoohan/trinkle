@@ -93,7 +93,7 @@ _The goal is to connect dots and create as many non-overlapping triangles as pos
 
 - 기획·개발 : 한수수  
 - 개발 보조 : 챗GPT 
-- 코딩 도움 : 클라우드  
+- 코딩 도움 : 클로드  
 - 디자인 도움: 네이처 리
 
 ⓒ 2025 한수수. 이 게임의 모든 권리는 제작자인 한수수에게 있습니다.<br>
