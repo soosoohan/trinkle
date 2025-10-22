@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4YZHC1G9FN');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinkle - Triangle Strategy Game | Soosooland</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Connect dots to draw triangles. Bilingual game (English/Korean). Free online strategy game.">
+<meta name="keywords" content="트링클, 전략 게임, 두뇌 개발, trinkle, triangle game, strategy game, dot connection, logic game, puzzle game, free online game">
+<meta name="author" content="Soosooland">
+<!-- Open Graph (SNS 공유용) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://soosooland.com/trinkle/">
+<meta property="og:image" content="https://soosooland.com/images/trinkle.png">
+<meta property="og:site_name" content="Soosooland">
+<link rel="canonical" href="https://soosooland.com/trinkle/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Trinkle",
+  "description": "Triangle strategy game where players connect dots to create non-overlapping triangles",
+  "url": "https://soosooland.com/trinkle/",
+  "genre": "Strategy",
+  "gamePlatform": "Web browser",
+  "playMode": ["SinglePlayer", "MultiPlayer"],
+  "inLanguage": ["en", "ko"]
+}
+</script>
+
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background: #145454;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.header {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+}
+
+.language-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.9);
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 100;
+}
+
+.language-button {
+    background: #145454;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    transition: all 0.3s ease;
+}
+
+.language-button:hover {
+    background: #20b2aa;
+}
+
+.language-button.active {
+    background: #ff69b4;
+}
+
+.main-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: bold;
+    color: #f0f8ff;
+    margin-top: 20px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.game-description {
+    color: #f0f8ff;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.game-description h3 {
+    color: #add8e6;
+    margin-bottom: 15px;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    border-bottom: 2px solid #add8e6;
+    padding-bottom: 8px;
+}
+
+.game-description p {
+    margin-bottom: 15px;
+}
+
+.game-description ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.game-description li {
+    margin-bottom: 8px;
+}
+
+.game-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.main-game-button {
+    background: rgba(255,255,255,0.9);
+    color: #2e8b8b;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.main-game-button:hover {
+    background: #f0f8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.main-game-button:active {
+    transform: translateY(0);
+}
+
+.footer {
+    margin-top: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square-button {
+            width: 250px;
+            height: 45px;
+            background-color: #FFB3D9; /* 연분홍 */
+            color: white;
+            border: none;
+            border-radius: 12px; /* 둥근 모서리 */
+            cursor: pointer;
+            font-size: 1.1rem; /*크기 고정 */
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+            margin: 8px;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+    .square-button:hover {
+        background-color: #FF8FAB; /* 호버 시 진한 분홍 */
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .square-button:active {
+        transform: scale(0.95);
+    }
+.credits {
+        margin-top: 50px;
+        font-size: 0.9em;
+        color:white;
+        background-color: #145454;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px;
+    }
+
+    .language-toggle {
+        top: 15px;
+        right: 15px;
+        padding: 6px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    
+}
+
+/* 매우 작은 화면 */
+@media (max-width: 480px) {
+    .header {
+        padding: 10px;
+    }
+
+    .language-toggle {
+        position: static;
+        float: right;
+        margin-bottom: 20px;
+    }
+
+    .main-title {
+        clear: both;
+        margin-top: 10px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .buttons-container {
+        max-width: 300px;
+    }
+
+    .footer {
+        padding: 15px;
+    }
+}
+
+/* 가로 모드 모바일 */
+@media (max-height: 600px) and (orientation: landscape) {
+    .content {
+        justify-content: flex-start;
+        padding-top: 10px;
+    }
+
+    .game-description {
+        margin-bottom: 20px;
+    }
+
+    .game-menu {
+        margin-top: 10px;
+        gap: 15px;
+    }
+
+    .buttons-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 600px;
+    }
+
+    .main-game-button {
+        flex: 1;
+        min-width: 180px;
+        max-width: 200px;
+    }
+
+    .footer {
+        padding: 10px;
+    }
+
+    .credits {
+        padding: 15px;
+    }
+}
+
+
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="language-toggle">
+                <button class="language-button active" onclick="toggleLanguage('ko')">한국어</button>
+                <button class="language-button" onclick="toggleLanguage('en')">English</button>
+            </div>
+            <h1 class="main-title">트링클 TRINKLE</h1>
+        </div>
+
+
+    <!-- 메인 콘텐츠 -->
+    <div class="content">
+        <!-- 한국어 설명 -->
+        <div class="game-description" id="korean-description">
+            <h3> 두 점을 잇는  선분으로 삼각형을 많이  그리세요.</h3>
+            <p>트링클 (Trinkle) = 삼각형 (Triangle) + 반짝이다 (Twinkle)</p>
+            
+            <h3>📋 게임 규칙</h3>
+            <ul>
+                <li>두 사람이 번갈아 선을 그어요.</li>
+                <li>삼각형을 완성하면 점수를 얻고 한 번 더!</li>
+                <li>가장 많은 삼각형을 만든 사람이 이겨요!</li>
+                <li>클릭 한 번으로 바로 게임을 시작하세요!</li>
+            </ul>
+
+            <div class="game-menu">
+                <div class="buttons-container">
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-k3.html'">
+                        🌙 졸린 트링키와 하기 
+                    </button>
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-k2.html'">
+                        🤖 트링키와 하기
+                    </button>
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-k1.html'">
+                        👫 친구와 하기
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 영어 설명 -->
+        <div class="game-description hidden" id="english-description">
+            <h3>Connect the Dots Triangle.</h3>
+            <p>Trinkle = Triangle + Twinkle</p>
+            
+            <h3>📋 Game Rules</h3>
+            <ul>
+                <li>Two players take turns drawing lines</li>
+                <li>Complete a triangle to score and take another turn</li>
+                <li>Player with the most triangles wins!</li>
+                <li>Start the game with just one click!</li>
+            </ul>
+
+            <div class="game-menu">
+                <div class="buttons-container">
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-e3.html'">
+                        🌙 Play with sleepy Trinky
+                    </button>
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-e2.html'">
+                        🤖 Play with Trinky
+                    </button>
+                    <button class="main-game-button" onclick="location.href='https://soosoofile.vercel.app/Trinkle-e1.html'">
+                        👫 Play with Friend
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="footer">
+        <div class="credits">       
+<button class="square-button" onclick="location.href='https://soosooland.com'">
+    즐거운 퍼즐, 수수랜드
+</button>
+<p> © 2025 Soosoo Han. All rights reserved.</p>
+    </div>
+
+    </div>
+</div>
+
+<script>
+    function toggleLanguage(lang) {
+        const koreanDesc = document.getElementById('korean-description');
+        const englishDesc = document.getElementById('english-description');
+        const buttons = document.querySelectorAll('.language-button');
+        
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        if (lang === 'ko') {
+            koreanDesc.classList.remove('hidden');
+            englishDesc.classList.add('hidden');
+            buttons[0].classList.add('active');
+        } else {
+            koreanDesc.classList.add('hidden');
+            englishDesc.classList.remove('hidden');
+            buttons[1].classList.add('active');
+        }
+    }
+</script>
+
+
+</body>
+</html>
