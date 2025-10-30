@@ -1,46 +1,89 @@
-## ✨ 트링클(TRINKLE) 
+## 👤🆚🤖 👤🆚👤트링클 (TRINKLE)
 
 Trinkle = Triangle + Twinkle
 
----
+점들을 연결해 서로 겹치지 않는 삼각형을 가능한 많이 만들면 이깁니다.  
+The goal is to connect dots and create as many non-overlapping triangles as possible.
 
- 🛡️ **이 게임은 저작권 등록이 완료되었습니다.**  
- 무단 복제, 무단 이용, 상업적 사용은 법적 책임을 초래할 수 있습니다.  
-  
- 🛡️ **This game has been officially copyright registered.**  
- Unauthorized reproduction, use, or commercial distribution may result in legal consequences.  
+### ✨ 게임 방법 / How to Play
 
-----
+- 플레이어는 컴퓨터와 번갈아 가며 점 두 개를 선택해 선을 그립니다.  
+  Players take turns with the computer to draw a line between two dots.
 
-## ✨ 게임 규칙 (Game Rules)
+- 선분 3개로 완전히 둘러싸이면 삼각형으로 인정되며, 해당 플레이어가 점수를 얻습니다.  
+  When three lines form a closed triangle, the player earns a point.
 
-점들을 연결해 서로 **겹치지 않는 삼각형**을 가능한 많이 만들면 이깁니다.  
-_The goal is to connect dots and create as many non-overlapping triangles as possible._
+- 선분이 서로 교차해서는 안 됩니다.  
+  Lines must not cross over other lines.
 
----
+- 가능한 선을 모두 그리면 게임은 종료되며, 삼각형을 많이 그린 사람이 승리합니다.  
+  The game ends when no more valid moves remain, and the player with the most triangles wins.
 
-## ✨ 게임 방식 (How to Play)
+- 사각형이나 기타 다각형은 점수로 인정되지 않습니다.  
+  Squares or other polygons are not counted as valid.
 
-- 플레이어는 **컴퓨터와 번갈아 가며** 점 두 개를 선택해 선을 그립니다.  
-  _Players take turns with the computer to draw a line between two dots._
+- 똑똑한 트링키와 대결하기, 졸린 트링키와 대결하기, 두 사용자가 대결하기 세 종류가 있습니다. 
+  There are three types: Battle against  Trinky, Battle against Sleepy Trinky, and Battle between Two Users.
 
-- 선분 3개로 완전히 둘러싸이면 **삼각형**으로 인정되며, 해당 플레이어가 점수를 얻습니다.  
-  _When three lines form a closed triangle, the player earns a point._
+## 🌟 Soosooland - Puzzle Game Hub by Han Soosoo
 
-- **선분이 서로 교차해서는 안 됩니다.**  
-  _Lines must not cross over other lines._
+> "Learning through fun, and fun through learning."
 
-- 가능한 선을 모두 그리면 게임은 종료되며, **삼각형을 많이 그린 사람이 승리**합니다.  
-  _The game ends when no more valid moves remain, and the player with the most triangles wins._
-
-- 사각형이나 기타 다각형은 **점수로 인정되지 않습니다.**  
-  _Squares or other polygons are not counted as valid._
+Explore more brain games and puzzles in **[Soosooland](https://soosooland.com)**    
+— a digital playground designed to improve memory, logic, and creativity while having fun!
 
 ---
+## ⚠️ **Copyright Protection   
 
-## 트링클 주소 : https://soosooland.com/trinkle/   
-    
+이 저작물은 한국저작권위원회에 등록되어 법적 보호를 받습니다.    
+This project is registered with the Korea Copyright Commission.
+
+| 게임 | 등록번호 | 등록일 |
+|------|----------|--------|
+| 트링클(trinkle)| C-2025-031800 | 2025.08.19 |
+
 ---
+### ✨ 자유롭게 하실 수 있는 것
+
+✅ **무료 플레이** - 언제든 게임을 즐기세요  
+✅ **공유하기** - 친구들에게 수수랜드를 추천해주세요  
+✅ **링크 공유** - SNS에 soosooland.com을 올려주세요  
+✅ **피드백** - 의견을 보내주시면 반영하겠습니다
+
+### ✨ What You Can Do
+
+✅ **Play for free** - Enjoy all games anytime  
+✅ **Share** - Tell your friends about Soosooland  
+✅ **Link** - Share soosooland.com on social media  
+✅ **Feedback** - Help us improve with your suggestions
+
+---
+
+### 🤝 허락이 필요한 경우
+
+📧 **다음의 경우 연락 주세요:**
+- 상업적 이용
+- 2차 창작 또는 변형
+- 재배포 또는 재게시
+- 교육기관 또는 단체 이용
+
+💌 협업과 파트너십은 언제나 환영합니다!  
+[문의하기](https://soosooland.com/Contact.html)
+
+### 🤝 Need Permission For
+
+📧 **Please contact me for:**
+- Commercial use or monetization
+- Creating derivative works
+- Redistribution or republishing
+- Educational or institutional use
+
+💌 I'm open to collaborations and partnerships!  
+[Contact me](https://soosooland.com/Contact.html)
+
+---
+
+##  Trinkle : https://soosooland.com/trinkle/
 
 ## 🌟 Soosooland - Puzzle Game Hub by Han Soosoo
 
@@ -50,13 +93,11 @@ Explore more brain games and puzzles in **[Soosooland](https://soosooland.com/)*
 — a digital playground designed to improve memory, logic, and creativity while having fun!
 
 ---
-
 ### 👤 만든 사람 | Credits
 
 - 기획·개발 : 한수수  
-<p>ⓒ 2025 한수수. 이 게임의 모든 권리는 제작자인 한수수에게 있습니다.<br>
- 무단 복제, 배포, 2차 창작을 금합니다.</p>
+ⓒ 2025 한수수. 이 게임의 모든 권리는 제작자인 한수수에게 있습니다.
 
 - Created and Developed by Soosoo Han  
-<p>© 2025 Soosoo Han. All rights reserved.<br>
+ⓒ 2025 Soosoo Han. All rights reserved.
 
