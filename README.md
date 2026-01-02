@@ -1,4 +1,4 @@
-## 👤🆚🤖 👤🆚👤트링클 시리즈 (Trinkle series) 
+## ✨트링클 시리즈 (Trinkle series) 
 
 트링클 (Trinkle) = Triangle(삼각형) + Twinkle (반짝이다)
 
