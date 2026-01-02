@@ -30,7 +30,7 @@ The goal is to connect dots and create as many non-overlapping triangles as poss
 - 사각형이나 기타 다각형은 점수로 인정되지 않습니다.  
   Squares or other polygons are not counted as valid.
 
-- 트링클은 똑똑한 트링키와 대결하기, 졸린 트링키와 대결하기, 두 사용자가 대결하기 세 종류가 있습니다.
+- 트링클은 똑똑한 트링키와 대결하기, 졸린 트링키와 대결하기, 두 사용자가 대결하기 세 종류가 있습니다.   
   Trinkle has three types: Battle against Smart Tringkey, Battle against Sleepy Tringkey, and Two Players Mode.​​​​​​​​​​​​​​​​
 
 - 트리테라는 두 사용자가 대결하기와 똑똑한 트링키와 대결하기가 있습니다.   
