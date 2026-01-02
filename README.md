@@ -12,8 +12,8 @@ The goal is to connect dots and create as many non-overlapping triangles as poss
 
 ### ✨ 게임 방법 / How to Play
 
-- 게임이 시작되면  화면에  점들이 생성되는데, 트링클은  점들이 랜덤하게 뿌려지며, 트리테라는 규칙적으로 배열됩니다.
- When the game starts, dots are generated on the screen. In Trinkle, dots are randomly scattered, while in Tritera, they are arranged in a regular pattern.​​​​​​​​​​​​​​​​
+- 게임이 시작되면  화면에  점들이 생성되는데, 트링클은  점들이 랜덤하게 뿌려지며, 트리테라는 규칙적으로 배열됩니다.  
+ When the game starts, dots are generated on the screen. In Trinkle, dots are randomly scattered, while in Tritera, they are arranged in a regular pattern.  ​​​​​​​​​​​​​​​​
 
 - 플레이어는 컴퓨터와 번갈아 가며 점 두 개를 선택해 선을 그립니다.  
   Players take turns with the computer to draw a line between two dots.
@@ -32,7 +32,7 @@ The goal is to connect dots and create as many non-overlapping triangles as poss
 
 - 트링클은 똑똑한 트링키와 대결하기, 졸린 트링키와 대결하기, 두 사용자가 대결하기 세 종류가 있습니다.   Trinkle has three types: Battle against Smart Tringkey, Battle against Sleepy Tringkey, and Two Players Mode.​​​​​​​​​​​​​​​​
 
-- 트리테라는 두 사용자가 대결하기와 똑똑한 트링키와 대결하기가 있습니다.
+- 트리테라는 두 사용자가 대결하기와 똑똑한 트링키와 대결하기가 있습니다.   
   Triterra offers Two Players Mode and Battle against Smart Trinky.
   
 ## 🌟 Soosooland - Puzzle Game Hub by Han Soosoo
