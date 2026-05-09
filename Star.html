@@ -2,30 +2,18 @@
 
 <html lang="en">
 <head>
+<script src="pwa-header.js"></script>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-4YZHC1G9FN');
-
-  const isLocal = window.location.hostname === 'localhost' || 
-                  window.location.hostname === '127.0.0.1' ||
-                  window.location.hostname.includes('192.168.');
-
-  const originalGtag = gtag;
-  function gtag() {
-    if (isLocal) {
-      return;
-    }
-    originalGtag.apply(this, arguments);
-  }
-</script>
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4YZHC1G9FN');
+    </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Trinkle-Strategy Game | Soosooland </title>
+  <title>트링클똑똑</title>
   <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
   <script src="https://soosooland.com/js/protection.js"></script>
   <style>
@@ -485,26 +473,21 @@ function createPointsFromSaved() {
             element: line
         });
 
-// 사용자가 다각형을 그려도 턴 유지       
-const newTriangles = checkForDirectTrianglesOnly(point1.id, point2.id);
-const formedPolygon = currentPlayer === 1 && checkFormedPolygon(point1.id, point2.id);
-
-if (newTriangles.length > 0 || formedPolygon) {
-    if (formedPolygon && newTriangles.length === 0) {
-        console.log(`🔷 다각형 완성! 플레이어 1 턴 유지`);
-    } else {
-        console.log(`🔺 삼각형 ${newTriangles.length}개 완성! 플레이어 ${currentPlayer} 계속 진행`);
-    }
-    newTriangles.forEach(triangle => createTriangle(triangle));
-    scores[`player${currentPlayer}`] += newTriangles.length;
-    updateScoreboard();
-    updateTurnDisplay();
-} else {
-    console.log(`➡️ 삼각형 없음. 턴 교체: ${currentPlayer} -> ${currentPlayer === 1 ? 2 : 1}`);
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    updateTurnDisplay();
-}
-
+        // 새로 그은 선분이 직접 완성하는 삼각형만 체크하여 점수 부여
+        const newTriangles = checkForDirectTrianglesOnly(point1.id, point2.id);
+        if (newTriangles.length > 0) {
+            console.log(`🔺 삼각형 ${newTriangles.length}개 완성! 플레이어 ${currentPlayer} 계속 진행`);
+            newTriangles.forEach(triangle => createTriangle(triangle));
+            scores[`player${currentPlayer}`] += newTriangles.length;
+            updateScoreboard();
+            // 삼각형을 완성했으므로 같은 플레이어가 계속 진행
+            updateTurnDisplay();
+        } else {
+            console.log(`➡️ 삼각형 없음. 턴 교체: ${currentPlayer} -> ${currentPlayer === 1 ? 2 : 1}`);
+            // 삼각형을 완성하지 못했으므로 턴 교체
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            updateTurnDisplay();
+        }
 
         // AI 턴인 경우 자동으로 수행
         if (currentPlayer === 2 && !isAiThinking) {
@@ -521,31 +504,6 @@ if (newTriangles.length > 0 || formedPolygon) {
             showGameEndMessage();
         }
     }
-function checkFormedPolygon(newPoint1, newPoint2) {
-    for (let point of points) {
-        if (point.id === newPoint1 || point.id === newPoint2) continue;
-        
-        const hasLine1 = lines.some(line =>
-            (line.point1 === newPoint1 && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === newPoint1)
-        );
-        const hasLine2 = lines.some(line =>
-            (line.point1 === newPoint2 && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === newPoint2)
-        );
-
-        if (hasLine1 && hasLine2) {
-            const triangle = [newPoint1, newPoint2, point.id].sort((a, b) => a - b);
-            const alreadyExists = triangles.some(t =>
-                JSON.stringify(t.points.slice().sort((a,b)=>a-b)) === JSON.stringify(triangle)
-            );
-            if (!alreadyExists && triangleHasInteriorElements(triangle)) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
     // 엄격한 룰: 빈 공간에 새로 완성되는 삼각형만 점수 부여
     function checkForDirectTrianglesOnly(newPoint1, newPoint2) {
