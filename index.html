@@ -73,41 +73,29 @@ body {
 
 .header {
     position: relative;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
 }
 
-.language-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+#lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
     background: rgba(255,255,255,0.9);
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 100;
-}
-
-.language-button {
-    background: #145454;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    margin: 2px;
-    border-radius: 5px;
+    color: #2e8b8b;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
     cursor: pointer;
-    font-family: 'Pretendard', sans-serif;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    transition: all 0.3s ease;
-}
+    z-index: 100;
+    transition: background 0.2s;
+  }
+  #lang-toggle:hover { background: rgba(255,255,255,0.9); }
 
-.language-button:hover {
-    background: #20b2aa;
-}
-
-.language-button.active {
-    background: #ff69b4;
-}
+  .lang-ko, .lang-en { transition: opacity 0.2s; }
+  body.en .lang-ko { display: none; }
+  body.ko .lang-en { display: none; }
 
 .main-title {
     font-size: clamp(1.5rem, 4vw, 2.2rem);
@@ -132,6 +120,7 @@ body {
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     line-height: 1.6;
     margin-bottom: 30px;
+    margin-left: 100px;
 }
 
 .game-description h3 {
@@ -223,6 +212,7 @@ body {
         background-color: #FF9494;
         color: white;
     }
+.credits { color: rgba(255,255,255,0.6); text-align: center; margin-top: 20px; font-size: 13px; }
 
 .hidden {
     display: none;
@@ -259,7 +249,10 @@ body {
 
     .main-title {
         clear: both;
-        margin-top: 10px;
+        margin-top: 80px;
+    }
+    .game-description {
+    margin-left: 15px;
     }
 
     .content {
@@ -311,16 +304,14 @@ body {
 
 </style>
 </head>
-  <body onload="initLanguage()">
+  <body class="ko" onload="initLanguage()">
   <button class="back-button" onclick="location.href='https://soosooland.com/'">
     Soosooland </button>
     <div class="container">
         <!-- 헤더 -->
+<button id="lang-toggle" onclick="toggleLang()">English</button>
+
         <div class="header">
-            <div class="language-toggle">
-                <button class="language-button active" onclick="toggleLanguage('ko')">한국어</button>
-                <button class="language-button" onclick="toggleLanguage('en')">English</button>
-            </div>
             <h1 class="main-title">트링클 TRINKLE</h1>
         </div>
 
@@ -328,7 +319,7 @@ body {
     <!-- 메인 콘텐츠 -->
     <div class="content">
         <!-- 한국어 설명 -->
-        <div class="game-description" id="korean-description">
+        <div class="game-description lang-ko" >
             <h3> 두 점을 잇는  선분으로 삼각형을 많이  그리세요.</h3>
             <p>트링클 (Trinkle) = 삼각형 (Triangle) + 반짝이다 (Twinkle)</p>
             
@@ -356,7 +347,7 @@ body {
         </div>
 
         <!-- 영어 설명 -->
-        <div class="game-description hidden" id="english-description">
+        <div class="game-description lang-en">
             <h3>Connect the Dots Triangle.</h3>
             <p>Trinkle = Triangle + Twinkle</p>
             
@@ -382,39 +373,38 @@ body {
                 </div>
             </div>
         </div>
+<div class="credits"><p>© 2026 Soosoo Han. All rights reserved.</p></div>
     </div>
 </div>
-<footer>
-  <p>© 2025 Han Soosoo. All rights reserved.</p>
-</footer>
 
 <script>
-    function toggleLanguage(lang) {
-        const koreanDesc = document.getElementById('korean-description');
-        const englishDesc = document.getElementById('english-description');
-        const buttons = document.querySelectorAll('.language-button');
-        
-        buttons.forEach(btn => btn.classList.remove('active'));
-        
-        if (lang === 'ko') {
-            koreanDesc.classList.remove('hidden');
-            englishDesc.classList.add('hidden');
-            buttons[0].classList.add('active');
-        } else {
-            koreanDesc.classList.add('hidden');
-            englishDesc.classList.remove('hidden');
-            buttons[1].classList.add('active');
-        }
-    }
-function initLanguage() {
-  const saved = localStorage.getItem('soosoo-lang');
-  if (saved) {
-    toggleLanguage(saved); // 저장된 값 우선
+    function toggleLang() {
+  const body = document.body;
+  const btn = document.getElementById('lang-toggle');
+  if (body.classList.contains('ko')) {
+    body.classList.replace('ko', 'en');
+    document.documentElement.lang = 'en';
+    btn.textContent = '한국어';
+    localStorage.setItem('soosoo-lang', 'en'); // 여기
   } else {
-    const lang = navigator.language.startsWith('ko') ? 'ko' : 'en';
-    toggleLanguage(lang); // 브라우저 언어 감지
+    body.classList.replace('en', 'ko');
+    document.documentElement.lang = 'ko';
+    btn.textContent = 'English';
+    localStorage.setItem('soosoo-lang', 'ko'); // 여기
   }
 }
+  function initLanguage() {
+  const saved = localStorage.getItem('soosoo-lang');
+  const lang = saved || (navigator.language.startsWith('ko') ? 'ko' : 'en');
+  const body = document.body;
+  const btn = document.getElementById('lang-toggle');
+  if (lang === 'en') {
+    body.classList.replace('ko', 'en');
+    document.documentElement.lang = 'en';
+    btn.textContent = '한국어';
+  }
+}
+
     
 </script>
 
