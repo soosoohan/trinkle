@@ -98,6 +98,11 @@ body {
   .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
   body.ko .lang-en { display: none; }
+.back-button {position: fixed;top: 12px; left: 12px;width: 44px;height: 44px;padding: 0;background: transparent;border: none;border-radius: 22%;cursor: pointer;z-index: 100; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+
+.back-button img {width: 100%;height: 100%;object-fit: cover;display: block;}
+
+.back-button:active {transform: scale(0.92);transition: transform 0.1s;}
 
 .main-title {
     font-size: clamp(1.5rem, 4vw, 2.2rem);
@@ -195,25 +200,6 @@ body {
     align-items: center;
 }
 
-  .back-button {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        padding: 10px 20px;
-        font-size: 1em;
-        background-color: #FFD6BA;
-        color: #7A2E2E;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        z-index: 100;
-    }
-
-    .back-button:hover {
-        background-color: #FF9494;
-        color: white;
-    }
 .credits { color: rgba(255,255,255,0.6); text-align: center; margin-top: 20px; font-size: 13px; }
 
 .hidden {
@@ -264,6 +250,7 @@ body {
     .buttons-container {
         max-width: 300px;
     }
+    .back-button {top: 10px;left: 10px;width: 40px;height: 40px;}
 }
 
 /* 가로 모드 모바일 */
@@ -307,8 +294,8 @@ body {
 </style>
 </head>
   <body class="ko" onload="initLanguage()">
-  <button class="back-button" onclick="location.href='https://soosooland.com/'">
-    Soosooland </button>
+  <button class="back-button" onclick="location.href='https://soosooland.com/'" aria-label="수수랜드 홈으로">
+  <img src="https://soosooland.com/images/home.png" alt="수수랜드 홈"></button>
     <div class="container">
         <!-- 헤더 -->
 <button id="lang-toggle" onclick="toggleLang()">English</button>
