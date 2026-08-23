@@ -85,6 +85,8 @@ body,
     max-height: 100dvh;
 }
 .game-container {
+    height: 100vh;
+    height: 100dvh;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
 }
@@ -231,11 +233,6 @@ animation: aiThinking 1.5s infinite;
 
 /* 모바일 세로 모드 */
 @media (max-width: 768px) and (orientation: portrait) {
-.game-container {
-    height: 100dvh; /* 동적 뷰포트 높이 */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
-             env(safe-area-inset-bottom) env(safe-area-inset-left);
-}
 
 .header {
 padding: 5px;
@@ -270,11 +267,7 @@ width: 100vw;
 height: 100vh;
 border-radius: 0;
 }
-.game-container {
-    height: 100dvh; /* 동적 뷰포트 높이 */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
-             env(safe-area-inset-bottom) env(safe-area-inset-left);
-}}
+}
 @media (max-width: 480px) {  
 .back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px; width: 40px; height: 40px; font-size: 1.5em; }
 }
