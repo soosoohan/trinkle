@@ -56,11 +56,19 @@ body,
     flex-direction: column;
     background: #145454 ;
     font-family: 'Pretendard', sans-serif;
-    height: 100dvh;
     overflow: hidden;
-    min-height: 100dvh;
     width: 100vw;
     position: relative;
+    height: 100vh;       /* 구형 브라우저 폴백 */
+    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+}
+.game-container {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+             max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
 }
 
 .header {
