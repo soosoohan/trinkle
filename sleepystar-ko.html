@@ -57,22 +57,31 @@ body {
     user-select: none; /* 텍스트 선택 방지 */
     -webkit-user-select: none;
     -webkit-touch-callout: none; /* iOS 길게 누르기 메뉴 방지 */
-    background: #145454 ;
-  
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* game-container를 가로 가운데 정렬 */
+    background: #145454;      /* 900px 밖 여백 배경색 (원하는 색으로) */
+    overflow: hidden;
+    width: 100vw;
+    font-family: 'Pretendard', sans-serif;
+    position: relative;
+    height: 100vh;       /* 구형 브라우저 폴백 */
+    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    }
 
 
 html {
     background: #0b0c1a !important;
-}
-html, body {
     overflow: hidden;
     height: 100%;
-    position: fixed;   /* 안드로이드에서 바운스 스크롤/주소창 리사이즈 영향 최소화 */
+    position: fixed;  
     width: 100%;
 }
 
-body,
 .game-container {
     display: flex;
     flex-direction: column;
@@ -87,12 +96,10 @@ body,
     min-height: 100dvh;
     max-height: 100vh;
     max-height: 100dvh;
-}
-.game-container {
-    height: 100vh;
-    height: 100dvh;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
+    width: 100%;
+    position: relative;
 }
 
 .header {
@@ -285,8 +292,8 @@ border-radius: 0;
 
 </head>
 <body>
-  <div class="game-container">
 <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">←</button>
+  <div class="game-container">
     <div class="header">
       <h1 class="game-title">졸린 트링키와 대결</h1>
     </div>
