@@ -96,6 +96,7 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
 
 .game-area {
     flex: 1;
+    min-height: 0;              /* ← 추가 */
     position: relative;
     background: #145454;
     border: 2px solid rgba(255,255,255,0.25);
@@ -103,6 +104,7 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
     margin: 0 10px 10px;
     overflow: hidden;
 }
+
 
 .point {
     position: absolute;
@@ -271,8 +273,8 @@ border-radius: 0;
     </div>
     <div class="current-turn" id="currentTurn">P1's turn</div>
   </div>
-</div>
 <div class="game-area" id="gameArea"></div>
+</div>
  
 <script>
     
@@ -339,7 +341,7 @@ function createPoints() {
 
             while (!validPosition && attempts < 50) {
                 x = margin + Math.random() * (areaRect.width - 2 * margin);
-                y = margin + Math.random() * (areaRect.height - 2 * margin - 100);
+                y = margin + Math.random() * (areaRect.height - 2 * margin);
 
                 validPosition = true;
                 for (let existingPoint of points) {
