@@ -50,6 +50,12 @@ body {
 html {
     background: #0b0c1a !important;
 }
+html, body {
+    overflow: hidden;
+    height: 100%;
+    position: fixed;   /* 안드로이드에서 바운스 스크롤/주소창 리사이즈 영향 최소화 */
+    width: 100%;
+}
 
 body,
 .game-container {
