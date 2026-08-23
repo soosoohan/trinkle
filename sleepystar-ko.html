@@ -318,31 +318,30 @@ border-radius: 0;
     let isAiThinking = false;
 
 
+const MIN_POINT_COUNT = 8;
+
 function createPoints() {
-    console.log("Creating points");
-    
     const areaRect = gameArea.getBoundingClientRect();
-    const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;
     const margin = 40;
-    
-    // 화면 크기에 따라 기본 점 개수 설정 후 랜덤으로 홀짝 조절
-    let baseCount;
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        baseCount = 9;
-        pointCount = Math.random() < 0.45 ? 9: 11;  // 짝수 또는 홀수
-    } else if (areaRect.width > 1200) {
-        baseCount = 19;
-        pointCount = Math.random() < 0.5 ? 17 : 19;  // 아이패드 프로
-    } else if (areaRect.width > 1000) {
-        baseCount = 16;
-        pointCount = Math.random() < 0.5 ? 13: 15;  // 일반 아이패드
-    } else {
-        baseCount = 11;
-        pointCount = Math.random() < 0.5 ? 11 : 13;  // 아이패드 미니
+
+    const cellSize = 120;
+    const cols = Math.floor(areaRect.width / cellSize);
+    const rows = Math.floor(areaRect.height / cellSize);
+    let targetCount = cols * rows;
+
+    if (targetCount < MIN_POINT_COUNT) {
+        showTooSmallWarning();
+        return;
     }
-    
+
+    let pointCount = adjustParity(targetCount, false);   // 항상 홀수
+
+    if (pointCount < MIN_POINT_COUNT) {
+        showTooSmallWarning();
+        return;
+    }
+
+    const minDistance = Math.max(70, Math.min(areaRect.width, areaRect.height) * 0.18);
 
         for (let i = 0; i < pointCount; i++) {
             let validPosition = false;
