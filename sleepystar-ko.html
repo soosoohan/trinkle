@@ -391,6 +391,34 @@ validPosition = true;
         savedPoints = points.map(p => ({ x: p.x, y: p.y, id: p.id }));
     }
 }
+function adjustParity(count, wantEven) {
+    const isEven = count % 2 === 0;
+    if (wantEven === isEven) return count;
+    return count - 1;
+}
+
+function showTooSmallWarning() {
+    const warning = document.createElement('div');
+    warning.id = 'tooSmallWarning';
+    warning.textContent = '화면이 너무 작아요. 화면을 회전하거나 더 큰 화면에서 플레이해주세요.';
+    warning.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(200, 0, 0, 0.9);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        font-family: 'Pretendard', sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        z-index: 1000;
+        text-align: center;
+        max-width: 80%;
+    `;
+    gameArea.appendChild(warning);
+}
 
 // 저장된 점 배치로 점 재생성
 function createPointsFromSaved() {
