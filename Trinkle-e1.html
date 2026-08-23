@@ -117,24 +117,6 @@ html {
  color: #145454; 
 border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;z-index: 100;}
 
-    .game-button {
-    padding: clamp(8px, 2vw, 10px) clamp(12px, 4vw, 20px);
-    background: rgba(255,255,255,0.9);
-    border: none;
-    border-radius: 8px;
-    font-family: 'Pretendard', sans-serif;
-    font-size: clamp(14px, 3.5vw, 20px);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #145454;
-}
-
-.game-button:hover {
-    background: rgba(255,255,255,1);
-    transform: scale(1.05);
-}
-
 
 .game-area {
     flex: 1;
@@ -243,18 +225,6 @@ color: #fff;
 background: rgba(255, 107, 107, 0.2) !important;
 animation: aiThinking 1.5s infinite;
 }
-.buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.bottom-buttons {
-    flex: 0 0 auto;
-    position: static;
-    justify-content: center;
-    padding: 10px 15px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
-}
 
 @keyframes pulse {
 0%, 100% { opacity: 1; }
@@ -317,10 +287,6 @@ border-radius: 0;
     <div class="current-turn" id="currentTurn">P1's turn</div>
   </div>
 <div class="game-area" id="gameArea"></div>
-<div class="buttons bottom-buttons">
-    <button class="game-button" onclick="restartSameBoard()">Restart</button>
-    <button class="game-button" onclick="newGame()">New Game</button>
-</div>
 </div>
  
 <script>
