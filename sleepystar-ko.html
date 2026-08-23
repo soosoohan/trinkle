@@ -118,14 +118,6 @@ html {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-.buttons {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    gap: 10px;
-}
-
 .back-button { position: fixed; top: max(48px, env(safe-area-inset-top) + 20px); left: 22px; width: 44px; height: 44px; padding: 0; font-size: 1.8em; font-weight: bold; 
     background: rgba(255,255,255,0.9);
     color: #145454;
@@ -243,6 +235,37 @@ animation: aiThinking 1.5s infinite;
 0%, 100% { opacity: 1; }
 50% { opacity: 0.5; }
 }
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.game-button {
+    padding: clamp(8px, 2vw, 10px) clamp(12px, 4vw, 20px);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(14px, 3.5vw, 20px);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #145454;
+}
+
+.game-button:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+}
+
+.bottom-buttons {
+    flex: 0 0 auto;
+    position: static;
+    justify-content: center;
+    padding: 10px 15px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+
 
 /* 모바일 세로 모드 */
 @media (max-width: 768px) and (orientation: portrait) {
@@ -256,15 +279,6 @@ padding: 5px;
     font-size: 1.7rem;
     width: 100%;
     margin: 20px auto;
-}
-
-.buttons {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    justify-content: center;
-    margin-bottom: 0;
 }
 
 .game-button {
