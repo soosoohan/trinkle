@@ -373,8 +373,9 @@ border-radius: 0;
       player1: 0, player2: 0 };
     
     // 플레이어 이름 변수
-    let player1Name = 'P1';
-    let player2Name = 'P2';
+    // 수정
+    let player1Name = 'white';
+    let player2Name = 'pink';
     
     // localStorage에서 플레이어 이름 로드
     function loadPlayerNames() {
@@ -834,8 +835,8 @@ function checkIfLineCreatesValidTriangle(point1Id, point2Id) {
     }
     return false;
 }
-
-// 게임 종료 처리 함수
+  
+  // 게임 종료 처리 함수
 function endGame() {
     const currentTurnElement = document.getElementById('currentTurn');
     
@@ -883,13 +884,21 @@ function endGame() {
     }
 
     function updateTurnDisplay() {
-        const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
-        document.getElementById('currentTurn').textContent = `${currentPlayerName}'s turn`;
-        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
-        
-        document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
-        document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
+    const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
+    const turnEl = document.getElementById('currentTurn');
+    turnEl.textContent = `${currentPlayerName}'s turn`;
+    
+    if (currentPlayer === 1) {
+        turnEl.style.color = '#145454';
+        turnEl.style.background = 'white';
+    } else {
+        turnEl.style.color = '#145454';
+        turnEl.style.background = 'pink';
     }
+    
+    document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
+    document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
+}
 
 // 같은 판으로 재시작 - 점 배치 유지
 function restartSameBoard() {
