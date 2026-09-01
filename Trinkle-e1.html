@@ -956,13 +956,19 @@ localStorage.removeItem('player2Name');
 window.location.href = "index.html";
     }
 
-    // 페이지 로드 완료 후 실행
-    window.addEventListener('load', function() {
-        loadPlayerNames(); // 플레이어 이름 먼저 로드
-        setTimeout(createPoints, 100);
-        updateTurnDisplay();
+  window.addEventListener('load', function() {
+    loadPlayerNames(); // 플레이어 이름 먼저 로드
+
+    // 모바일에서 주소창/뷰포트가 완전히 자리잡을 때까지 기다린 후 점 생성
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            setTimeout(createPoints, 200);
+        });
     });
 
+    updateTurnDisplay();
+});
+  
     // 디버깅용 - 게임 영역 클릭시 정보 출력
     gameArea.addEventListener('click', function(e) {
     });
