@@ -299,12 +299,12 @@ animation: aiThinking 1.5s infinite;
     </div>
     <div class="scoreboard">
       <div class="player-score player1">
-        <span id="player1Name">플레이어1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+        <span id="player1Name">하양</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
       </div>
       <div class="player-score player2">
-        <span id="player2Name">플레이어2</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+        <span id="player2Name">분홍</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
       </div>
-      <div class="current-turn" id="currentTurn">플레이어1의 차례</div>
+      <div class="current-turn" id="currentTurn">하양의 차례</div>
     </div>
 
     <div class="game-area" id="gameArea"></div>
@@ -324,8 +324,8 @@ let selectedPoint = null;
 let scores = { player1: 0, player2: 0 };
 let gridInfo = { rows: 0, cols: 0 };
     
-    let player1Name = '플레이어1';
-    let player2Name = '플레이어2';
+    let player1Name = '하양';
+    let player2Name = '분홍';
 
 function loadPlayerNames() {
     const savedPlayer1 = localStorage.getItem('player1Name');
