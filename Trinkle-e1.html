@@ -890,7 +890,7 @@ function updateScoreboard() {
 
 function updateTurnDisplay() {
     const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
-    document.getElementById('currentTurn').textContent = `${currentPlayerName}의 차례`;
+    document.getElementById('currentTurn').textContent = `${currentPlayerName}'s turn`;
     document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
     document.getElementById('currentTurn').style.background = 'rgba(255,255,255,0.1)';
     document.getElementById('currentTurn').style.fontSize = '25px';
