@@ -64,6 +64,10 @@ body,
     margin: 0 auto;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
+.back-button { position: fixed; top: max(48px, env(safe-area-inset-top) + 20px); left: 22px; width: 44px; height: 44px; padding: 0; font-size: 1.8em; font-weight: bold; 
+   background: rgba(255,255,255,0.9);
+ color: #145454; 
+border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;z-index: 100;}
 
 .buttons {
     position: absolute;
@@ -94,13 +98,14 @@ body,
 
 .game-area {
     flex: 1;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
     background: #145454 ;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    margin: 20px;
+    overflow: hidden;
 }
+
 
 .point {
     position: absolute;
@@ -130,7 +135,7 @@ body,
 
 .point.selected::before {
     background: #F7f883;
-    transform: scale(1.4);
+    transform: scale(2.0);
 }
 
 .line {
@@ -154,17 +159,13 @@ body,
 }
 
 .scoreboard {
-    flex: 0 0 100px;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    flex: 0 0 auto;
+    margin: 0 15px 10px;
     background: #145454;
-    padding: 15px;
+    padding: 12px 15px;
     font-family: 'Pretendard', sans-serif;
     color: #fffde7;
     z-index: 50;
-    pointer-events: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -172,29 +173,34 @@ body,
 }
 
 .player-score {
-    font-size: 25px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+font-size: clamp(16px, 4vw, 25px);
+font-weight: bold;
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
 .player1 { color: white; }
 .player2 { color: pink; }
 
 .turn-indicator {
-    font-size: 25px;
-    animation: pulse 1s infinite;
+font-size: clamp(16px, 4vw, 25px);
+animation: pulse 1s infinite;
 }
 
 .current-turn {
-    font-size: 25px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background: rgba(255,255,255,0.1);
-    font-family: 'Pretendard', sans-serif;
-    color: #fff;
+font-size: clamp(16px, 4vw, 25px);
+font-weight: bold;
+padding: 5px 10px;
+border-radius: 5px;
+background: rgba(255,255,255,0.1);
+font-family: 'Pretendard', sans-serif;
+color: #fff;
+}
+
+.ai-thinking {
+background: rgba(255, 107, 107, 0.2) !important;
+animation: aiThinking 1.5s infinite;
 }
 
 @keyframes pulse {
@@ -277,21 +283,24 @@ body,
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
+@media (max-width: 480px) {
+   
+.back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px; width: 40px; height: 40px; font-size: 1.5em; }
+}
 
 </style>
 </head>
 <body>
-  <div class="game-container">
+  <body>
+  <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
+   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+ </button>
+<div class="game-container">
     <div class="header">
-      <div class="buttons">
-        <button class="game-button" onclick="restartGame()">↻ 다시 시작</button>
-        <button class="game-button" onclick="location.href='https://soosooland.com/trinkle/index.html'">← 뒤로 가기</button>
-      </div><br>
       <h1 class="game-title">트링클</h1>
     </div>
-
-    <div class="game-area" id="gameArea"></div>
-    
     <div class="scoreboard">
       <div class="player-score player1">
         <span id="player1Name">플레이어1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
@@ -301,6 +310,9 @@ body,
       </div>
       <div class="current-turn" id="currentTurn">플레이어1의 차례</div>
     </div>
+
+    <div class="game-area" id="gameArea"></div>
+    
   </div>
 
 <script>
