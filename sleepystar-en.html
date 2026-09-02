@@ -347,12 +347,8 @@ border-radius: 0;
 
 </head>
 <body>
-<button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
- </button>
-  
+<button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">←</button>
+
   <div class="game-container">
     <div class="header">
       <h1 class="game-title">TRINKLE vs SLEEPY TRINKY</h1>
@@ -473,7 +469,7 @@ function adjustParity(count, wantEven) {
 function showTooSmallWarning() {
     const warning = document.createElement('div');
     warning.id = 'tooSmallWarning';
-    warning.textContent = 'The screen is too small. Please rotate your device or play on a larger screen.';
+    warning.textContent = '화면이 너무 작아요. 화면을 회전하거나 더 큰 화면에서 플레이해주세요.';
     warning.style.cssText = `
         position: fixed;
         top: 50%;
@@ -522,26 +518,21 @@ function createPointsFromSaved() {
         points.push({ x: savedPoint.x, y: savedPoint.y, element: point, id: i });
     });
 }
-
-  let isProcessing = false;
-
-function selectPoint(pointId, x, y) {
-    if (isProcessing) return;   // 처리 중이면 무시
-    
-    if (selectedPoint === null) {
-        selectedPoint = { id: pointId, x, y };
-        points[pointId].element.classList.add('selected');
-    } else if (selectedPoint.id === pointId) {
-        points[pointId].element.classList.remove('selected');
-        selectedPoint = null;
-    } else {
-        isProcessing = true;
-        drawLine(selectedPoint, { id: pointId, x, y });
-        points[selectedPoint.id].element.classList.remove('selected');
-        selectedPoint = null;
-        setTimeout(() => { isProcessing = false; }, 150);  // 짧게 잠금
+    function selectPoint(pointId, x, y) {
+        console.log("Point selected:", pointId);
+        
+        if (selectedPoint === null) {
+            selectedPoint = { id: pointId, x, y };
+            points[pointId].element.classList.add('selected');
+        } else if (selectedPoint.id === pointId) {
+            points[pointId].element.classList.remove('selected');
+            selectedPoint = null;
+        } else {
+            drawLine(selectedPoint, { id: pointId, x, y });
+            points[selectedPoint.id].element.classList.remove('selected');
+            selectedPoint = null;
+        }
     }
-}
 
     function drawLine(point1, point2) {
         console.log("Drawing line:", point1.id, "->", point2.id);
