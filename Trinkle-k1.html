@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
-<script>
-  if (window.top !== window.self) {
-    window.top.location = "https://soosooland.com";
-  }
-  console.log("© 2025-2026 Soosooland by 한수수. All rights reserved.");
-  console.log("https://soosooland.com");
-  console.log("🎮 Trinkle | Born: 2025-06-07");
-</script>    
 <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
     <script>
@@ -19,32 +10,27 @@
       gtag('config', 'G-4YZHC1G9FN');
     </script>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>트링클친구</title>
-  <meta property="og:locale" content="ko_KR">
-  <meta property="og:locale:alternate" content="en_US">
-
-  <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
-  <script src="https://soosooland.com/js/protection.js"></script>
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <title>트링클친구</title>
+ <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
+ <script src="https://soosooland.com/js/protection.js">
+ </script>
+<style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-          touch-action: manipulation; /* 핀치 줌, 더블탭 줌 방지 */
+          touch-action: manipulation;
         }
 
 body {
-    touch-action: pan-x pan-y; /* 스크롤만 허용 */
-    user-select: none; /* 텍스트 선택 방지 */
+    touch-action: pan-x pan-y;
+    user-select: none;
     -webkit-user-select: none;
-    -webkit-touch-callout: none; /* iOS 길게 누르기 메뉴 방지 */
+    -webkit-touch-callout: none;
 }
-
 
 html {
     background: #0b0c1a !important;
@@ -64,7 +50,7 @@ body,
 }
 
 .header {
-    flex: 0 0 100px; 
+    flex: 0 0 100px;
     text-align: center;
     padding: 15px;
     color: white;
@@ -72,7 +58,7 @@ body,
 }
 
 .game-title {
-    font-size: clamp(1.3rem, 3vw, 1.5rem);
+    font-size: clamp(1.3rem, 3.7vw, 1.9rem);
     font-weight: bold;
     width: 30%;
     margin: 0 auto;
@@ -87,21 +73,33 @@ body,
     gap: 10px;
 }
 
-.back-button { position: fixed; top: max(48px, env(safe-area-inset-top) + 20px); left: 22px; width: 44px; height: 44px; padding: 0; font-size: 1.8em; font-weight: bold; 
-   background: rgba(255,255,255,0.9);
- color: #145454; 
-border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;z-index: 100;}
+.game-button {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #145454;
+}
 
+.game-button:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+    font-family: 'Pretendard', sans-serif;
+}
 
 .game-area {
-    flex: 1; /* 나머지 공간 모두 차지 */
+    flex: 1;
     position: absolute;
     top: 80px;
     left: 0;
     right: 0;
     bottom: 0;
     background: #145454 ;
-    
 }
 
 .point {
@@ -128,12 +126,12 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
 .point:hover::before {
     transform: scale(1.2);
     background: #Fcefa4;
-    }
+}
 
 .point.selected::before {
     background: #F7f883;
-    transform: scale(2.0);
-    }
+    transform: scale(1.4);
+}
 
 .line {
     position: absolute;
@@ -155,158 +153,172 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
     pointer-events: none;
 }
 
-
 .scoreboard {
-flex: 0 0 100px;  /* 고정 높이 */
-position: absolute;
-bottom: 20px;
-left: 20px;
-right: 20px;
-background: #145454;
-padding: 15px;
-font-family: ‘Pretendard’, sans-serif;
-color: #fffde7;
-z-index: 50;
-pointer-events: auto;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border-radius: 10px;
+    flex: 0 0 100px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: #145454;
+    padding: 15px;
+    font-family: 'Pretendard', sans-serif;
+    color: #fffde7;
+    z-index: 50;
+    pointer-events: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
 }
 
 .player-score {
-font-size: clamp(16px, 4vw, 25px);
-font-weight: bold;
-display: flex;
-align-items: center;
-gap: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .player1 { color: white; }
 .player2 { color: pink; }
 
 .turn-indicator {
-font-size: clamp(16px, 4vw, 25px);
-animation: pulse 1s infinite;
+    font-size: 25px;
+    animation: pulse 1s infinite;
 }
 
 .current-turn {
-font-size: clamp(16px, 4vw, 25px);
-font-weight: bold;
-padding: 5px 10px;
-border-radius: 5px;
-background: rgba(255,255,255,0.1);
-font-family: ‘Pretendard’, sans-serif;
-color: #fff;
-}
-
-.ai-thinking {
-background: rgba(255, 107, 107, 0.2) !important;
-animation: aiThinking 1.5s infinite;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.1);
+    font-family: 'Pretendard', sans-serif;
+    color: #fff;
 }
 
 @keyframes pulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.5; }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
-/* 모바일 세로 모드 */
 @media (max-width: 768px) and (orientation: portrait) {
-.game-container {
-    height: 100dvh; /* 동적 뷰포트 높이 */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
-             env(safe-area-inset-bottom) env(safe-area-inset-left);
-}
+    .game-container {
+        height: 100dvh;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+                 env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
 
-.header {
-padding: 5px;
-}
+    .header {
+        padding: 5px;
+    }
 
+    .game-title {
+        font-size: 1.8rem;
+        width: 100%;
+        margin: 10px auto;
+    }
 
-.game-title {
-    font-size: 1.8rem;
-    width: 100%;
-    margin: 20px auto ;
-}
+    .buttons {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        justify-content: center;
+        margin-bottom: 0;
+    }
 
-.buttons {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    justify-content: center;
-    margin: 0;
-   }
+    .game-button {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
 
-.game-area {
-    top: 80px;
-}
+    .game-area {
+        top: 80px;
+    }
 
-.scoreboard {
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    padding: 10px;
-}
+    .scoreboard {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px;
+    }
 
+    .player-score {
+        font-size: 18px;
+    }
+
+    .current-turn {
+        font-size: 16px;
+    }
+
+    .point {
+        width: 40px;
+        height: 40px;
+    }
+
+    .point::before {
+        width: 12px;
+        height: 12px;
+    }
 }
 
 @media (max-height: 800px) {
-.blackboard {
-border: none;
-width: 100vw;
-height: 100vh;
-border-radius: 0;
+    .blackboard {
+        border: none;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
 }
-}
+
 .game-container {
-    height: 100dvh; /* 동적 뷰포트 높이 */
+    height: 100dvh;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-@media (max-width: 480px) {
-   
-.back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px; width: 40px; height: 40px; font-size: 1.5em; }
-}
 </style>
 </head>
 <body>
-  <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">←</button>
-<div class="game-container">
+  <div class="game-container">
     <div class="header">
-      <h1 class="game-title">트링클 친구</h1>
+      <div class="buttons">
+        <button class="game-button" onclick="restartGame()">↻ 다시 시작</button>
+        <button class="game-button" onclick="location.href='https://soosooland.com/trinkle/index.html'">← 뒤로 가기</button>
+      </div><br>
+      <h1 class="game-title">트링클</h1>
     </div>
 
-
-<div class="game-area" id="gameArea"></div>
-  <div class="scoreboard">
-    <div class="player-score player1">
-      <span id="player1Name">P1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+    <div class="game-area" id="gameArea"></div>
+    
+    <div class="scoreboard">
+      <div class="player-score player1">
+        <span id="player1Name">플레이어1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+      </div>
+      <div class="player-score player2">
+        <span id="player2Name">플레이어2</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+      </div>
+      <div class="current-turn" id="currentTurn">플레이어1의 차례</div>
     </div>
-    <div class="player-score player2">
-      <span id="player2Name">P2</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
-    </div>
-    <div class="current-turn" id="currentTurn">P1의 차례</div>
   </div>
-</div>
+
 <script>
+    console.log("스크립트 시작");
     
     const gameArea = document.getElementById('gameArea');
     const scoreBoard = document.querySelector('.scoreboard');
     let points = [];
-    let savedPoints = [];
     let lines = [];
     let triangles = [];
     let currentPlayer = 1;
     let selectedPoint = null;
     let scores = { player1: 0, player2: 0 };
+    let gridInfo = { rows: 0, cols: 0 };
     
-    // 플레이어 이름 변수
-    let player1Name = 'P1';
-    let player2Name = 'P2';
+    let player1Name = '플레이어1';
+    let player2Name = '플레이어2';
     
-    // localStorage에서 플레이어 이름 로드
     function loadPlayerNames() {
         const savedPlayer1 = localStorage.getItem('player1Name');
         const savedPlayer2 = localStorage.getItem('player2Name');
@@ -315,125 +327,176 @@ border-radius: 0;
             player1Name = savedPlayer1;
             player2Name = savedPlayer2;
             
-            // HTML 업데이트
             document.getElementById('player1Name').textContent = player1Name;
             document.getElementById('player2Name').textContent = player2Name;
             
+            console.log("플레이어 이름 로드됨:", player1Name, player2Name);
         } else {
+            console.log("저장된 플레이어 이름이 없습니다. 기본값 사용.");
         }
     }
 
-function createPoints() {
-    
-    const areaRect = gameArea.getBoundingClientRect();
-    const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;
-    const margin = 40;
-    
-    // 화면 크기에 따라 기본 점 개수 설정 후 랜덤으로 홀짝 조절
-    let baseCount;
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        baseCount = 10;
-        pointCount = Math.random() < 0.45 ? 10 : 11;  // 짝수 또는 홀수
-    } else if (areaRect.width > 1200) {
-        baseCount = 20;
-        pointCount = Math.random() < 0.5 ? 20 : 21;  // 아이패드 프로
-    } else if (areaRect.width > 1000) {
-        baseCount = 16;
-        pointCount = Math.random() < 0.5 ? 16 : 17;  // 일반 아이패드
-    } else {
-        baseCount = 12;
-        pointCount = Math.random() < 0.5 ? 12 : 13;  // 아이패드 미니
+    // 점 개수에 맞는 격자 크기 결정
+    function getGridSize(targetPoints, isMobile) {
+        if (isMobile) {
+            if (targetPoints <= 9) return { rows: 3, cols: 3 };
+            if (targetPoints <= 12) return { rows: 4, cols: 3 };
+            if (targetPoints <= 15) return { rows: 5, cols: 3 };
+            if (targetPoints <= 16) return { rows: 4, cols: 4 };
+            if (targetPoints <= 20) return { rows: 5, cols: 4 };
+            return { rows: 6, cols: 4 };
+        }
+        
+        if (targetPoints <= 9) return { rows: 3, cols: 3 };
+        if (targetPoints <= 12) return { rows: 3, cols: 4 };
+        if (targetPoints <= 16) return { rows: 4, cols: 4 };
+        if (targetPoints <= 20) return { rows: 4, cols: 5 };
+        if (targetPoints <= 25) return { rows: 5, cols: 5 };
+        return { rows: 6, cols: 6 };
     }
 
+    // 격자로 점 생성
+    function createPoints() {
+        console.log("격자로 점을 찍고 있어요");
         
-        for (let i = 0; i < pointCount; i++) {
-            let validPosition = false;
-            let attempts = 0;
-            let x, y;
+        const areaRect = gameArea.getBoundingClientRect();
+        const margin = 80;
+        
+        let targetPoints;
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            targetPoints = Math.random() < 0.45 ? 10 : 11;
+        } else if (areaRect.width > 1200) {
+            targetPoints = Math.random() < 0.5 ? 20 : 21;
+        } else if (areaRect.width > 1000) {
+            targetPoints = Math.random() < 0.5 ? 16 : 17;
+        } else {
+            targetPoints = Math.random() < 0.5 ? 12 : 13;
+        }
 
-            while (!validPosition && attempts < 50) {
-                x = margin + Math.random() * (areaRect.width - 2 * margin);
-                y = margin + Math.random() * (areaRect.height - 2 * margin - 100);
-
-                validPosition = true;
-                for (let existingPoint of points) {
-                    const distance = Math.sqrt(Math.pow(x - existingPoint.x, 2) + Math.pow(y - existingPoint.y, 2));
-                    if (distance < minDistance) {
-                        validPosition = false;
-                        break;
+        // 격자 크기 결정
+        gridInfo = getGridSize(targetPoints, isMobile);
+        const { rows, cols } = gridInfo;
+        const totalGridPoints = rows * cols;
+        
+        console.log(`목표: ${targetPoints}개, 격자: ${rows}×${cols} (총 ${totalGridPoints}개)`);
+        
+        // 사용 가능한 영역 계산
+        const usableWidth = areaRect.width - 2 * margin;
+        const usableHeight = areaRect.height - 2 * margin - 120;
+        
+        // 격자 간격 계산 (화면에 맞춤)
+        const spacingX = usableWidth / (cols - 1);
+        const spacingY = usableHeight / (rows - 1);
+        
+        console.log(`계산된 간격: X=${spacingX.toFixed(1)}px, Y=${spacingY.toFixed(1)}px`);
+        
+        // 랜덤 이동 범위
+        const jitterXInner = spacingX * 0.5;
+        const jitterYInner = spacingY * 0.5;
+        const jitterXEdge = spacingX * 0.4;
+        const jitterYEdge = spacingY * 0.4;
+        
+        // 모든 격자 교차점 생성
+        let gridPoints = [];
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const baseX = margin + col * spacingX;
+                const baseY = margin + row * spacingY;
+                
+                const isEdge = row === 0 || row === rows - 1 || col === 0 || col === cols - 1;
+                
+                let x, y;
+                if (isEdge) {
+                    // 가장자리는 안쪽으로만 이동
+                    let offsetX = 0;
+                    let offsetY = 0;
+                    
+                    if (col === 0) {
+                        offsetX = Math.random() * jitterXEdge;
+                    } else if (col === cols - 1) {
+                        offsetX = -Math.random() * jitterXEdge;
                     }
+                    
+                    if (row === 0) {
+                        offsetY = Math.random() * jitterYEdge;
+                    } else if (row === rows - 1) {
+                        offsetY = -Math.random() * jitterYEdge;
+                    }
+                    
+                    x = baseX + offsetX;
+                    y = baseY + offsetY;
+                } else {
+                    // 내부 점은 자유롭게 이동
+                    x = baseX + (Math.random() - 0.5) * jitterXInner;
+                    y = baseY + (Math.random() - 0.5) * jitterYInner;
                 }
-                attempts++;
-            }
-
-            if (validPosition) {
-                const point = document.createElement('div');
-                point.className = 'point';
-                point.style.left = (x - 25) + 'px';
-                point.style.top = (y - 25) + 'px';
                 
-                // 터치와 클릭 이벤트 모두 추가
-                point.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectPoint(i, x, y);
-                });
-                
-                point.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    selectPoint(i, x, y);
-                });
-                
-                // 더 넓은 터치 영역을 위한 추가 이벤트
-                point.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                });
-                
-                gameArea.appendChild(point);
-                points.push({ x, y, element: point, id: i });
+                gridPoints.push({ x, y, row, col, isEdge });
             }
         }
-
-    // 점 배치 저장 (처음 생성할 때만)
-    if (savedPoints.length === 0) {
-        savedPoints = points.map(p => ({ x: p.x, y: p.y, id: p.id }));
+        
+        // 목표 개수에 맞게 조정 (모든 점에서 제거 가능!)
+        if (totalGridPoints > targetPoints) {
+            const needToRemove = totalGridPoints - targetPoints;
+            let availablePoints = [...gridPoints];  // 모든 점 포함
+            
+            for (let i = 0; i < needToRemove && availablePoints.length > 0; i++) {
+                const randomIndex = Math.floor(Math.random() * availablePoints.length);
+                const pointToRemove = availablePoints[randomIndex];
+                
+                const gridIndex = gridPoints.findIndex(p => 
+                    p.row === pointToRemove.row && p.col === pointToRemove.col
+                );
+                
+                if (gridIndex > -1) {
+                    gridPoints.splice(gridIndex, 1);
+                    availablePoints.splice(randomIndex, 1);
+                }
+            }
+        }
+        
+        // 점 생성 및 배치
+        gridPoints.forEach((pointData, i) => {
+            const point = document.createElement('div');
+            point.className = 'point';
+            point.style.left = (pointData.x - 25) + 'px';
+            point.style.top = (pointData.y - 25) + 'px';
+            
+            point.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                selectPoint(i, pointData.x, pointData.y);
+            });
+            
+            point.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                selectPoint(i, pointData.x, pointData.y);
+            });
+            
+            point.addEventListener('touchend', function(e) {
+                e.preventDefault();
+            });
+            
+            gameArea.appendChild(point);
+            points.push({ 
+                x: pointData.x,
+                y: pointData.y,
+                element: point, 
+                id: i,
+                row: pointData.row,
+                col: pointData.col,
+                isEdge: pointData.isEdge
+            });
+        });
+        
+        console.log(`생성된 점: ${points.length}개`);
     }
-}
-
-// 저장된 점 배치로 점 재생성
-function createPointsFromSaved() {
-    savedPoints.forEach((savedPoint, i) => {
-        const point = document.createElement('div');
-        point.className = 'point';
-        point.style.left = (savedPoint.x - 25) + 'px';
-        point.style.top = (savedPoint.y - 25) + 'px';
-        
-        // 터치와 클릭 이벤트 모두 추가
-        point.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            selectPoint(i, savedPoint.x, savedPoint.y);
-        });
-        
-        point.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            selectPoint(i, savedPoint.x, savedPoint.y);
-        });
-        
-        point.addEventListener('touchend', function(e) {
-            e.preventDefault();
-        });
-        
-        gameArea.appendChild(point);
-        points.push({ x: savedPoint.x, y: savedPoint.y, element: point, id: i });
-    });
-}
 
     function selectPoint(pointId, x, y) {
+        console.log("Point selected:", pointId);
         
         if (selectedPoint === null) {
             selectedPoint = { id: pointId, x, y };
@@ -449,76 +512,193 @@ function createPointsFromSaved() {
     }
 
     function drawLine(point1, point2) {
-    const existingLine = lines.find(line =>
-        (line.point1 === point1.id && line.point2 === point2.id) ||
-        (line.point1 === point2.id && line.point2 === point1.id)
-    );
+        console.log("Drawing line:", point1.id, "->", point2.id);
 
-    if (existingLine) {
-        return;
-    }
+        const existingLine = lines.find(line =>
+            (line.point1 === point1.id && line.point2 === point2.id) ||
+            (line.point1 === point2.id && line.point2 === point1.id)
+        );
 
-    if (lineIntersectsExistingLines(point1, point2)) {
-        showWarningMessage("선분이 다른 선분과 교차할 수 없습니다!");
-        return;
-    }
-
-    const line = document.createElement('div');
-    line.className = 'line';
-
-    const dx = point2.x - point1.x;
-    const dy = point2.y - point1.y;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-
-    line.style.width = length + 'px';
-    line.style.left = point1.x + 'px';
-    line.style.top = (point1.y - 1.5) + 'px';
-    line.style.transform = `rotate(${angle}deg)`;
-    line.style.background = currentPlayer === 1 ? 'white' : 'pink';
-
-    gameArea.appendChild(line);
-    lines.push({
-        point1: point1.id,
-        point2: point2.id,
-        player: currentPlayer,
-        element: line
-    });
-
-    const newTriangles = checkForAllTriangles(point1.id, point2.id);
-    if (newTriangles.length > 0) {
-        newTriangles.forEach(triangle => createTriangle(triangle));
-        scores[`player${currentPlayer}`] += newTriangles.length;
-        updateScoreboard();
-        
-        // ✅ 게임 종료 확인
-        if (checkGameOver()) {
-            setTimeout(() => endGame(), 500);
+        if (existingLine) {
+            console.log("이미 선이 있어요.");
+            return;
         }
-    } else {
-        currentPlayer = currentPlayer === 1 ? 2 : 1;
-        updateTurnDisplay();
-        
-        // ✅ 게임 종료 확인
-        if (checkGameOver()) {
-            setTimeout(() => endGame(), 500);
-        }
-    }
-}
 
-    // 새로 그으려는 선분이 기존 선분들과 교차하는지 확인
+        if (lineIntersectsExistingLines(point1, point2)) {
+            console.log("다른 선분과 교차함");
+            showWarningMessage("선분이 다른 선분과 교차할 수 없습니다!");
+            return;
+        }
+
+        for (let point of points) {
+            if (linePassesThroughPoint(point1, point2, point)) {
+                console.log("선분이 다른 점을 지나감:", point.id);
+                showWarningMessage("선분이 다른 점을 지나갈 수 없습니다!");
+                return;
+            }
+        }
+
+        const line = document.createElement('div');
+        line.className = 'line';
+
+        const dx = point2.x - point1.x;
+        const dy = point2.y - point1.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+        line.style.width = length + 'px';
+        line.style.left = point1.x + 'px';
+        line.style.top = (point1.y - 1.5) + 'px';
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.background = currentPlayer === 1 ? 'white' : 'pink';
+
+        gameArea.appendChild(line);
+        lines.push({
+            point1: point1.id,
+            point2: point2.id,
+            player: currentPlayer,
+            element: line
+        });
+
+        const newTriangles = checkForAllTriangles(point1.id, point2.id);
+        if (newTriangles.length > 0) {
+            newTriangles.forEach(triangle => createTriangle(triangle));
+            scores[`player${currentPlayer}`] += newTriangles.length;
+            updateScoreboard();
+        } else {
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            updateTurnDisplay();
+        }
+
+        checkGameOver();
+    }
+
+    function linePassesThroughPoint(lineStart, lineEnd, point) {
+        if (point.id === lineStart.id || point.id === lineEnd.id) {
+            return false;
+        }
+        
+        const x1 = lineStart.x;
+        const y1 = lineStart.y;
+        const x2 = lineEnd.x;
+        const y2 = lineEnd.y;
+        const px = point.x;
+        const py = point.y;
+        
+        const A = px - x1;
+        const B = py - y1;
+        const C = x2 - x1;
+        const D = y2 - y1;
+        
+        const dot = A * C + B * D;
+        const lenSq = C * C + D * D;
+        
+        let param = -1;
+        if (lenSq !== 0) {
+            param = dot / lenSq;
+        }
+        
+        let xx, yy;
+        
+        if (param < 0) {
+            xx = x1;
+            yy = y1;
+        } else if (param > 1) {
+            xx = x2;
+            yy = y2;
+        } else {
+            xx = x1 + param * C;
+            yy = y1 + param * D;
+        }
+        
+        const dx = px - xx;
+        const dy = py - yy;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        return distance < 8;
+    }
+
+    function checkGameOver() {
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                const p1 = points[i];
+                const p2 = points[j];
+                
+                const lineExists = lines.some(line =>
+                    (line.point1 === p1.id && line.point2 === p2.id) ||
+                    (line.point1 === p2.id && line.point2 === p1.id)
+                );
+                
+                if (lineExists) continue;
+                
+                const wouldIntersect = lineIntersectsExistingLines(
+                    { id: p1.id, x: p1.x, y: p1.y },
+                    { id: p2.id, x: p2.x, y: p2.y }
+                );
+                
+                if (wouldIntersect) continue;
+                
+                let passesThrough = false;
+                for (let k = 0; k < points.length; k++) {
+                    if (k === i || k === j) continue;
+                    if (linePassesThroughPoint(
+                        { id: p1.id, x: p1.x, y: p1.y },
+                        { id: p2.id, x: p2.x, y: p2.y },
+                        points[k]
+                    )) {
+                        passesThrough = true;
+                        break;
+                    }
+                }
+                
+                if (!passesThrough) {
+                    console.log(`아직 그을 수 있는 선이 있음: ${i} - ${j}`);
+                    return;
+                }
+            }
+        }
+        
+        console.log("더 이상 그을 수 있는 선이 없습니다!");
+        endGame();
+    }
+
+    function endGame() {
+        console.log("게임 종료!");
+        
+        let winner = '';
+        if (scores.player1 > scores.player2) {
+            winner = `${player1Name} 승리!`;
+        } else if (scores.player2 > scores.player1) {
+            winner = `${player2Name} 승리!`;
+        } else {
+            winner = '무승부!';
+        }
+        
+        showGameOverMessage(winner);
+    }
+
+    function showGameOverMessage(message) {
+        const currentTurnDiv = document.getElementById('currentTurn');
+        currentTurnDiv.innerHTML = `🎮 게임 종료!<br>${message}`;
+        currentTurnDiv.style.background = 'rgba(255, 215, 0, 0.3)';
+        currentTurnDiv.style.color = '#FFD700';
+        currentTurnDiv.style.fontSize = '20px';
+        currentTurnDiv.style.animation = 'pulse 1.5s infinite';
+        
+        document.getElementById('turn1').style.display = 'none';
+        document.getElementById('turn2').style.display = 'none';
+    }
+
     function lineIntersectsExistingLines(newPoint1, newPoint2) {
         for (let existingLine of lines) {
             const existingP1 = points[existingLine.point1];
             const existingP2 = points[existingLine.point2];
             
-            // 새 선분과 기존 선분이 같은 점을 공유하는 경우는 교차로 보지 않음
             if (newPoint1.id === existingLine.point1 || newPoint1.id === existingLine.point2 ||
                 newPoint2.id === existingLine.point1 || newPoint2.id === existingLine.point2) {
                 continue;
             }
             
-            // 두 선분의 교차점 확인
             if (doLinesIntersect(
                 newPoint1.x, newPoint1.y, newPoint2.x, newPoint2.y,
                 existingP1.x, existingP1.y, existingP2.x, existingP2.y
@@ -529,14 +709,9 @@ function createPointsFromSaved() {
         return false;
     }
 
-    // 두 선분이 교차하는지 확인하는 함수
     function doLinesIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
-        // 선분 1: (x1, y1) - (x2, y2)
-        // 선분 2: (x3, y3) - (x4, y4)
-        
         const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
         
-        // 평행한 경우
         if (Math.abs(denom) < 1e-10) {
             return false;
         }
@@ -544,19 +719,15 @@ function createPointsFromSaved() {
         const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
         const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
         
-        // 교점이 두 선분 모두의 범위 내에 있는지 확인
         return t > 0 && t < 1 && u > 0 && u < 1;
     }
 
-    // 경고 메시지 표시 함수
     function showWarningMessage(message) {
-        // 기존 경고 메시지가 있다면 제거
         const existingWarning = document.getElementById('warningMessage');
         if (existingWarning) {
             existingWarning.remove();
         }
 
-        // 새 경고 메시지 생성
         const warning = document.createElement('div');
         warning.id = 'warningMessage';
         warning.textContent = message;
@@ -569,17 +740,15 @@ function createPointsFromSaved() {
             color: white;
             padding: 15px 25px;
             border-radius: 10px;
-            font-family: 'Times New Roman', serif;
+            font-family: 'Pretendard', sans-serif;
             font-size: 18px;
             font-weight: bold;
             z-index: 1000;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            animation: fadeInOut 2s ease-in-out;
         `;
 
         document.body.appendChild(warning);
 
-        // 2초 후 자동으로 제거
         setTimeout(() => {
             if (warning && warning.parentNode) {
                 warning.remove();
@@ -587,182 +756,38 @@ function createPointsFromSaved() {
         }, 2000);
     }
 
-
-// 점이 삼각형 내부에 있는지 확인하는 함수
-function isPointInTriangle(px, py, ax, ay, bx, by, cx, cy) {
-    // 삼각형의 면적을 계산하는 함수
-    function triangleArea(x1, y1, x2, y2, x3, y3) {
-        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2);
-    }
-    
-    const areaABC = triangleArea(ax, ay, bx, by, cx, cy);
-    const areaPAB = triangleArea(px, py, ax, ay, bx, by);
-    const areaPBC = triangleArea(px, py, bx, by, cx, cy);
-    const areaPCA = triangleArea(px, py, cx, cy, ax, ay);
-    
-    // 오차 범위 허용 (부동소수점 오차 때문에)
-    return Math.abs(areaABC - (areaPAB + areaPBC + areaPCA)) < 0.01;
-}
-
-// 삼각형 내부에 다른 점이 있는지 확인
-function hasPointInsideTriangle(trianglePoints) {
-    const p1 = points[trianglePoints[0]];
-    const p2 = points[trianglePoints[1]];
-    const p3 = points[trianglePoints[2]];
-    
-    // 삼각형의 세 꼭짓점을 제외한 모든 점을 확인
-    for (let point of points) {
-        if (point.id === trianglePoints[0] || 
-            point.id === trianglePoints[1] || 
-            point.id === trianglePoints[2]) {
-            continue;
-        }
+    function checkForAllTriangles(newPoint1, newPoint2) {
+        const completedTriangles = [];
         
-        if (isPointInTriangle(point.x, point.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)) {
-            return true;
-        }
-    }
-    
-    return false;
-}
-
-// checkForAllTriangles 함수 수정
-function checkForAllTriangles(newPoint1, newPoint2) {
-    const completedTriangles = [];
-    
-    for (let point of points) {
-        if (point.id === newPoint1 || point.id === newPoint2) continue;
-        
-        const hasLine1 = lines.some(line => 
-            (line.point1 === newPoint1 && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === newPoint1)
-        );
-        
-        const hasLine2 = lines.some(line => 
-            (line.point1 === newPoint2 && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === newPoint2)
-        );
-
-        if (hasLine1 && hasLine2) {
-            const triangle = [newPoint1, newPoint2, point.id].sort((a, b) => a - b);
+        for (let point of points) {
+            if (point.id === newPoint1 || point.id === newPoint2) continue;
             
-            const triangleExists = triangles.some(existingTriangle => {
-                const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
-                return JSON.stringify(triangle) === JSON.stringify(existingPoints);
-            });
-            
-            // ✅ 삼각형 내부에 점이 있는지 확인
-            if (!triangleExists && !hasPointInsideTriangle(triangle)) {
-                completedTriangles.push(triangle);
-            }
-        }
-    }
-    
-    return completedTriangles;
-}
-
-// 게임 종료 확인 함수
-function checkGameOver() {
-    // 모든 가능한 선분 조합을 확인
-    for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-            const point1 = points[i];
-            const point2 = points[j];
-            
-            // 이미 그어진 선인지 확인
-            const lineExists = lines.some(line =>
-                (line.point1 === i && line.point2 === j) ||
-                (line.point1 === j && line.point2 === i)
+            const hasLine1 = lines.some(line => 
+                (line.point1 === newPoint1 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint1)
             );
             
-            if (lineExists) continue;
-            
-            // 선이 교차하는지 확인
-            if (lineIntersectsExistingLines(point1, point2)) continue;
-            
-            // 이 선을 그었을 때 만들어지는 삼각형들을 확인
-            const wouldMakeValidTriangle = checkIfLineCreatesValidTriangle(i, j);
-            
-            // 유효한 삼각형을 만들거나, 삼각형을 만들지 않는 선이 있으면 게임 계속
-            if (wouldMakeValidTriangle || !wouldMakeAnyTriangle(i, j)) {
-                return false;
+            const hasLine2 = lines.some(line => 
+                (line.point1 === newPoint2 && line.point2 === point.id) ||
+                (line.point1 === point.id && line.point2 === newPoint2)
+            );
+
+            if (hasLine1 && hasLine2) {
+                const triangle = [newPoint1, newPoint2, point.id].sort((a, b) => a - b);
+                
+                const triangleExists = triangles.some(existingTriangle => {
+                    const existingPoints = existingTriangle.points.slice().sort((a, b) => a - b);
+                    return JSON.stringify(triangle) === JSON.stringify(existingPoints);
+                });
+                
+                if (!triangleExists) {
+                    completedTriangles.push(triangle);
+                }
             }
         }
+        
+        return completedTriangles;
     }
-    
-    // 더 이상 그을 수 있는 선이 없으면 게임 종료
-    return true;
-}
-
-// 선이 삼각형을 만드는지 확인
-function wouldMakeAnyTriangle(point1Id, point2Id) {
-    for (let point of points) {
-        if (point.id === point1Id || point.id === point2Id) continue;
-        
-        const hasLine1 = lines.some(line => 
-            (line.point1 === point1Id && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === point1Id)
-        );
-        
-        const hasLine2 = lines.some(line => 
-            (line.point1 === point2Id && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === point2Id)
-        );
-        
-        if (hasLine1 && hasLine2) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// 선이 유효한 삼각형을 만드는지 확인
-function checkIfLineCreatesValidTriangle(point1Id, point2Id) {
-    for (let point of points) {
-        if (point.id === point1Id || point.id === point2Id) continue;
-        
-        const hasLine1 = lines.some(line => 
-            (line.point1 === point1Id && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === point1Id)
-        );
-        
-        const hasLine2 = lines.some(line => 
-            (line.point1 === point2Id && line.point2 === point.id) ||
-            (line.point1 === point.id && line.point2 === point2Id)
-        );
-        
-        if (hasLine1 && hasLine2) {
-            const triangle = [point1Id, point2Id, point.id];
-            if (!hasPointInsideTriangle(triangle)) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-// 게임 종료 처리 함수
-function endGame() {
-    const currentTurnElement = document.getElementById('currentTurn');
-    
-    if (scores.player1 > scores.player2) {
-        currentTurnElement.textContent = `${player1Name} 승리! 🎉`;
-        currentTurnElement.style.color = 'white';
-        currentTurnElement.style.background = 'rgba(255, 255, 255, 0.2)';
-    } else if (scores.player2 > scores.player1) {
-        currentTurnElement.textContent = `${player2Name} 승리! 🎉`;
-        currentTurnElement.style.color = 'pink';
-        currentTurnElement.style.background = 'rgba(255, 192, 203, 0.2)';
-    } else {
-        currentTurnElement.textContent = '무승부! ';
-        currentTurnElement.style.color = '#fffde7';
-        currentTurnElement.style.background = 'rgba(255, 255, 255, 0.15)';
-    }
-    
-    // 차례 표시 별 숨기기
-    document.getElementById('turn1').style.display = 'none';
-    document.getElementById('turn2').style.display = 'none';
-}
 
     function createTriangle(trianglePoints) {
         const p1 = points[trianglePoints[0]];
@@ -792,88 +817,52 @@ function endGame() {
         const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
         document.getElementById('currentTurn').textContent = `${currentPlayerName}의 차례`;
         document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
+        document.getElementById('currentTurn').style.background = 'rgba(255,255,255,0.1)';
+        document.getElementById('currentTurn').style.fontSize = '25px';
         
         document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
         document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
     }
 
-// 같은 판으로 재시작 - 점 배치 유지
-function restartSameBoard() {
-    // 선택된 점 해제
-    if (selectedPoint !== null) {
-        points[selectedPoint.id].element.classList.remove('selected');
-        selectedPoint = null;
-    }
-    
-    // 모든 선과 삼각형만 제거
-    lines.forEach(line => line.element.remove());
-    triangles.forEach(triangle => triangle.element.remove());
-    
-    // 배열 초기화 (점은 유지)
-    lines = [];
-    triangles = [];
-    
-    // 게임 상태 초기화
-    currentPlayer = 1;
-    scores = { player1: 0, player2: 0 };
-    
-    // UI 업데이트
-    updateScoreboard();
-    updateTurnDisplay();
-}
-
-// 새 게임 시작 - 점 배치도 새로 생성
-function newGame() {
-    // 선택된 점 해제
-    if (selectedPoint !== null) {
-        points[selectedPoint.id].element.classList.remove('selected');
-        selectedPoint = null;
-    }
+    function restartGame() {
+        console.log("게임 다시 시작");
         
-        // 모든 점, 선, 삼각형 제거
         points.forEach(point => point.element.remove());
         lines.forEach(line => line.element.remove());
         triangles.forEach(triangle => triangle.element.remove());
         
-        // 배열 초기화
         points = [];
-        savedPoints = [];
         lines = [];
         triangles = [];
         
-        // 게임 상태 초기화
         currentPlayer = 1;
         selectedPoint = null;
         scores = { player1: 0, player2: 0 };
         
-        // UI 업데이트
         updateScoreboard();
         updateTurnDisplay();
         
-        // 새 점들 생성
         setTimeout(createPoints, 100);
     }
 
-    // 인덱스로 가기 함수
     function goToIndex() {
-        
-localStorage.removeItem('player1Name');
-localStorage.removeItem('player2Name');
-window.location.href = "index.html";
+        console.log("처음으로 가기");
+        localStorage.removeItem('player1Name');
+        localStorage.removeItem('player2Name');
+        window.location.href = "index.html";
     }
 
-    // 페이지 로드 완료 후 실행
     window.addEventListener('load', function() {
-        loadPlayerNames(); // 플레이어 이름 먼저 로드
+        console.log("페이지 로드 완료");
+        loadPlayerNames();
         setTimeout(createPoints, 100);
         updateTurnDisplay();
     });
 
-    // 디버깅용 - 게임 영역 클릭시 정보 출력
     gameArea.addEventListener('click', function(e) {
+        console.log("게임 영역 클릭:", e.clientX, e.clientY);
     });
-
-  </script>
+</script>
 
 </body>
 </html>
