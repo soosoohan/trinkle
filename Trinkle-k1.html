@@ -326,12 +326,8 @@ border-radius: 0;
 </style>
 </head>
 <body>
-  <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
- </button>
-  <div class="game-container">
+  <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">←</button>
+<div class="game-container">
     <div class="header">
       <h1 class="game-title">트링클 2인 대결</h1>
     </div>
@@ -339,12 +335,12 @@ border-radius: 0;
 
   <div class="scoreboard">
     <div class="player-score player1">
-      <span id="player1Name">하양</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+      <span id="player1Name">P1</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
     </div>
     <div class="player-score player2">
-      <span id="player2Name">분홍</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+      <span id="player2Name">P2</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
     </div>
-    <div class="current-turn" id="currentTurn">하양의 차례</div>
+    <div class="current-turn" id="currentTurn">P1의 차례</div>
   </div>
   <div class="game-area" id="gameArea"></div>
   <div class="buttons bottom-buttons">
@@ -363,12 +359,11 @@ border-radius: 0;
     let triangles = [];
     let currentPlayer = 1;
     let selectedPoint = null;
-    let scores = { player1: 0, player2: 0 };
+    let scores = { P1: 0, P2: 0 };
     
     // 플레이어 이름 변수
-    // 수정
-    let player1Name = '하양';
-    let player2Name = '분홍';
+    let player1Name = 'P1';
+    let player2Name = 'P2';
     
     // localStorage에서 플레이어 이름 로드
     function loadPlayerNames() {
@@ -472,21 +467,20 @@ function showTooSmallWarning() {
     warning.id = 'tooSmallWarning';
     warning.textContent = '화면이 너무 작아요. 화면을 회전하거나 더 큰 화면에서 플레이해주세요.';
     warning.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 100, 255, 0.9);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-family: 'Times New Roman', serif;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 1000;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-    animation: fadeInOut 2s ease-in-out;
-    pointer-events: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(200, 0, 0, 0.9);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        font-family: 'Pretendard', sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        z-index: 1000;
+        text-align: center;
+        max-width: 80%;
     `;
     gameArea.appendChild(warning);
 }
@@ -520,25 +514,21 @@ function createPointsFromSaved() {
         points.push({ x: savedPoint.x, y: savedPoint.y, element: point, id: i });
     });
 }
-let isProcessing = false;
 
-function selectPoint(pointId, x, y) {
-    if (isProcessing) return;   // 처리 중이면 무시
-    
-    if (selectedPoint === null) {
-        selectedPoint = { id: pointId, x, y };
-        points[pointId].element.classList.add('selected');
-    } else if (selectedPoint.id === pointId) {
-        points[pointId].element.classList.remove('selected');
-        selectedPoint = null;
-    } else {
-        isProcessing = true;
-        drawLine(selectedPoint, { id: pointId, x, y });
-        points[selectedPoint.id].element.classList.remove('selected');
-        selectedPoint = null;
-        setTimeout(() => { isProcessing = false; }, 150);  // 짧게 잠금
+    function selectPoint(pointId, x, y) {
+        
+        if (selectedPoint === null) {
+            selectedPoint = { id: pointId, x, y };
+            points[pointId].element.classList.add('selected');
+        } else if (selectedPoint.id === pointId) {
+            points[pointId].element.classList.remove('selected');
+            selectedPoint = null;
+        } else {
+            drawLine(selectedPoint, { id: pointId, x, y });
+            points[selectedPoint.id].element.classList.remove('selected');
+            selectedPoint = null;
+        }
     }
-}
 
     function drawLine(point1, point2) {
     const existingLine = lines.find(line =>
@@ -832,7 +822,7 @@ function checkIfLineCreatesValidTriangle(point1Id, point2Id) {
     }
     return false;
 }
-  
+
 // 게임 종료 처리 함수
 function endGame() {
     const currentTurnElement = document.getElementById('currentTurn');
@@ -881,21 +871,13 @@ function endGame() {
     }
 
     function updateTurnDisplay() {
-    const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
-    const turnEl = document.getElementById('currentTurn');
-    turnEl.textContent = `${currentPlayerName} 차례`;
-    
-    if (currentPlayer === 1) {
-        turnEl.style.color = '#145454';
-        turnEl.style.background = 'white';
-    } else {
-        turnEl.style.color = '#145454';
-        turnEl.style.background = 'pink';
+        const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
+        document.getElementById('currentTurn').textContent = `${currentPlayerName}의 차례`;
+        document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
+        
+        document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
+        document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
     }
-    
-    document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
-    document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
-}
 
 // 같은 판으로 재시작 - 점 배치 유지
 function restartSameBoard() {
@@ -963,17 +945,10 @@ window.location.href = "index.html";
     }
 
     // 페이지 로드 완료 후 실행
-  window.addEventListener('load', function() {
-    loadPlayerNames(); // 플레이어 이름 먼저 로드
-
-    // 모바일에서 주소창/뷰포트가 완전히 자리잡을 때까지 기다린 후 점 생성
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            setTimeout(createPoints, 200);
-        });
-    });
-
-    updateTurnDisplay();
+    window.addEventListener('load', function() {
+        loadPlayerNames(); // 플레이어 이름 먼저 로드
+        setTimeout(createPoints, 100);
+        updateTurnDisplay();
     });
 
     // 디버깅용 - 게임 영역 클릭시 정보 출력
