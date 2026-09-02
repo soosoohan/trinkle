@@ -522,21 +522,26 @@ function createPointsFromSaved() {
         points.push({ x: savedPoint.x, y: savedPoint.y, element: point, id: i });
     });
 }
-    function selectPoint(pointId, x, y) {
-        console.log("Point selected:", pointId);
-        
-        if (selectedPoint === null) {
-            selectedPoint = { id: pointId, x, y };
-            points[pointId].element.classList.add('selected');
-        } else if (selectedPoint.id === pointId) {
-            points[pointId].element.classList.remove('selected');
-            selectedPoint = null;
-        } else {
-            drawLine(selectedPoint, { id: pointId, x, y });
-            points[selectedPoint.id].element.classList.remove('selected');
-            selectedPoint = null;
-        }
+
+  let isProcessing = false;
+
+function selectPoint(pointId, x, y) {
+    if (isProcessing) return;   // 처리 중이면 무시
+    
+    if (selectedPoint === null) {
+        selectedPoint = { id: pointId, x, y };
+        points[pointId].element.classList.add('selected');
+    } else if (selectedPoint.id === pointId) {
+        points[pointId].element.classList.remove('selected');
+        selectedPoint = null;
+    } else {
+        isProcessing = true;
+        drawLine(selectedPoint, { id: pointId, x, y });
+        points[selectedPoint.id].element.classList.remove('selected');
+        selectedPoint = null;
+        setTimeout(() => { isProcessing = false; }, 150);  // 짧게 잠금
     }
+}
 
     function drawLine(point1, point2) {
         console.log("Drawing line:", point1.id, "->", point2.id);
