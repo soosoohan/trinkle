@@ -680,7 +680,6 @@ function showGameOverMessage(message) {
     currentTurnDiv.innerHTML = `🎮 게임 종료!<br>${message}`;
     currentTurnDiv.style.background = 'rgba(255, 215, 0, 0.3)';
     currentTurnDiv.style.color = '#FFD700';
-    currentTurnDiv.style.fontSize = '20px';
     currentTurnDiv.style.animation = 'pulse 1.5s infinite';
     
     document.getElementById('turn1').style.display = 'none';
@@ -851,7 +850,6 @@ function updateTurnDisplay() {
     document.getElementById('currentTurn').textContent = `${currentPlayerName}의 차례`;
     document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
     document.getElementById('currentTurn').style.background = 'rgba(255,255,255,0.1)';
-    document.getElementById('currentTurn').style.fontSize = '25px';
     
     document.getElementById('turn1').style.display = currentPlayer === 1 ? 'inline' : 'none';
     document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
