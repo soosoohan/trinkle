@@ -480,21 +480,22 @@ function showTooSmallWarning() {
     warning.id = 'tooSmallWarning';
     warning.textContent = 'The screen is too small. Please rotate your device or play on a larger screen.';
     warning.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(200, 0, 0, 0.9);
-        color: white;
-        padding: 20px 30px;
-        border-radius: 10px;
-        font-family: 'Pretendard', sans-serif;
-        font-size: 18px;
-        font-weight: bold;
-        z-index: 1000;
-        text-align: center;
-        max-width: 80%;
-    `;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 100, 255, 0.9);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-family: 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    animation: fadeInOut 2s ease-in-out;
+    pointer-events: none;
+`;
     gameArea.appendChild(warning);
 }
 
@@ -530,7 +531,7 @@ function createPointsFromSaved() {
 let isProcessing = false;
 
 function selectPoint(pointId, x, y) {
-    if (isProcessing) return;   // 처리 중이면 무시
+    if (isProcessing) return;
     
     if (selectedPoint === null) {
         selectedPoint = { id: pointId, x, y };
@@ -543,7 +544,7 @@ function selectPoint(pointId, x, y) {
         drawLine(selectedPoint, { id: pointId, x, y });
         points[selectedPoint.id].element.classList.remove('selected');
         selectedPoint = null;
-        setTimeout(() => { isProcessing = false; }, 150);  // 짧게 잠금
+        setTimeout(() => { isProcessing = false; }, 150);
     }
 }
 
