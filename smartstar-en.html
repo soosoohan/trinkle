@@ -21,54 +21,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Trinkle vs Trinky - Triangle Strategy Game vs AI | Soosooland</title>
+<title>Trinkle - Strategy Game | Soosooland</title>
+
 <!-- SEO Meta Tags -->
-<meta name="description" content="Compete against a computer AI in this triangle-drawing strategy game. Play solo, anytime.">
-<meta name="keywords" content="dots and boxes, land grabbing, strategy game, classic game, puzzle game, browser game">
+<meta name="description" content="A land-grabbing strategy game">
+<meta name="keywords" content="dots and boxes, land grabbing, strategy game, brain development, classic game, puzzle game, browser game">
 <meta name="author" content="Soosooland">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Trinkle vs Trinky - Triangle Strategy Game vs AI">
-<meta property="og:description" content="Compete against a computer AI in this triangle-drawing strategy game. Play solo, anytime.">
+<meta property="og:title" content="Trinkle - Strategy Game">
+<meta property="og:description" content="Draw more triangles to win!">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://soosooland.com/trinkle/smartstar-en.html">
 <meta property="og:image" content="https://soosooland.com/images/trinkle.png">
 <meta property="og:site_name" content="Soosooland">
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Trinkle vs Trinky - Triangle Strategy Game vs AI">
-<meta name="twitter:description" content="Compete against a computer AI in this triangle-drawing strategy game. Play solo, anytime.">
-<meta name="twitter:image" content="https://soosooland.com/images/trinkle.png">
-
-<meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="ko_KR">
 <link rel="canonical" href="https://soosooland.com/trinkle/smartstar-en.html">
 <link rel="alternate" hreflang="ko" href="https://soosooland.com/trinkle/smartstar-ko.html">
 <link rel="alternate" hreflang="en" href="https://soosooland.com/trinkle/smartstar-en.html">
-<link rel="alternate" hreflang="x-default" href="https://soosooland.com/trinkle/smartstar-ko.html">
-
 <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoGame",
-  "name": "Trinkle vs Trinky",
-  "description": "Compete against a computer AI in this triangle-drawing strategy game.",
-  "url": "https://soosooland.com/trinkle/smartstar-en.html",
-  "genre": ["strategy"],
-  "gamePlatform": "Web browser",
-  "playMode": ["SinglePlayer"],
-  "inLanguage": ["en"],
-  "isPartOf": {
-    "@type": "VideoGameSeries",
-    "name": "Trinkle",
-    "url": "https://soosooland.com/trinkle/"
-  }
-}
-</script>
-  <script src="https://soosooland.com/js/protection.js"></script>
+<script src="https://soosooland.com/js/protection.js"></script>
   <style>
-    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * {
             margin: 0;
@@ -82,48 +55,23 @@ body {
     user-select: none; /* 텍스트 선택 방지 */
     -webkit-user-select: none;
     -webkit-touch-callout: none; /* iOS 길게 누르기 메뉴 방지 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;      /* game-container를 가로 가운데 정렬 */
-    background: #145454;      /* 900px 밖 여백 배경색 (원하는 색으로) */
-    overflow: hidden;
-    width: 100vw;
-    font-family: 'Pretendard', sans-serif;
-    position: relative;
-    height: 100vh;       /* 구형 브라우저 폴백 */
-    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
-    min-height: 100vh;
-    min-height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
-    }
+}
 
 
 html {
     background: #0b0c1a !important;
-    overflow: hidden;
-    height: 100%;
-    position: fixed;  
-    width: 100%;
 }
 
+body,
 .game-container {
     display: flex;
     flex-direction: column;
     background: #145454 ;
     font-family: 'Pretendard', sans-serif;
+    height: 100dvh;
     overflow: hidden;
-    max-width: 900px;   
-    position: relative;
-    height: 100vh;       /* 구형 브라우저 폴백 */
-    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
-    min-height: 100vh;
     min-height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
-             max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
-    width: 100%;
+    width: 100vw;
     position: relative;
 }
 
@@ -143,19 +91,28 @@ html {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+.buttons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
 .back-button { position: fixed; top: max(48px, env(safe-area-inset-top) + 20px); left: 22px; width: 44px; height: 44px; padding: 0; font-size: 1.8em; font-weight: bold; 
     background: rgba(255,255,255,0.9);
     color: #145454;
 border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;z-index: 100;}
 
 .game-area {
-    flex: 1;
-    position: relative;
-    background: #145454;
-    border: 2px solid rgba(255,255,255,0.25);
-    border-radius: 12px;
-    margin: 0 10px 10px;
-    overflow: hidden;
+    flex: 1; /* 나머지 공간 모두 차지 */
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #145454 ;
+    
 }
 
 .point {
@@ -210,17 +167,21 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
 }
 
 .scoreboard {
-    flex: 0 0 auto;
-    margin: 0 15px 10px;
-    background: #145454;
-    padding: 12px 15px;
-    font-family: 'Pretendard', sans-serif;
-    color: #fffde7;
-    z-index: 50;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
+flex: 0 0 100px;  /* 고정 높이 */
+position: absolute;
+bottom: 20px;
+left: 20px;
+right: 20px;
+background: #145454;
+padding: 15px;
+font-family: ‘Pretendard’, sans-serif;
+color: #fffde7;
+z-index: 50;
+pointer-events: auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-radius: 10px;
 }
 
 .player-score {
@@ -245,7 +206,7 @@ font-weight: bold;
 padding: 5px 10px;
 border-radius: 5px;
 background: rgba(255,255,255,0.1);
-font-family: 'Pretendard', sans-serif;
+font-family: ‘Pretendard’, sans-serif;
 color: #fff;
 }
 
@@ -258,40 +219,14 @@ animation: aiThinking 1.5s infinite;
 0%, 100% { opacity: 1; }
 50% { opacity: 0.5; }
 }
-.buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.game-button {
-    padding: clamp(8px, 2vw, 10px) clamp(12px, 4vw, 20px);
-    background: rgba(255,255,255,0.9);
-    border: none;
-    border-radius: 8px;
-    font-family: 'Pretendard', sans-serif;
-    font-size: clamp(14px, 3.5vw, 20px);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #145454;
-}
-
-.game-button:hover {
-    background: rgba(255,255,255,1);
-    transform: scale(1.05);
-}
-
-.bottom-buttons {
-    flex: 0 0 auto;
-    position: static;
-    justify-content: center;
-    padding: 10px 15px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
-}
-
 
 /* 모바일 세로 모드 */
 @media (max-width: 768px) and (orientation: portrait) {
+.game-container {
+    height: 100dvh; /* 동적 뷰포트 높이 */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
 
 .header {
 padding: 5px;
@@ -303,6 +238,32 @@ padding: 5px;
     width: 100%;
     margin: 20px auto;
 }
+
+.buttons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.game-button {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.game-area {
+    top: 80px;
+}
+
+.scoreboard {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px;
+}
+
 }
 
 @media (max-height: 800px) {
@@ -312,7 +273,11 @@ width: 100vw;
 height: 100vh;
 border-radius: 0;
 }
-}
+.game-container {
+    height: 100dvh; /* 동적 뷰포트 높이 */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+}}
 @media (max-width: 480px) {  
 .back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px; width: 40px; height: 40px; font-size: 1.5em; }
 }
@@ -322,17 +287,13 @@ border-radius: 0;
 
 </head>
 <body>
-<button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
- </button>
-  
+<button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">←</button>
   <div class="game-container">
     <div class="header">
       <h1 class="game-title">TRINKLE vs TRINKY</h1>
     </div>
 
+<div class="game-area" id="gameArea"></div><br>
   <div class="scoreboard">
     <div class="player-score player1">
       <span id="player1Name">You</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
@@ -342,12 +303,6 @@ border-radius: 0;
     </div>
     <div class="current-turn" id="currentTurn">Your Turn</div>
   </div>
-<div class="game-area" id="gameArea"></div>
-    <div class="buttons bottom-buttons">
-        <button class="game-button" onclick="restartSameBoard()">Restart</button>
-        <button class="game-button" onclick="newGame()">New Game</button>
-    </div>
-
 </div>
 
 <script>
@@ -366,30 +321,30 @@ border-radius: 0;
     let isAiThinking = false;
 
 
-const MIN_POINT_COUNT = 8;
-
 function createPoints() {
+    console.log("Creating points");
+    
     const areaRect = gameArea.getBoundingClientRect();
+    const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;
     const margin = 40;
-
-    const cellSize = 120;
-    const cols = Math.floor(areaRect.width / cellSize);
-    const rows = Math.floor(areaRect.height / cellSize);
-    let targetCount = cols * rows;
-
-    if (targetCount < MIN_POINT_COUNT) {
-        showTooSmallWarning();
-        return;
+    
+    // 화면 크기에 따라 기본 점 개수 설정 후 랜덤으로 홀짝 조절
+    let baseCount;
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        baseCount = 10;
+        pointCount = Math.random() < 0.45 ? 10 : 12;  // 짝수 또는 홀수
+    } else if (areaRect.width > 1200) {
+        baseCount = 20;
+        pointCount = Math.random() < 0.5 ? 18 : 20;  // 아이패드 프로
+    } else if (areaRect.width > 1000) {
+        baseCount = 16;
+        pointCount = Math.random() < 0.5 ? 14 : 16;  // 일반 아이패드
+    } else {
+        baseCount = 12;
+        pointCount = Math.random() < 0.5 ? 10 : 12;  // 아이패드 미니
     }
-
-    let pointCount = adjustParity(targetCount, true);   // 항상 짝수
-
-    if (pointCount < MIN_POINT_COUNT) {
-        showTooSmallWarning();
-        return;
-    }
-
-    const minDistance = Math.max(70, Math.min(areaRect.width, areaRect.height) * 0.18);
     
         for (let i = 0; i < pointCount; i++) {
             let validPosition = false;
@@ -398,7 +353,7 @@ function createPoints() {
 
             while (!validPosition && attempts < 100) {
                 x = margin + Math.random() * (areaRect.width - 2 * margin);
-                y = margin + Math.random() * (areaRect.height - 2 * margin);
+                y = margin + Math.random() * (areaRect.height - 2 * margin - 100); // 점수판 공간 확보
 
 validPosition = true;
                 
@@ -439,34 +394,6 @@ validPosition = true;
     if (savedPoints.length === 0) {
         savedPoints = points.map(p => ({ x: p.x, y: p.y, id: p.id }));
     }
-}
-function adjustParity(count, wantEven) {
-    const isEven = count % 2 === 0;
-    if (wantEven === isEven) return count;
-    return count - 1;
-}
-
-function showTooSmallWarning() {
-    const warning = document.createElement('div');
-    warning.id = 'tooSmallWarning';
-    warning.textContent = 'The screen is too small. Please rotate your device or play on a larger screen.';
-    warning.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(200, 0, 0, 0.9);
-        color: white;
-        padding: 20px 30px;
-        border-radius: 10px;
-        font-family: 'Pretendard', sans-serif;
-        font-size: 18px;
-        font-weight: bold;
-        z-index: 1000;
-        text-align: center;
-        max-width: 80%;
-    `;
-    gameArea.appendChild(warning);
 }
 
 // 저장된 점 배치로 점 재생성
