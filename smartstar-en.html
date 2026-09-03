@@ -426,6 +426,30 @@ validPosition = true;
         }
         console.log("Total points:", points.length);
     
+        console.log("Total points:", points.length);
+
+    if (points.length < 7) {
+        points.forEach(p => p.element.remove());
+        points = [];
+        const msg = document.createElement('div');
+        msg.id = 'minSizeMessage';
+        msg.textContent = '게임이 가능한 최소 크기에 못 미칩니다.';
+        msg.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fffde7;
+            font-family: 'Pretendard', sans-serif;
+            font-size: clamp(16px, 4vw, 22px);
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            z-index: 200;
+        `;
+        gameArea.appendChild(msg);
+        return;
+    }
 
     // 점 배치 저장 (처음 생성할 때만)
     if (savedPoints.length === 0) {
