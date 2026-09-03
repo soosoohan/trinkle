@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <script>
   if (window.top !== window.self) {
@@ -21,40 +21,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>트링클 2인대결 - 친구와 겨루는 2인용 삼각형 땅따먹기 전략게임 |soosooland</title>
+  <title>Trinkle 2-Player - Triangle Strategy Game |soosooland</title>
 <!-- SEO Meta Tags -->
-<meta name="description" content="트링클 2인 대결: 격자에 점을 이어 상대보다 삼각형을 더 많이 그리면 승리. 무료 온라인 퍼즐, 다운로드 없음.">
+<meta name="description" content="Take turns with a friend or family member to claim triangles and territory.">
 <meta name="keywords" content="K-game, 전략 게임, strategy game, dot connection, logic game">
 <meta name="author" content="Soosooland">
 <!-- Open Graph (SNS 공유용) -->
-<meta property="og:title" content="트링클 2인대결 - 친구와 겨루는 2인용 삼각형 땅따먹기 전략게임">
-<meta property="og:description" content="친구와 대결! 격자 점을 이어 삼각형을 더 많이 그린 사람이 승리하는 무료 온라인 게임.">
+<meta property="og:title" content="Trinkle 2-Player - Triangle Strategy Game">
+<meta property="og:description" content="Face off with a friend — draw more triangles on a grid of dots than they do. Free online, no ads.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://soosooland.com/trinkle/">
 <meta property="og:image" content="https://soosooland.com/images/trinkle.png">
 <meta property="og:site_name" content="Soosooland">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="트링클 2인대결 - 친구와 겨루는 2인용 삼각형 땅따먹기 전략게임">
-<meta name="twitter:description" content="친구와 삼각형 그리기 대결. 무료 온라인 전략 퍼즐 게임.">
+<meta name="twitter:title" content="Trinkle 2-Player - Triangle Strategy Game">
+<meta name="twitter:description" content="Challenge a friend to a grid-based triangle-drawing showdown. Free strategy puzzle game.">
 <meta name="twitter:image" content="https://soosooland.com/images/trinkle.png">
-<meta property="og:locale" content="ko_KR">
-<meta property="og:locale:alternate" content="en_US">
-<link rel="canonical" href="https://soosooland.com/trinkle/Trinkle-k1.html">
-<link rel="alternate" hreflang="ko" href="https://soosooland.com/trinkle/Trinkle-k1.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<link rel="canonical" href="https://soosooland.com/trinkle/Trinkle-e1.html">
 <link rel="alternate" hreflang="en" href="https://soosooland.com/trinkle/Trinkle-e1.html">
+<link rel="alternate" hreflang="ko" href="https://soosooland.com/trinkle/Trinkle-k1.html">
 <link rel="alternate" hreflang="x-default" href="https://soosooland.com/trinkle/Trinkle-e1.html">
 <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "VideoGame",
-  "name": "Trinkle 2-player",
-  "description": "Take turns with a friend or family member to claim triangles and territory.",
-  "url": "https://soosooland.com/trinkle/Trinkle-k1.html",
+  "name": "Trinkle 2-Player",
+  "description": "Trinkle 2-player: connect dots on a grid to draw more triangles than your opponent.",
+  "url": "https://soosooland.com/trinkle/Trinkle-e1.html",
   "genre": ["strategy"],
   "gamePlatform": "Web browser",
   "playMode": ["SinglePlayer"],
-  "inLanguage": ["ko"],
+  "inLanguage": ["en"],
   "isPartOf": {
     "@type": "VideoGameSeries",
     "name": "Trinkle",
@@ -63,8 +63,8 @@
 }
 </script>
 <script src="https://soosooland.com/js/protection.js"></script>
-<style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * {
             margin: 0;
@@ -78,24 +78,45 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
+    align-items: center;      
+    height: 100vh;       /* 구형 브라우저 폴백 */
+    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
 }
 
 html {
     background: #0b0c1a !important;
+    overflow: hidden;
+    height: 100%;
+    position: fixed;  
+    width: 100%;
 }
 
 body,
 .game-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: #145454 ;
     font-family: 'Pretendard', sans-serif;
     height: 100dvh;
     overflow: hidden;
-    max-width: 900px;   
     min-height: 100dvh;
     width: 100vw;
     position: relative;
+    max-width: 900px;   
+    height: 100vh;       /* 구형 브라우저 폴백 */
+    height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+             max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
+
 }
 
 .header {
@@ -127,7 +148,6 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
     margin: 20px;
     overflow: hidden;
 }
-
 
 .point {
     position: absolute;
@@ -260,6 +280,7 @@ animation: aiThinking 1.5s infinite;
     padding: 10px 15px;
     padding-bottom: max(10px, env(safe-area-inset-bottom));
 }
+
 @media (max-width: 768px) and (orientation: portrait) {
     .game-container {
         height: 100dvh;
@@ -274,38 +295,16 @@ animation: aiThinking 1.5s infinite;
     .game-title {
         font-size: 1.8rem;
         width: 100%;
-        margin: 10px auto;
+        margin: 20px auto;
     }
 
-    .game-button {
-        padding: 6px 12px;
-        font-size: 14px;
-    }
-
-    .scoreboard {
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        padding: 10px;
-    }
-
-    .player-score {
-        font-size: 18px;
-    }
-
-    .current-turn {
-        font-size: 16px;
-    }
-
-    .point {
-        width: 40px;
-        height: 40px;
-    }
-
-    .point::before {
-        width: 12px;
-        height: 12px;
-    }
+.scoreboard {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px;
+}
+    
 }
 
 @media (max-height: 800px) {
@@ -322,6 +321,7 @@ animation: aiThinking 1.5s infinite;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
+
 @media (max-width: 480px) {
    
 .back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px; width: 40px; height: 40px; font-size: 1.5em; }
@@ -330,35 +330,36 @@ animation: aiThinking 1.5s infinite;
 </style>
 </head>
 <body>
-  <body>
   <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
  </button>
-<div class="game-container">
+  <div class="game-container">
     <div class="header">
-      <h1 class="game-title">트링클</h1>
-    </div>
+            <h1 class="game-title">Trinkle 2-Player</h1>
+      </div>
+
     <div class="scoreboard">
       <div class="player-score player1">
-        <span id="player1Name">하양</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
+        <span id="player1Name">White</span>: <span id="score1">0</span> <span class="turn-indicator" id="turn1">⭐</span>
       </div>
       <div class="player-score player2">
-        <span id="player2Name">분홍</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
+        <span id="player2Name">Pink</span>: <span id="score2">0</span> <span class="turn-indicator" id="turn2" style="display:none;">⭐</span>
       </div>
-      <div class="current-turn" id="currentTurn">하양의 차례</div>
+      <div class="current-turn" id="currentTurn">White's Turn</div>
     </div>
-
+      
     <div class="game-area" id="gameArea"></div>
- <div class="buttons bottom-buttons">
-        <button class="game-button" onclick="restartSameBoard()">재시작</button>
-        <button class="game-button" onclick="newGame()">새 게임</button>
+   <div class="buttons bottom-buttons">
+        <button class="game-button" onclick="restartSameBoard()">Restart</button>
+        <button class="game-button" onclick="newGame()">New Game</button>
     </div>
-   
+ 
   </div>
 
 <script>
+    console.log("스크립트 시작");
 
 const gameArea = document.getElementById('gameArea');
 const scoreBoard = document.querySelector('.scoreboard');
@@ -369,9 +370,9 @@ let currentPlayer = 1;
 let selectedPoint = null;
 let scores = { player1: 0, player2: 0 };
 let gridInfo = { rows: 0, cols: 0 };
-    
-    let player1Name = '하양';
-    let player2Name = '분홍';
+
+let player1Name = 'White';
+let player2Name = 'Pink';
 
 function loadPlayerNames() {
     const savedPlayer1 = localStorage.getItem('player1Name');
@@ -419,6 +420,7 @@ function createPoints() {
     const usableWidth = areaRect.width - 2 * margin;
     const usableHeight = areaRect.height - 2 * margin;
 
+    // 최소 거리를 지키면서 들어갈 수 있는 최대 격자 계산
     const maxCols = Math.max(1, Math.floor(usableWidth / MIN_POINT_DISTANCE) + 1);
     const maxRows = Math.max(1, Math.floor(usableHeight / MIN_POINT_DISTANCE) + 1);
     const maxPossiblePoints = maxCols * maxRows;
@@ -428,7 +430,7 @@ function createPoints() {
         return;
     }
 
-       const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= 768;
     let baseTotal;
 
     if (isMobile) {
@@ -460,108 +462,105 @@ function createPoints() {
         maxPossiblePoints
     );
 
-  
     const spacingX = usableWidth / (cols - 1);
     const spacingY = usableHeight / (rows - 1);
-
+    
     console.log(`계산된 간격: X=${spacingX.toFixed(1)}px, Y=${spacingY.toFixed(1)}px`);
-
+    
     const jitterXInner = spacingX * 0.25;
     const jitterYInner = spacingY * 0.25;
     const jitterXEdge = spacingX * 0.2;
     const jitterYEdge = spacingY * 0.2;
-
+    
     let gridPoints = [];
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
             const baseX = margin + col * spacingX;
             const baseY = margin + row * spacingY;
-
+            
             const isEdge = row === 0 || row === rows - 1 || col === 0 || col === cols - 1;
-
+            
             let x, y;
             if (isEdge) {
                 let offsetX = 0;
                 let offsetY = 0;
-
+                
                 if (col === 0) {
                     offsetX = Math.random() * jitterXEdge;
                 } else if (col === cols - 1) {
                     offsetX = -Math.random() * jitterXEdge;
                 }
-
+                
                 if (row === 0) {
                     offsetY = Math.random() * jitterYEdge;
                 } else if (row === rows - 1) {
                     offsetY = -Math.random() * jitterYEdge;
                 }
-
+                
                 x = baseX + offsetX;
                 y = baseY + offsetY;
             } else {
                 x = baseX + (Math.random() - 0.5) * jitterXInner;
                 y = baseY + (Math.random() - 0.5) * jitterYInner;
             }
-
+            
             gridPoints.push({ x, y, row, col, isEdge });
         }
     }
-
+    
     if (totalGridPoints > targetPoints) {
         const needToRemove = totalGridPoints - targetPoints;
         let availablePoints = [...gridPoints];
-
+        
         for (let i = 0; i < needToRemove && availablePoints.length > 0; i++) {
             const randomIndex = Math.floor(Math.random() * availablePoints.length);
             const pointToRemove = availablePoints[randomIndex];
-
-            const gridIndex = gridPoints.findIndex(p =>
+            
+            const gridIndex = gridPoints.findIndex(p => 
                 p.row === pointToRemove.row && p.col === pointToRemove.col
             );
-
+            
             if (gridIndex > -1) {
                 gridPoints.splice(gridIndex, 1);
                 availablePoints.splice(randomIndex, 1);
             }
         }
     }
-
+    
     gridPoints.forEach((pointData, i) => {
         const point = document.createElement('div');
         point.className = 'point';
         point.style.left = (pointData.x - 25) + 'px';
         point.style.top = (pointData.y - 25) + 'px';
-
+        
         point.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             selectPoint(i, pointData.x, pointData.y);
         });
-
+        
         point.addEventListener('touchstart', function(e) {
             e.preventDefault();
             e.stopPropagation();
             selectPoint(i, pointData.x, pointData.y);
         });
-
+        
         point.addEventListener('touchend', function(e) {
             e.preventDefault();
         });
-
+        
         gameArea.appendChild(point);
-        points.push({
+        points.push({ 
             x: pointData.x,
             y: pointData.y,
-            element: point,
+            element: point, 
             id: i,
             row: pointData.row,
             col: pointData.col,
             isEdge: pointData.isEdge
         });
     });
-
-    console.log(`생성된 점: ${points.length}개`);
-}   // ← 여기 딱 하나만!
+  }
 
 function showMinSizeMessage() {
     const msg = document.createElement('div');
@@ -582,7 +581,7 @@ function showMinSizeMessage() {
     `;
     gameArea.appendChild(msg);
 }
-
+    
 function selectPoint(pointId, x, y) {
     console.log("Point selected:", pointId);
     
@@ -608,19 +607,20 @@ function drawLine(point1, point2) {
     );
 
     if (existingLine) {
-        console.log("이미 선이 있어요.");
+        console.log("Line already exists.");
         return;
     }
 
     if (lineIntersectsExistingLines(point1, point2)) {
-        showWarningMessage("선분이 다른 선분과 교차할 수 없습니다!");
+        console.log("Line intersects existing line!");
+        showWarningMessage("Line intersects existing line!");
         return;
     }
 
     for (let point of points) {
-            if (linePassesThroughPoint(point1, point2, point)) {
-            console.log("선분이 다른 점을 지나감:", point.id);
-            showWarningMessage("선분이 다른 점을 지나갈 수 없습니다!");
+        if (linePassesThroughPoint(point1, point2, point)) {
+            console.log("Line passes through point:", point.id);
+            showWarningMessage("Line cannot pass through another point!");
             return;
         }
     }
@@ -936,7 +936,7 @@ function updateScoreboard() {
 
 function updateTurnDisplay() {
     const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
-    document.getElementById('currentTurn').textContent = `${currentPlayerName}의 차례`;
+    document.getElementById('currentTurn').textContent = `${currentPlayerName}'s turn`;
     document.getElementById('currentTurn').style.color = currentPlayer === 1 ? 'white' : 'pink';
     document.getElementById('currentTurn').style.background = 'rgba(255,255,255,0.1)';
     
