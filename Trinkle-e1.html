@@ -410,16 +410,29 @@ function getGridSize(targetPoints, isMobile) {
     return { rows: 6, cols: 6 };
 }
 
-// 격자로 점 생성
+const MIN_POINT_DISTANCE = 100; // 점 사이 최소 거리(px)
+const MIN_POINTS_REQUIRED = 7;  // 게임이 가능한 최소 점 개수
+
 function createPoints() {
-    console.log("Creating points");
-    
     const areaRect = gameArea.getBoundingClientRect();
     const margin = 80;
-    
+
+    const usableWidth = areaRect.width - 2 * margin;
+    const usableHeight = areaRect.height - 2 * margin;
+
+    // 최소 거리를 지키면서 들어갈 수 있는 최대 격자 계산
+    const maxCols = Math.max(1, Math.floor(usableWidth / MIN_POINT_DISTANCE) + 1);
+    const maxRows = Math.max(1, Math.floor(usableHeight / MIN_POINT_DISTANCE) + 1);
+    const maxPossiblePoints = maxCols * maxRows;
+
+    if (maxPossiblePoints < MIN_POINTS_REQUIRED) {
+        showMinSizeMessage();
+        return;
+    }
+
     let targetPoints;
     const isMobile = window.innerWidth <= 768;
-    
+
     if (isMobile) {
         targetPoints = Math.random() < 0.45 ? 10 : 11;
     } else if (areaRect.width > 1200) {
@@ -430,12 +443,21 @@ function createPoints() {
         targetPoints = Math.random() < 0.5 ? 12 : 13;
     }
 
+    // 목표 개수가 실제로 배치 가능한 최대치를 넘지 않도록 제한
+    targetPoints = Math.min(targetPoints, maxPossiblePoints);
+
     gridInfo = getGridSize(targetPoints, isMobile);
+
+    // 격자가 최대 rows/cols를 넘으면 보정
+    if (gridInfo.rows > maxRows || gridInfo.cols > maxCols) {
+        gridInfo = {
+            rows: Math.min(gridInfo.rows, maxRows),
+            cols: Math.min(gridInfo.cols, maxCols)
+        };
+    }
+
     const { rows, cols } = gridInfo;
     const totalGridPoints = rows * cols;
-    
-    console.log(`목표: ${targetPoints}개, 격자: ${rows}×${cols} (총 ${totalGridPoints}개)`);
-    
     const usableWidth = areaRect.width - 2 * margin;
     const usableHeight = areaRect.height - 2 * margin;
     
@@ -540,7 +562,30 @@ function createPoints() {
     
     console.log(`생성된 점: ${points.length}개`);
 }
+    // ↓↓↓ 여기부터는 기존 코드 그대로 (spacingX, spacingY 계산 이후) ↓↓↓
+    ...
+}
 
+function showMinSizeMessage() {
+    const msg = document.createElement('div');
+    msg.id = 'minSizeMessage';
+    msg.textContent = '게임이 가능한 최소 크기에 못 미칩니다.';
+    msg.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fffde7;
+        font-family: 'Pretendard', sans-serif;
+        font-size: clamp(16px, 4vw, 22px);
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        z-index: 200;
+    `;
+    gameArea.appendChild(msg);
+}
+    
 function selectPoint(pointId, x, y) {
     console.log("Point selected:", pointId);
     
@@ -903,24 +948,44 @@ function updateTurnDisplay() {
     document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
 }
 
-function restartGame() {
-    console.log("게임 다시 시작");
-    
-    points.forEach(point => point.element.remove());
+function restartSameBoard() {
+    const msg = document.getElementById('minSizeMessage');
+    if (msg) msg.remove();
+
     lines.forEach(line => line.element.remove());
     triangles.forEach(triangle => triangle.element.remove());
-    
-    points = [];
+
     lines = [];
     triangles = [];
-    
+
     currentPlayer = 1;
     selectedPoint = null;
     scores = { player1: 0, player2: 0 };
-    
+
     updateScoreboard();
     updateTurnDisplay();
-    
+    // 점은 그대로 두고 선/삼각형만 초기화 (같은 판으로 재시작)
+}
+
+function newGame() {
+    const msg = document.getElementById('minSizeMessage');
+    if (msg) msg.remove();
+
+    points.forEach(point => point.element.remove());
+    lines.forEach(line => line.element.remove());
+    triangles.forEach(triangle => triangle.element.remove());
+
+    points = [];
+    lines = [];
+    triangles = [];
+
+    currentPlayer = 1;
+    selectedPoint = null;
+    scores = { player1: 0, player2: 0 };
+
+    updateScoreboard();
+    updateTurnDisplay();
+
     setTimeout(createPoints, 100);
 }
 
