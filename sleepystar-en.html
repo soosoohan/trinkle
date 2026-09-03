@@ -372,7 +372,7 @@ function createPoints() {
     console.log("Creating points");
     
     const areaRect = gameArea.getBoundingClientRect();
-    const minDistance = Math.min(areaRect.width, areaRect.height) * 0.18;
+    const minDistance = Math.max(Math.min(areaRect.width, areaRect.height) * 0.18, 90);
     const margin = 40;
     
     // 화면 크기에 따라 기본 점 개수 설정 후 랜덤으로 홀짝 조절
