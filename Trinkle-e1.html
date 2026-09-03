@@ -458,8 +458,6 @@ function createPoints() {
 
     const { rows, cols } = gridInfo;
     const totalGridPoints = rows * cols;
-    const usableWidth = areaRect.width - 2 * margin;
-    const usableHeight = areaRect.height - 2 * margin;
     
     const spacingX = usableWidth / (cols - 1);
     const spacingY = usableHeight / (rows - 1);
@@ -559,10 +557,7 @@ function createPoints() {
             isEdge: pointData.isEdge
         });
     });
-    
-    console.log(`생성된 점: ${points.length}개`);
-}
-}
+  }
 
 function showMinSizeMessage() {
     const msg = document.createElement('div');
