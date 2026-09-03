@@ -79,6 +79,7 @@ body {
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     align-items: center;      
+    width: 100vw;
     height: 100vh;       /* 구형 브라우저 폴백 */
     height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
     min-height: 100vh;
@@ -105,9 +106,7 @@ body,
     height: 100dvh;
     overflow: hidden;
     min-height: 100dvh;
-    width: 100vw;
     position: relative;
-    max-width: 900px;   
     height: 100vh;       /* 구형 브라우저 폴백 */
     height: 100dvh;      /* 지원되면 이 값으로 덮어씀 */
     min-height: 100vh;
@@ -116,9 +115,9 @@ body,
     max-height: 100dvh;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 
              max(env(safe-area-inset-bottom), 12px) env(safe-area-inset-left);
-
 }
-
+.game-container { 
+    width: 100%; max-width: 900px;   }
 .header {
     flex: 0 0 100px;
     text-align: center;
@@ -145,7 +144,7 @@ border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: 
     background: #145454 ;
     border: 2px solid rgba(255,255,255,0.25);
     border-radius: 12px;
-    margin: 20px;
+    margin: 10px 30px;
     overflow: hidden;
 }
 
