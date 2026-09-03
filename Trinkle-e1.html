@@ -430,23 +430,20 @@ function createPoints() {
         return;
     }
 
-    let targetPoints;
-    const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= 768;
+    let baseTotal;
 
     if (isMobile) {
-        targetPoints = Math.random() < 0.45 ? 10 : 11;
+        baseTotal = 12;              // 4×3 격자
     } else if (areaRect.width > 1200) {
-        targetPoints = Math.random() < 0.5 ? 20 : 21;
+        baseTotal = 25;              // 5×5 격자
     } else if (areaRect.width > 1000) {
-        targetPoints = Math.random() < 0.5 ? 16 : 17;
+        baseTotal = 20;              // 4×5 격자
     } else {
-        targetPoints = Math.random() < 0.5 ? 12 : 13;
+        baseTotal = 16;              // 4×4 격자
     }
 
-    // 목표 개수가 실제로 배치 가능한 최대치를 넘지 않도록 제한
-    targetPoints = Math.min(targetPoints, maxPossiblePoints);
-
-    gridInfo = getGridSize(targetPoints, isMobile);
+    gridInfo = getGridSize(baseTotal, isMobile);
 
     // 격자가 최대 rows/cols를 넘으면 보정
     if (gridInfo.rows > maxRows || gridInfo.cols > maxCols) {
@@ -458,7 +455,13 @@ function createPoints() {
 
     const { rows, cols } = gridInfo;
     const totalGridPoints = rows * cols;
-    
+
+    // 격자를 다 채울지, 1개 뺄지 50% 확률로 결정 (+ 최대 배치 가능 개수 제한)
+    const targetPoints = Math.min(
+        Math.random() < 0.5 ? totalGridPoints : totalGridPoints - 1,
+        maxPossiblePoints
+    );
+
     const spacingX = usableWidth / (cols - 1);
     const spacingY = usableHeight / (rows - 1);
     
