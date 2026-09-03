@@ -365,6 +365,10 @@ border-radius: 0;
 
 function createPoints() {
     console.log("Creating points");
+
+    // 추가: 이전 안내 메시지가 있으면 지우기
+    const oldMsg = document.getElementById('minSizeMessage');
+    if (oldMsg) oldMsg.remove();
     
     const areaRect = gameArea.getBoundingClientRect();
     const minDistance = Math.max(Math.min(areaRect.width, areaRect.height) * 0.18, 90);
