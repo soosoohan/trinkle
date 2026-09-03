@@ -368,7 +368,6 @@ animation: aiThinking 1.5s infinite;
   </div>
 
 <script>
-    console.log("스크립트 시작");
 
 const gameArea = document.getElementById('gameArea');
 const scoreBoard = document.querySelector('.scoreboard');
@@ -419,135 +418,178 @@ function getGridSize(targetPoints, isMobile) {
     return { rows: 6, cols: 6 };
 }
 
-// 격자로 점 생성
+const MIN_POINT_DISTANCE = 100; // 점 사이 최소 거리(px)
+const MIN_POINTS_REQUIRED = 7;  // 게임이 가능한 최소 점 개수
+
 function createPoints() {
-    console.log("Creating points");
-    
     const areaRect = gameArea.getBoundingClientRect();
     const margin = 80;
-    
-    let targetPoints;
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        targetPoints = Math.random() < 0.45 ? 10 : 11;
-    } else if (areaRect.width > 1200) {
-        targetPoints = Math.random() < 0.5 ? 20 : 21;
-    } else if (areaRect.width > 1000) {
-        targetPoints = Math.random() < 0.5 ? 16 : 17;
-    } else {
-        targetPoints = Math.random() < 0.5 ? 12 : 13;
-    }
 
-    gridInfo = getGridSize(targetPoints, isMobile);
-    const { rows, cols } = gridInfo;
-    const totalGridPoints = rows * cols;
-    
-    console.log(`목표: ${targetPoints}개, 격자: ${rows}×${cols} (총 ${totalGridPoints}개)`);
-    
     const usableWidth = areaRect.width - 2 * margin;
     const usableHeight = areaRect.height - 2 * margin;
-    
+
+    const maxCols = Math.max(1, Math.floor(usableWidth / MIN_POINT_DISTANCE) + 1);
+    const maxRows = Math.max(1, Math.floor(usableHeight / MIN_POINT_DISTANCE) + 1);
+    const maxPossiblePoints = maxCols * maxRows;
+
+    if (maxPossiblePoints < MIN_POINTS_REQUIRED) {
+        showMinSizeMessage();
+        return;
+    }
+
+       const isMobile = window.innerWidth <= 768;
+    let baseTotal;
+
+    if (isMobile) {
+        baseTotal = 12;              // 4×3 격자
+    } else if (areaRect.width > 1200) {
+        baseTotal = 25;              // 5×5 격자
+    } else if (areaRect.width > 1000) {
+        baseTotal = 20;              // 4×5 격자
+    } else {
+        baseTotal = 16;              // 4×4 격자
+    }
+
+    gridInfo = getGridSize(baseTotal, isMobile);
+
+    // 격자가 최대 rows/cols를 넘으면 보정
+    if (gridInfo.rows > maxRows || gridInfo.cols > maxCols) {
+        gridInfo = {
+            rows: Math.min(gridInfo.rows, maxRows),
+            cols: Math.min(gridInfo.cols, maxCols)
+        };
+    }
+
+    const { rows, cols } = gridInfo;
+    const totalGridPoints = rows * cols;
+
+    // 격자를 다 채울지, 1개 뺄지 50% 확률로 결정 (+ 최대 배치 가능 개수 제한)
+    const targetPoints = Math.min(
+        Math.random() < 0.5 ? totalGridPoints : totalGridPoints - 1,
+        maxPossiblePoints
+    );
+
+  
     const spacingX = usableWidth / (cols - 1);
     const spacingY = usableHeight / (rows - 1);
-    
+
     console.log(`계산된 간격: X=${spacingX.toFixed(1)}px, Y=${spacingY.toFixed(1)}px`);
-    
-    const jitterXInner = spacingX * 0.5;
-    const jitterYInner = spacingY * 0.5;
-    const jitterXEdge = spacingX * 0.4;
-    const jitterYEdge = spacingY * 0.4;
-    
+
+    const jitterXInner = spacingX * 0.25;
+    const jitterYInner = spacingY * 0.25;
+    const jitterXEdge = spacingX * 0.2;
+    const jitterYEdge = spacingY * 0.2;
+
     let gridPoints = [];
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
             const baseX = margin + col * spacingX;
             const baseY = margin + row * spacingY;
-            
+
             const isEdge = row === 0 || row === rows - 1 || col === 0 || col === cols - 1;
-            
+
             let x, y;
             if (isEdge) {
                 let offsetX = 0;
                 let offsetY = 0;
-                
+
                 if (col === 0) {
                     offsetX = Math.random() * jitterXEdge;
                 } else if (col === cols - 1) {
                     offsetX = -Math.random() * jitterXEdge;
                 }
-                
+
                 if (row === 0) {
                     offsetY = Math.random() * jitterYEdge;
                 } else if (row === rows - 1) {
                     offsetY = -Math.random() * jitterYEdge;
                 }
-                
+
                 x = baseX + offsetX;
                 y = baseY + offsetY;
             } else {
                 x = baseX + (Math.random() - 0.5) * jitterXInner;
                 y = baseY + (Math.random() - 0.5) * jitterYInner;
             }
-            
+
             gridPoints.push({ x, y, row, col, isEdge });
         }
     }
-    
+
     if (totalGridPoints > targetPoints) {
         const needToRemove = totalGridPoints - targetPoints;
         let availablePoints = [...gridPoints];
-        
+
         for (let i = 0; i < needToRemove && availablePoints.length > 0; i++) {
             const randomIndex = Math.floor(Math.random() * availablePoints.length);
             const pointToRemove = availablePoints[randomIndex];
-            
-            const gridIndex = gridPoints.findIndex(p => 
+
+            const gridIndex = gridPoints.findIndex(p =>
                 p.row === pointToRemove.row && p.col === pointToRemove.col
             );
-            
+
             if (gridIndex > -1) {
                 gridPoints.splice(gridIndex, 1);
                 availablePoints.splice(randomIndex, 1);
             }
         }
     }
-    
+
     gridPoints.forEach((pointData, i) => {
         const point = document.createElement('div');
         point.className = 'point';
         point.style.left = (pointData.x - 25) + 'px';
         point.style.top = (pointData.y - 25) + 'px';
-        
+
         point.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             selectPoint(i, pointData.x, pointData.y);
         });
-        
+
         point.addEventListener('touchstart', function(e) {
             e.preventDefault();
             e.stopPropagation();
             selectPoint(i, pointData.x, pointData.y);
         });
-        
+
         point.addEventListener('touchend', function(e) {
             e.preventDefault();
         });
-        
+
         gameArea.appendChild(point);
-        points.push({ 
+        points.push({
             x: pointData.x,
             y: pointData.y,
-            element: point, 
+            element: point,
             id: i,
             row: pointData.row,
             col: pointData.col,
             isEdge: pointData.isEdge
         });
     });
-    
+
     console.log(`생성된 점: ${points.length}개`);
+}   // ← 여기 딱 하나만!
+
+function showMinSizeMessage() {
+    const msg = document.createElement('div');
+    msg.id = 'minSizeMessage';
+    msg.textContent = '게임이 가능한 최소 크기에 못 미칩니다.';
+    msg.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fffde7;
+        font-family: 'Pretendard', sans-serif;
+        font-size: clamp(16px, 4vw, 22px);
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        z-index: 200;
+    `;
+    gameArea.appendChild(msg);
 }
 
 function selectPoint(pointId, x, y) {
@@ -911,24 +953,44 @@ function updateTurnDisplay() {
     document.getElementById('turn2').style.display = currentPlayer === 2 ? 'inline' : 'none';
 }
 
-function restartGame() {
-    console.log("게임 다시 시작");
-    
-    points.forEach(point => point.element.remove());
+function restartSameBoard() {
+    const msg = document.getElementById('minSizeMessage');
+    if (msg) msg.remove();
+
     lines.forEach(line => line.element.remove());
     triangles.forEach(triangle => triangle.element.remove());
-    
-    points = [];
+
     lines = [];
     triangles = [];
-    
+
     currentPlayer = 1;
     selectedPoint = null;
     scores = { player1: 0, player2: 0 };
-    
+
     updateScoreboard();
     updateTurnDisplay();
-    
+    // 점은 그대로 두고 선/삼각형만 초기화 (같은 판으로 재시작)
+}
+
+function newGame() {
+    const msg = document.getElementById('minSizeMessage');
+    if (msg) msg.remove();
+
+    points.forEach(point => point.element.remove());
+    lines.forEach(line => line.element.remove());
+    triangles.forEach(triangle => triangle.element.remove());
+
+    points = [];
+    lines = [];
+    triangles = [];
+
+    currentPlayer = 1;
+    selectedPoint = null;
+    scores = { player1: 0, player2: 0 };
+
+    updateScoreboard();
+    updateTurnDisplay();
+
     setTimeout(createPoints, 100);
 }
 
