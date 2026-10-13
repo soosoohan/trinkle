@@ -1371,17 +1371,13 @@ if (newTriangles.length > 0 || formedPolygon) {
     }
 
     function showGameEndMessage() {
-        isAiThinking = false;
-        const winner = scores.player1 > scores.player2 ? "You Win! 🎉" : 
-                      scores.player2 > scores.player1 ? "Trinky Wins! 🤖" : "Draw! 🤝";
-        
-        document.getElementById('currentTurn').textContent = `Game Over`;
-        document.getElementById('currentTurn').style.background = 'rgba(0, 255, 0, 0.3)';
-        
-        setTimeout(() => {
-            alert(`게임 종료!\n${winner}\n\nYour Score: ${scores.player1}\nTrinky Score: ${scores.player2}`);
-        }, 500);
-    }
+  isAiThinking = false;
+  const result = scores.player1 > scores.player2 ? 'win' : scores.player2 > scores.player1 ? 'lose' : 'draw';
+  setTimeout(() => showEndOverlay({
+    lang: 'en', result,
+    scoreText: `You ${scores.player1} : ${scores.player2} Trinky`
+  }), 500);
+}
 
 // 같은 판으로 재시작 - 점 배치 유지
 function restartSameBoard() {
