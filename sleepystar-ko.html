@@ -1361,12 +1361,12 @@ if (newTriangles.length > 0 || formedPolygon) {
         return getAllValidMoves().length === 0;
     }
 
-   function showGameEndMessage() {
+ function showGameEndMessage() {
   isAiThinking = false;
   const result = scores.player1 > scores.player2 ? 'win' : scores.player2 > scores.player1 ? 'lose' : 'draw';
   setTimeout(() => showEndOverlay({
-    lang: 'en', result,
-    scoreText: `You ${scores.player1} : ${scores.player2} Trinky`
+    lang: 'ko', result,
+    scoreText: `나 ${scores.player1} : ${scores.player2} 트링키`
   }), 500);
 }
 
