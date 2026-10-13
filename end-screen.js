@@ -17,13 +17,22 @@ function showEndOverlay({ lang='ko', result, title, scoreText, onRestart }) {
   if (result === 'win') launchConfetti();
 }
 
-function launchConfetti(n = 60) {
-  const colors = ['#ff5252','#ffd740','#69f0ae','#40c4ff','#e040fb'];
-  for (let i = 0; i < n; i++) {
-    const c = document.createElement('div');
-    c.style.cssText = `position:fixed;top:-10px;left:${Math.random()*100}vw;width:8px;height:12px;background:${colors[i%5]};z-index:10000;pointer-events:none;transition:transform ${2+Math.random()*2}s ease-in,opacity 1s 2s`;
-    document.body.appendChild(c);
-    requestAnimationFrame(() => { c.style.transform = `translateY(110vh) rotate(${Math.random()*720}deg)`; c.style.opacity = 0; });
-    setTimeout(() => c.remove(), 4500);
-  }
+// 라이브러리를 자동으로 불러오기 (게임 HTML에 CDN 줄을 따로 안 넣어도 돼요)
+(function () {
+  if (typeof confetti === 'function') return;
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+  document.head.appendChild(s);
+})();
+
+function launchConfetti(count = 80) {
+  if (typeof confetti !== 'function') return;   // 아직 로딩 전이거나 실패하면 조용히 건너뜀
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;pointer-events:none;';
+  document.body.appendChild(canvas);
+  const myConfetti = confetti.create(canvas, { resize: true });
+  myConfetti({ particleCount: count, angle: 60,  spread: 70, origin: { x: 0, y: 0.7 } });
+  myConfetti({ particleCount: count, angle: 120, spread: 70, origin: { x: 1, y: 0.7 } });
+  setTimeout(() => canvas.remove(), 4000);
+}
 }
