@@ -751,18 +751,17 @@ function checkGameOver() {
 }
 
 function endGame() {
-    console.log("게임 종료!");
-    
-    let winner = '';
-    if (scores.player1 > scores.player2) {
-        winner = `${player1Name} 승리!`;
-    } else if (scores.player2 > scores.player1) {
-        winner = `${player2Name} 승리!`;
-    } else {
-        winner = '무승부!';
-    }
-    
-    showGameOverMessage(winner);
+  const p1 = scores.player1, p2 = scores.player2;   // p1=하양, p2=분홍
+  const draw = p1 === p2;
+  const win1 = p1 > p2;
+  const whiteDot = '<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #999"></span>';
+  const pinkDot  = '<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#ff6fa5"></span>';
+  showEndOverlay({
+    lang: 'en',
+    result: draw ? 'draw' : 'win',
+    title: draw ? null : `${win1 ? whiteDot : pinkDot} ${win1 ? player1Name : player2Name} win!`,
+    scoreText: `${player1Name} ${p1} : ${p2} ${player2Name}`
+  });
 }
 
 function showGameOverMessage(message) {
