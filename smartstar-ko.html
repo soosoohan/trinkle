@@ -61,7 +61,7 @@
     "url": "https://soosooland.com/trinkle/"
   }
 }
-  </script>
+</script>
   <script src="https://soosooland.com/js/protection.js"></script>
   <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -310,7 +310,7 @@ border-radius: 0;
 
 
 </style>
-<script src="end-screen.js"></script>
+
 </head>
 <body>
 <button class="back-button"  onclick="location.href='https://soosooland.com/trinkle/index.html'">
@@ -1357,13 +1357,21 @@ if (newTriangles.length > 0 || formedPolygon) {
     }
 
     function showGameEndMessage() {
-  isAiThinking = false;
-  const result = scores.player1 > scores.player2 ? 'win' : scores.player2 > scores.player1 ? 'lose' : 'draw';
-  setTimeout(() => showEndOverlay({
-    lang: 'ko', result,
-    scoreText: `나 ${scores.player1} : ${scores.player2} 트링키`
-  }), 500);
-}
+           const currentTurnElement = document.getElementById('currentTurn');
+    
+    if (scores.player1 > scores.player2) {
+        currentTurnElement.textContent = ` 당신이 이겼습니다! 🎉`;
+        currentTurnElement.style.color = 'white';
+        currentTurnElement.style.background = 'rgba(255, 255, 255, 0.2)';
+    } else if (scores.player2 > scores.player1) {
+        currentTurnElement.textContent = `트링키가 이겼습니다! 🎉`;
+        currentTurnElement.style.color = 'pink';
+        currentTurnElement.style.background = 'rgba(255, 192, 203, 0.2)';
+    } else {
+        currentTurnElement.textContent = '비겼습니다! 🤝';
+        currentTurnElement.style.color = '#fffde7';
+        currentTurnElement.style.background = 'rgba(255, 255, 255, 0.15)';
+    }
     
     // 차례 표시 별 숨기기
     document.getElementById('turn1').style.display = 'none';
