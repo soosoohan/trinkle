@@ -75,7 +75,7 @@
 
 body {
     font-family: 'Pretendard', sans-serif;
-    background: #145454;
+    background: #011640;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -87,6 +87,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    margin: 0 auto;   /* 좌우 자동 여백으로 가운데 정렬 */
 }
 
 .header {
@@ -121,10 +122,16 @@ body {
 .back-button:active {transform: scale(0.92);transition: transform 0.1s;}
 
 .main-title {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: bold;
-    color: #f0f8ff;
-    margin-top: 20px;
+    margin: 45px 0 0;   /* 위쪽 여백 */
+    font-size: 0;
+}
+
+.main-title img {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    margin: 0 auto;
 }
 
 .content {
@@ -311,13 +318,17 @@ body {
   <body class="ko" onload="initLanguage()">
   <button class="back-button" onclick="location.href='https://soosooland.com/'" aria-label="수수랜드 홈으로">
   <img src="https://soosooland.com/images/home.png" alt="수수랜드 홈"></button>
-    <div class="container">
+
+<div class="container">
         <!-- 헤더 -->
 <button id="lang-toggle" onclick="toggleLang()">English</button>
 
-        <div class="header">
-            <h1 class="main-title">트링클 TRINKLE</h1>
-        </div>
+
+<div class="header">
+    <h1 class="main-title">
+        <img src="starbanner.png" alt="트링클 TRINKLE">
+    </h1>
+</div>
 
 
     <!-- 메인 콘텐츠 -->
