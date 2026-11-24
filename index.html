@@ -103,9 +103,9 @@ body {
 }
 
 #lang-toggle {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+  position: absolute;
+  right: 0;
+  top: 0;
     background: rgba(255,255,255,0.9);
     color: #2e8b8b;
     border: 1px solid #444;
@@ -116,6 +116,7 @@ body {
     z-index: 100;
     transition: background 0.2s; 
 }
+
 #lang-toggle:hover { background: rgba(255,255,255,0.9); }
 .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
