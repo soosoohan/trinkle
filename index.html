@@ -66,8 +66,15 @@
 <script src="https://soosooland.com/js/protection.js"></script>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
- :root {--content-width: 800px;}
-
+  :root {
+  --content-width: 800px;
+  --tb-bg: #011640;
+  --tb-border: #666;
+  --tb-text: #ddd;
+  --tb-active-bg: #e8e8e8;
+  --tb-active-text: #222;
+  }
+ 
 * {
     margin: 0;
     padding: 0;
@@ -80,6 +87,19 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 }
+.toolbar {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto 8px;
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background: var(--tb-bg);
+  border: 1px solid var(--tb-border);
+  border-radius: 12px;
+}
 
 .container {
     width: 800px;
@@ -91,41 +111,45 @@ body {
     margin: 0 auto;   /* 좌우 자동 여백으로 가운데 정렬 */
 }
 
-.header {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+header {
+  text-align: center;
+  margin: 0 auto 40px;
+  padding-top: 20px;
+  max-width: 800px;
 }
 
+
 #lang-toggle {
-  position: absolute;
-  right: 0;
-  top: 0;
+    display: flex;
     background: rgba(255,255,255,0.9);
-    color: #2e8b8b;
     border: 1px solid #444;
     border-radius: 20px;
     padding: 6px 14px;
+    color: #2e8b8b;
     font-size: 0.9rem;
     cursor: pointer;
     z-index: 100;
-    transition: background 0.2s; 
-}
+    gap: 4px;
+    transition: background 0.2s;
+  }
 
 #lang-toggle:hover { background: rgba(255,255,255,0.9); }
 .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
   body.ko .lang-en { display: none; }
-.back-button { position: fixed;  top: max(48px, env(safe-area-inset-top) + 20px);  left: 22px;  width: 44px; height: 44px; padding: 0; background: transparent; order: none; border-radius: 22%; cursor: pointer; z-index: 100; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
 
-.back-button img {width: 100%;height: 100%;object-fit: cover;display: block;}
+.back-button {
+  margin-left: 44px;
+  flex-shrink: 0;
+  width: 44px; height: 44px; padding: 0;
+  background: transparent; border: none;
+  border-radius: 22%; cursor: pointer; overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
 
-.back-button:active {transform: scale(0.92);transition: transform 0.1s;}
+ .back-button img {width: 100%;height: 100%;object-fit: cover;display: block;}
+
+  .back-button:active {transform: scale(0.92);transition: transform 0.1s;}
 
 .main-title {
     width: 100%;
@@ -235,102 +259,30 @@ body {
 .hidden {
     display: none;
 }
-
-/* 모바일 최적화 */
-@media (max-width: 768px) {
-    .header {
-        padding: 15px;
-    }
-
-    .language-toggle {
-        top: 15px;
-        right: 15px;
-        padding: 6px;
-    }
-
-    .content {
-        padding: 15px;
-    }    
-}
-
-/* 매우 작은 화면 */
-@media (max-width: 480px) {
-    .header {
-        padding: 10px;
-    }
-
-    .language-toggle {
-        position: static;
-        float: right;
-        margin-bottom: 20px;
-    }
-
-    .main-title {
-        clear: both;
-        margin-top: 80px;
-    }
-    .content {
-        padding: 10px;
-    }
-
-    .buttons-container {
-        max-width: 300px;
-    }
-    .back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px;  width: 40px; height: 40px; }
-}
-
-/* 가로 모드 모바일 */
-@media (max-height: 600px) and (orientation: landscape) {
-    .content {
-        justify-content: flex-start;
-        padding-top: 10px;
-    }
-
-    .game-description {
-        margin-bottom: 20px;
-    }
-
-    .game-menu {
-        margin-top: 10px;
-        gap: 15px;
-    }
-
-    .buttons-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        max-width: 600px;
-    }
-    .main-game-button {
-        padding: 12px 6px;
-        font-size: 0.9rem;
-    }
-   
-    .footer {
-        padding: 10px;
-    }
-
-    .credits {
-        padding: 15px;
-    }
-}
+header { display: flow-root; height: auto !important; }
+.main-title { height: auto !important; }
+.main-title img { position: static !important; float: none !important; }
 
 </style>
 </head>
   <body class="ko" onload="initLanguage()">
+<link rel="stylesheet" href="toolbar.css">
+
+<div class="toolbar">
   <button class="back-button" onclick="location.href='https://soosooland.com/'" aria-label="수수랜드 홈으로">
-  <img src="https://soosooland.com/images/home.png" alt="수수랜드 홈"></button>
-
-<div class="container">
-        <!-- 헤더 -->
-    
-<div class="header">
+  <img src="https://soosooland.com/images/home.png" alt="수수랜드 홈">
+</button>
+  <div class="lang-toggle">
 <button id="lang-toggle" onclick="toggleLang()">English</button>
+ </div><!--lang-toggle  -->
+</div> <!-- .toolbar -->
 
+<header>
 <h1 class="main-title">
-        <img src="starbanner.png" alt="트링클 TRINKLE">
+        <img src="https://soosooland.com/trinkle/starbanner.png" alt="트링클 TRINKLE">
     </h1>
-</div>
+  
+</header>
 
 
     <!-- 메인 콘텐츠 -->
